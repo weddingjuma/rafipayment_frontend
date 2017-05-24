@@ -11,5 +11,5 @@ selenium-debug.log
 www/index.html
 www/static/
 platforms/
-plugins/
+./plugins/
 res/
