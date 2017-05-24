@@ -1,0 +1,245 @@
+# Phonegap & Vue.js Proof of Concept
+
+> Using Vue.js and Phonegap to create a basic POC for the new Rafi Payment hybrid app.
+
+This project should be pretty straightforward, other than the initial loading flow, which may have the session instance check authentication via the API before the majority of the application is loaded.
+
+The primary data store is located in app.$store, which will be automatically reset on logout, but certain views may require their own special Vuex stores which need to be manually reset when their parent component is destroyed.
+
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm start
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+
+# run unit tests
+npm run unit
+
+# run e2e tests
+npm run e2e
+
+# run all tests
+npm test
+
+# run cordova build for ios
+npm run cordova
+
+# run cordova build for ios & emulate
+npm run ios
+```
+
+## Environments
+
+The project has several non-standard environments/webpack configs:
+
+1. dev – `npm start`
+1. staging – `npm run staging`
+1. production - `npm run build`
+1. ui – `npm run ui`
+1. cordova – `npm run cordova`
+
+The dev and ui scripts will spin up a webpack dev server, while the rest build production-ready assets to specific directories using webpack.
+
+## UI Kit
+
+The UI kit script will spin up a webpack dev server with the environment set to `ui`, which will use all the main app configs and components but load a different set of routes, which allow easy access to all components in the app.
+
+## Phonegap/Cordova
+
+Note: if you are using rvm or some other ruby environment manager, make sure to run `rvm use system` before building for ios.
+
+``` bash
+# run cordova app in browser
+phonegap emulate browser
+
+# run cordova app in ios emulator
+phonegap emulate ios
+
+# run phonegap dev server for mobile dev app
+phonegap serve
+
+# build ios app from cordova assets
+phonegap build ios --device
+```
+To build the app onto an iphone, make sure your certificates and profiles are set up, open the xcproject in /platforms/ios, plug in and register the phone with Xcode, and click Run.
+
+## Libraries & Docs
+
+1. [webpack](https://webpack.github.io/docs/)
+1. [vue](https://vuejs.org/v2/api/)
+1. [vuex](https://vuex.vuejs.org/en/)
+1. [vue-router](https://router.vuejs.org/en/)
+1. [vee-validate](http://vee-validate.logaretm.com/)
+1. [v-mask](https://github.com/probil/v-mask)
+1. [moment](https://momentjs.com/docs/)
+1. [lodash](https://lodash.com/docs/)
+1. [whatwg-fetch](https://github.com/github/fetch)
+1. [fastclick](https://github.com/ftlabs/fastclick)
+
+## Webpack Aliases
+
+There are 2 nice aliases available as a shortcut to the js and scss modules.
+
+@: /src/js
+
+```js
+import App from '@/components'
+```
+
+~%: /src/scss
+
+```scss
+@import '~%/colors';
+```
+
+## Requests
+
+You can easily replace the XHR tool included in this repository if you prefer another, but the the current implementation is a very simple wrapper around the es6 fetch API, which includes a polyfill. You can create a new GET request by passing a relative path to a URL of your API to a new Request instance:
+
+```js
+new Request('users/tokens')
+```
+If you use a relative path, the request will be made to the base URL of your API. You may also use external urls:
+```js
+new Request('https://api.google.com/widgets')
+```
+You can pass options to the Request instance to modify the request:
+
+```js
+new Request('users/managers', {
+  mode: 'POST',
+  body: {
+    name: 'test',
+    email: 'test@gmail.com'
+  }
+})
+```
+Adding custom Headers is easy:
+
+```js
+let headers = new Headers()
+if (authToken) headers.append('Authorization', authToken)
+new Request('users/managers', {
+  mode: 'GET',
+  headers
+})
+```
+Request always returns a promise:
+
+```js
+new Request('users/tokens')
+.then(response => { // on success
+  this.$store.dispatch('login', response)
+})
+.catch((err) => {
+  this.$store.dispatch('error', err) // on error
+})
+.then(() => {
+  console.log('This always fires') // always fires
+})
+```
+## Models
+
+An es6 class wrapper around a Vue instance makes it really easy to create reusable models with default attributes, shared methods, and methods that use default or dynamic values. The api is pretty similar to Backbone.Model
+
+```js
+import Model from '@/modules/model'
+
+const defaults = {
+  name: 'user',
+  computed: {
+    full_name() {
+      return `${this.first_name} ${this.last_name}`
+    }
+  }
+}
+
+export default class User extends Model {
+  static schema() {
+    return {
+      id: String,
+      first_name: String,
+      last_name: String
+    }
+  }
+  constructor(attributes, options) {
+    super(attributes, [defaults, options])
+  }
+}
+
+```
+
+```js
+import UserModel from '@/models/user'
+const user = new UserModel({
+  first_name: 'Jane',
+  last_name: 'Goodall'
+})
+
+console.log(user.full_name) // returns 'Jane Goodall'
+
+```
+
+The Model class has some default methods and computed attributes that are useful for basic CRUD operations:
+
+### Model.basePath
+
+An overwriteable attribute that either uses the name of the model, or the urlRoot property from the options parameter.
+
+### Model.url
+
+An overwriteable attribute that is used for XHR requests. This will override the construction of the urls used for all CRUD operations.
+
+### Model.isNew
+
+Based on whether or not the model has an id. Affects whether or not Model.save is a POST or PUT.
+
+### Model.fetch()
+
+Fetches the model via a GET at Model.url
+
+### Model.save(data, options)
+
+Data must be valid json, options may contain a `path` property in order to deviate from the standard urlRoot.
+
+### Model.destroy()
+
+Sends a DELETE request for the model.
+
+### Model.reset()
+
+Uses the schema definition to reset all values to their default values.
+
+### Model.toJSON()
+
+Returns all approved data attributes, in addition to all computed properties as json.
+
+## Collections
+
+You may want to take advantage of the light implementation of Collections, which allows you to subscribe a Vuex Store to an endpoint of an API:
+
+```js
+import Collection from '../store/collection'
+
+export default new Collection({
+  basePath: 'tenants',
+  createPath: 'invite'
+})
+```
+
+The `basePath` option will determine the path of the URL following the base path of the API, which is set in ./configs
+The `createPath` option is optional and will be appened to the API path following `basePath`, if included.
+These options allow you to fetch your collection at `localhost:3456/tenants` and to create new users at `localhost:3456/tenants/invite`.
+
+The main reason why this simple wrapper is useful is that the options you pass to it will maintain the location of the endpoints you need when you want to dispatch CRUD events via `dispatch('fetch')`, `dispatch('create', model)`, `dispatch('update', model)`, or `dispatch('delete', model)`.
+
+The Collection wrapper will also server as a control layer between the websocket server and the Vuex data store, when using websockets to subcribe to a collection of models.

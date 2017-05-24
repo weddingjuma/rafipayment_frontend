@@ -1,0 +1,23 @@
+.panel {
+  width: 680px;
+  max-width: 97%;
+  margin: 0 auto;
+
+  &.small {
+    // width: 420px;
+    // max-width: 97%;
+
+    input, .pw-container {
+      width: 100%;
+    }
+  }
+
+  .logo {
+    width: 180px;
+    margin: 0 auto 20px;
+  }
+
+  button.full-width {
+    margin-bottom: 10px;
+  }
+}

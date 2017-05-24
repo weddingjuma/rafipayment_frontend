@@ -1,0 +1,27 @@
+@import 'colors';
+@import 'breakpoints';
+
+body {
+  margin-top: 70px;
+  // margin-bottom: 60px;
+  margin-bottom: 50px;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: $color-text-default;
+  background-color: $color-background-default;
+  touch-events: none;
+}
+
+::selection {
+  color: $color-text-light;
+  background: transparentize($color-highlight, 0);
+}
+
+@media (min-width: $breakpoint-medium) {
+  body {
+    margin-bottom: 0;
+  }
+}

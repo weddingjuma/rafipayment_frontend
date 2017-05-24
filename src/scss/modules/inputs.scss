@@ -1,0 +1,215 @@
+@import 'colors';
+
+$disabled_color: #777;
+
+input, textarea {
+  position: relative;
+  width: 300px;
+  max-width: 100%;
+  margin: 0;
+  padding: 8px 12px 9px 9px;
+  border: 1px solid $color-input-border;
+  border-radius: 4px;
+  background-color: $color-input-background;
+  color: $color-input-text;
+  box-shadow: inset 0 1px 2px hsla(0,0%,4%,.1);
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9em;
+  text-overflow: ellipsis;
+  transition: all 0.2s;
+
+  &::selection {
+    color: $color-background-default;
+    background: $color-highlight;
+  }
+
+  &:hover {
+    background-color: $color-input-background-hover;
+    // border-color: $color-input-border-hover;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-input-border-focus;
+    box-shadow: inset 0 1px 2px hsla(0,0%,4%,.1);
+    transition: all 0.2s;
+  }
+
+  &:disabled {
+    color: $disabled_color;
+    background-color: $color-background-default;
+    box-shadow: none;
+    opacity: 1;
+    -webkit-text-fill-color: $disabled_color;
+
+    &:hover {
+      border-color: $color-input-background;
+      cursor: not-allowed;
+    }
+  }
+
+  &[type="checkbox"], &[type="radio"] {
+    opacity: 0;
+    position: absolute;
+    left: -9999px;
+    pointer-events: none;
+
+    & + label {
+      display: inline-block;
+      position: relative;
+      font-size: 0.9em;
+      line-height: 1.3em;
+      padding-left: 32px;
+      margin-right: 20px;
+      margin-top: 10px;
+      vertical-align: middle;
+      z-index: 0;
+      user-select: none;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:before {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 14px;
+        height: 7px;
+        z-index: 3;
+        opacity: 0;
+        transition: all 0.3s;
+      }
+
+      &:after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: -2px;
+        left: 0;
+        width: 22px;
+        height: 22px;
+        border: 3px solid $color-grey-40;
+        border-radius: 4px;
+        z-index: 2;
+      }
+    }
+
+    &:active + label {
+      &:before {
+        opacity: 1;
+      }
+
+      &:after {
+        border-color: darken($color-grey-40, 14%);
+      }
+    }
+
+    &:checked + label {
+      &:before {
+        opacity: 1;
+      }
+
+      &:after {
+        border-color: $color-highlight;
+        background-color: $color-highlight;
+      }
+    }
+
+    &:checked:active + label {
+      &:before {
+        opacity: 1;
+      }
+
+      &:after {
+        border-color: darken($color-grey-40, 14%);
+        background-color: darken($color-grey-40, 14%);
+      }
+    }
+
+    &:disabled {
+      & + label {
+        pointer-events: none;
+        color: $color-button-disabled-background;
+
+        &:after {
+          border-color: $color-button-disabled-background;
+        }
+      }
+      &:checked + label {
+        &:after {
+          background-color: $color-button-disabled-background;
+          border-color: $color-button-disabled-background;
+        }
+      }
+    }
+  }
+
+  &[type="checkbox"] {
+    & + label {
+      &:before {
+        border-left: 3px solid $color-text-light;
+        border-bottom: 3px solid $color-text-light;
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  &[type="radio"] {
+    & + label {
+      &:before {
+        border: 0;
+        background-color: $color-highlight;
+        width: 10px;
+        height: 10px;
+        left: 6px;
+        border-radius: 100px;
+      }
+      &:after {
+        border-radius: 100px;
+      }
+    }
+    &:checked {
+      & + label {
+        &:after {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
+
+textarea {
+  transition: none;
+}
+
+select {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 10px 8px;
+  border: 1px solid #2a3340;
+  border-radius: 5px;
+  color: #666;
+  background-color: $color-input-background;
+  background: linear-gradient(lighten($color-input-background, 5%) 20%, $color-input-background);
+  box-shadow: inset 0 0 3px $color-input-background, 0 1px 1px rgba(0, 0, 0, 0.1);
+  color: $color-input-text;
+  white-space: nowrap;
+  -webkit-appearance: none;
+
+  &.chosen {
+    max-width: 100%;
+    width: 300px;
+  }
+  &.chosen-multiple {
+    max-width: 100%;
+    width: 300px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,156 @@
+// external libraries
+import './lib'
+import _ from 'lodash'
+
+// main Vue plugins
+import Vue from 'vue'
+import VeeValidate from 'vee-validate'
+import VueTouch from 'vue-touch'
+import VueMask from 'v-mask'
+import VueModel from '@/plugins/model'
+import VueBecome from '@/plugins/become'
+import router from './router'
+import store from './store'
+
+// validators, config, filters
+import { config } from './config/validation'
+import { validators } from './modules/validators'
+import { filters } from './modules/filters'
+
+// custom components
+import App from './components/app'
+import Load from './components/load'
+import Logo from './components/logo'
+import Avatar from './components/avatar'
+import Password from './components/password'
+import Select from './components/select'
+import Currency from './components/currency'
+import Tabs from './components/tabs'
+import Tab from './components/tab'
+import Validation from './components/validation'
+import Alert from './components/alert'
+import Modal from './components/modal'
+import Collapse from './components/collapse'
+import IconSuccess from '@/components/icons/success'
+
+const components = [
+  Load,
+  Logo,
+  Avatar,
+  Password,
+  Select,
+  Currency,
+  Tabs,
+  Tab,
+  Validation,
+  Alert,
+  Modal,
+  Collapse,
+  IconSuccess
+]
+
+const install = (Vue, opts = {}) => {
+  // inject filters
+  for (let key in filters) {
+    Vue.filter(key, filters[key])
+  }
+
+  // inject validators
+  for (let key in validators) {
+    VeeValidate.Validator.extend(key, validators[key])
+  }
+
+  // inject components
+  components.map(component => {
+    Vue.component(component.name, component)
+  })
+
+  // inject plugins
+  Vue.use(VueTouch)
+  Vue.use(VueModel)
+  Vue.use(VueBecome)
+  Vue.use(VueMask)
+  Vue.use(VeeValidate, config)
+
+  // inject mixins
+  Vue.mixin({
+    beforeDestroy() {
+      if (_.get(this, '$options.collection')) {
+        this.$store.dispatch('reset')
+      }
+    }
+  })
+}
+
+install(Vue)
+
+export default new Vue({
+  el: '.loader-container',
+  router,
+  store,
+  template: '<App/>',
+  components: { App },
+  computed: {
+    is_cordova() {
+      return process.env.NODE_ENV === 'cordova'
+    }
+  },
+  async beforeMount() {
+    await this.checkBrowserSupport()
+  },
+  methods: {
+    checkBrowserSupport() {
+      try {
+        localStorage.setItem('_ls_test', 'testing_local_storage')
+        localStorage.removeItem('_ls_test')
+      } catch(error) {
+        this.alert(`Your curernt browser does not support local storage. If you
+                    are in private browser mode, please disable it.`)
+        // throw new Error('localStorage is required')
+      }
+    },
+    alert(
+      message = '',
+      callback = () => {},
+      title = 'Alert',
+      button_label = 'OK'
+    ) {
+      const createAlert = this.is_cordova ? navigator.notification.alert : this._modalAlert
+      return createAlert(message, callback, title, button_label)
+    },
+    confirm(
+      message = '',
+      _callback = () => {},
+      title = 'Confirm',
+      button_labels = ['OK', 'Cancel']
+    ) {
+      const createAlert = this.is_cordova ? navigator.notification.confirm : this._modalConfirm
+
+      const callback = !this.is_cordova ? _callback : (index) => {
+        if (index === 1) _callback()
+      }
+      return createAlert(message, callback, title, button_labels)
+    },
+    _modalAlert(message, callback, title, button_label) {
+      return this.$store.dispatch('alert_show', {
+        header: title,
+        message: message,
+        actions: {
+          confirm: callback
+        },
+        button_labels: [ button_label ]
+      })
+    },
+    _modalConfirm(message, callback, title, button_labels) {
+      return this.$store.dispatch('alert_show', {
+        header: title,
+        message: message,
+        actions: {
+          confirm: callback,
+          cancel: true
+        },
+        button_labels: button_labels
+      })
+    }
+  }
+})

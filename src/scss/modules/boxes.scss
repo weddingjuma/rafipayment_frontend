@@ -1,0 +1,48 @@
+@import 'colors';
+
+.box {
+  position: relative;
+  padding: 1.25rem;
+  margin-bottom: 6px;
+  // margin-bottom: 20px;
+  // border-radius: 5px;
+  border-radius: 0;
+  background-color: $color-box-background;
+  color: $color-box-text;
+  box-shadow: 0 2px 3px hsla(0,0%,4%,.1), 0 0 0 1px hsla(0,0%,4%,.1);
+  overflow: hidden;
+
+  header {
+    padding: 12px 14px;
+    // color: #99a0b1;
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-top: 10px;
+    // font-size: 0.85em;
+    // background-color: lighten($color-background-default, 10%);
+    // border-bottom: 1px solid $color-grey-80;
+    // border-bottom: 1px solid #24282f;
+  }
+
+  h2 {
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e0dcdc;
+    text-align: left;
+  }
+
+  input {
+    background-color: $color-background-default;
+  }
+
+  button.link.loading {
+    &:before {
+      background-color: $color-input-background;
+    }
+  }
+}
+
+.divider {
+  height: 2px;
+  border-color: #222;
+  border-top: 1px dotted #d1d1d1;
+}

@@ -1,0 +1,42 @@
+@import 'colors';
+
+legend {
+  display: inline-block;
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: $color-forms-legend;
+}
+
+input {
+  &.touched {
+    &.invalid {
+      border-color: $color-status-danger;
+
+      &:focus {
+        border-bottom: 1px solid $color-status-danger;
+        box-shadow: 0 1px 0 $color-status-danger;
+      }
+    }
+  }
+}
+
+.field-group {
+  position: relative;
+  margin-bottom: 14px;
+  width: 100%;
+
+  input {
+    z-index: 2;
+  }
+
+  .pw-container {
+    width: 300px;
+  }
+}
+
+.grid {
+  input, .pw-container {
+    width: 100%;
+  }
+}

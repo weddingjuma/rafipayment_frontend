@@ -1,0 +1,20 @@
+@import 'colors';
+
+.light {
+  background-color: $color-background-light;
+  color: $color-text-dark;
+
+  &.box {
+    background-color: $color-box-light-background;
+    
+    header {
+      background: desaturate(darken($color-background-light, 20%), 20%);
+      color: $color-text-dark;
+    }
+  }
+}
+
+.dark {
+  background-color: $color-background-dark;
+  color: $color-text-light;
+}

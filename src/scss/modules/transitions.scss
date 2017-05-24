@@ -1,0 +1,28 @@
+// Transitions
+
+// fade
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
+}
+.route-fade-enter-active, .route-fade-leave-active {
+  transition: all .2s ease
+}
+.route-fade-enter, .route-fade-leave-active {
+  opacity: 0;
+}
+
+// fade-in-only
+
+.fade-in-only-enter-active {
+  transition: opacity .3s
+}
+.fade-in-only-enter, .fade-in-only-leave-to {
+  opacity: 0
+}
+.route-fade-in-only-enter, .route-fade-in-only-leave-active {
+  opacity: 0;
+}

@@ -1,0 +1,21 @@
+<template>
+  <div class="step">
+    Dwolla account
+  </div>
+</template>
+
+<!--/////////////////////////////////////////////////////////////////////////-->
+
+<script>
+export default {
+
+}
+</script>
+
+<!--/////////////////////////////////////////////////////////////////////////-->
+
+<style scoped lang="scss">
+.step {
+  background: rgb(0, 113, 188);
+}
+</style>

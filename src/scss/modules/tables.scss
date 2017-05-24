@@ -1,0 +1,17 @@
+.table {
+  display: table;
+  // width: 100%;
+
+  .table-row {
+    display: table-row;
+  }
+
+  .table-cell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+}
