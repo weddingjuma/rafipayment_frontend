@@ -66,7 +66,7 @@
 
 <script>
 import _ from 'lodash'
-import app from '@/app'
+// import app from '@/app'
 import session from '@/session'
 import BillModel from '@/models/bill'
 

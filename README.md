@@ -1,8 +1,6 @@
-# Phonegap & Vue.js Proof of Concept
+# Rafi Payment Front End
 
-> Using Vue.js and Phonegap to create a basic POC for the new Rafi Payment hybrid app.
-
-This project should be pretty straightforward, other than the initial loading flow, which may have the session instance check authentication via the API before the majority of the application is loaded.
+> Vue.js and Phonegap hybrid app for mobile and desktop
 
 The primary data store is located in app.$store, which will be automatically reset on logout, but certain views may require their own special Vuex stores which need to be manually reset when their parent component is destroyed.
 
@@ -51,11 +49,11 @@ The dev and ui scripts will spin up a webpack dev server, while the rest build p
 
 ## UI Kit
 
-The UI kit script will spin up a webpack dev server with the environment set to `ui`, which will use all the main app configs and components but load a different set of routes, which allow easy access to all components in the app.
+The UI kit script will spin up a webpack dev server with the environment set to `ui`, which uses all the main app configs and components but load a different set of routes, which allow easy access to all components in the app.
 
 ## Phonegap/Cordova
 
-Note: if you are using rvm or some other ruby environment manager, make sure to run `rvm use system` before building for ios.
+Note: if using rvm or some other ruby environment manager, make sure to run `rvm use system` before building for ios.
 
 ``` bash
 # run cordova app in browser
@@ -70,7 +68,7 @@ phonegap serve
 # build ios app from cordova assets
 phonegap build ios --device
 ```
-To build the app onto an iphone, make sure your certificates and profiles are set up, open the xcproject in /platforms/ios, plug in and register the phone with Xcode, and click Run.
+To build the app onto an iphone, make sure certificates and profiles are set up, open the xcproject in /platforms/ios, plug in and register the phone with Xcode, and click Run.
 
 ## Libraries & Docs
 
@@ -103,16 +101,16 @@ import App from '@/components'
 
 ## Requests
 
-You can easily replace the XHR tool included in this repository if you prefer another, but the the current implementation is a very simple wrapper around the es6 fetch API, which includes a polyfill. You can create a new GET request by passing a relative path to a URL of your API to a new Request instance:
+The Request function is a wrapper around the fetch API, which includes a polyfill for older browsers. A new GET request can be created by passing a relative path to a URL to a new Request instance:
 
 ```js
 new Request('users/tokens')
 ```
-If you use a relative path, the request will be made to the base URL of your API. You may also use external urls:
+If using a relative path, the request will be made to the base URL of the API. External urls are also supported:
 ```js
 new Request('https://api.google.com/widgets')
 ```
-You can pass options to the Request instance to modify the request:
+Passing options to the Request instance to modify the request:
 
 ```js
 new Request('users/managers', {
@@ -123,7 +121,7 @@ new Request('users/managers', {
   }
 })
 ```
-Adding custom Headers is easy:
+Adding custom Headers:
 
 ```js
 let headers = new Headers()
@@ -136,20 +134,20 @@ new Request('users/managers', {
 Request always returns a promise:
 
 ```js
-new Request('users/tokens')
-.then(response => { // on success
+new Request('users/login')
+.then((response) => {
   this.$store.dispatch('login', response)
 })
 .catch((err) => {
-  this.$store.dispatch('error', err) // on error
+  this.$store.dispatch('error', err)
 })
 .then(() => {
-  console.log('This always fires') // always fires
+  console.log('This always fires')
 })
 ```
 ## Models
 
-An es6 class wrapper around a Vue instance makes it really easy to create reusable models with default attributes, shared methods, and methods that use default or dynamic values. The api is pretty similar to Backbone.Model
+The Model class is an extendable wrapper that returns a Vue instance, which makes it easy to create reusable models with default attributes, shared methods, and methods that use default or dynamic values.
 
 ```js
 import Model from '@/modules/model'
@@ -223,9 +221,27 @@ Uses the schema definition to reset all values to their default values.
 
 Returns all approved data attributes, in addition to all computed properties as json.
 
+
+Models can be bound to a Vue component using the following syntax:
+
+```js
+export default {
+  models: {
+    user() {
+      return new UserModel(data)
+    }
+  },
+  created() {
+    console.log(this.$user.full_name);
+  }
+}
+```
+
+NOTE: By default, models are reset when the parent component is destroyed. To disable this, the `persist: true` option can be provided in the model options.
+
 ## Collections
 
-You may want to take advantage of the light implementation of Collections, which allows you to subscribe a Vuex Store to an endpoint of an API:
+A light implementation of Collections that binds a collection of models to a Vuex instance, and provides some basic methods for CRUD operations.
 
 ```js
 import Collection from '../store/collection'
