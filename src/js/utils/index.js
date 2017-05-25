@@ -46,7 +46,7 @@ export const Request = (url = '', {
 // load scripts from cdn
 
 export const load = (url) => {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     let script = window.document.createElement('script')
     script.type = 'text/javascript'
     script.async = true

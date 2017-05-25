@@ -16,6 +16,8 @@ DOCKER
 
 
 
+
+
 BACK END
 
 - back end make IAV tokens endpoints consistent
@@ -23,10 +25,18 @@ BACK END
 - /activate/contact doesn't show terms accepted
 
 
+
+
 FRONT END
 
-- activation flow split confirm is broken
 
+- add modals to the confirm disbale or enable autopay feature
+- shouldnt be able to scroll while loading is a thing
+- forgot / reset buttons should be button.link
+X- activation flow split confirm is broken
+- funding source cards need love
+  - always sho buttons? shome disabled? icons?
+- put preloaders on everyting that loads to fast
 
 - i think i can remove cordova plugins and have user use phonegap prepare to install all of them
 
