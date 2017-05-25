@@ -1,6 +1,10 @@
+# mac stuff
 .DS_Store
+
+# Node packages
 node_modules/
-/dist/
+
+# debug logs
 npm-debug.log
 yarn-error.log
 /test/unit/coverage
@@ -8,6 +12,7 @@ yarn-error.log
 selenium-debug.log
 
 # cordova files
+/dist/
 /www/
 /platforms/
 /plugins/
