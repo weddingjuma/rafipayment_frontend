@@ -7,35 +7,27 @@
           <div class="table-row">
             <div class="table-cell text-left">
               <div class="label">{{ $bill.label }}</div>
-
             </div>
             <div class="table-cell text-right">
               <span :class="['text-color', message_class]">{{ $bill.message }}</span>
-              <!-- <div style="font-size: 0.8em">{{ $bill.display_date | moment('MM/DD/YYYY') }}</div> -->
             </div>
           </div>
         </div>
-
       </header>
       <div class="content">
         <legend>BALANCE</legend>
         <h1>{{ $bill.better_display_balance | currency }}</h1>
-        <!-- {{ $bill.id }} -->
-        <!-- <div class="message">
-
-        </div> -->
       </div>
     </div>
 
     <footer class="button button-full" v-if="$bill.bill_status !== 'paid'" @click="showModal">Make a Payment</footer>
 
-    <transfer-modal v-if="modal_visible" @close="closeModal" :confirm="updateBill" :model="$bill"></transfer-modal>
-    <!-- <transfer-modal
+    <transfer-modal
       v-if="modal_visible"
-      :close="closeModal"
+      @close="closeModal"
       :confirm="updateBill"
       :model="$bill">
-    </transfer-modal> -->
+    </transfer-modal>
 
   </div>
 </template>
@@ -43,8 +35,12 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+import app from '@/app'
+import session from '@/session'
+import BillModel from '@/models/bill'
 import transferModal from '@/components/modals/transfer'
-import Model from '@/models/bill'
+
+import validateFundingSourceStatus from '@/utils/validateFundingSourceStatus'
 
 export default {
   name: 'bill-large',
@@ -57,20 +53,14 @@ export default {
       modal_visible: false
     }
   },
-  created() {
-    this.$options.model = new Model(this.data, {
-      basePath: 'account/bills'
-    })
+  models: {
+    bill() {
+      return new BillModel(this.data, {
+        basePath: 'account/bills'
+      })
+    }
   },
   computed: {
-    $bill: {
-      get() {
-        return this.$options.model
-      },
-      set(data) {
-        this.$options.model.set(data)
-      }
-    },
     message_class() {
       const status = this.$bill.bill_status
       return {
@@ -85,23 +75,33 @@ export default {
           'overdue'
         ].includes(status)
       }
+    },
+    primary_funding_source() {
+      return session.primary_funding_source
     }
   },
   methods: {
     showDetails() {
-      // console.log(this.$bill.decode())
       this.$router.push(`/bills/${this.$bill.id}`)
     },
     showModal() {
-      this.modal_visible = true
+      app.$store.dispatch('loading_begin')
+      this.$become('primary_funding_source')
+      .then((funding_source) => {
+        if (validateFundingSourceStatus(funding_source)) {
+          this.modal_visible = true
+        }
+      })
+      .catch(() => {})
+      .then(() => {
+        app.$store.dispatch('loading_end')
+      })
     },
     closeModal() {
       this.modal_visible = false
     },
     async updateBill(response) {
-      // this.loading = true
       this.$bill.transfers = response.transfers
-      // this.loading = false
     }
   },
   components: {

@@ -108,13 +108,13 @@ const routes = [
           require(['@/views/account/profile'], resolve)
         }
       },
-      {
-        name: 'Contact',
-        path: 'contact',
-        component(resolve) {
-          require(['@/views/account/contact'], resolve)
-        }
-      },
+      // {
+      //   name: 'Contact',
+      //   path: 'contact',
+      //   component(resolve) {
+      //     require(['@/views/account/contact'], resolve)
+      //   }
+      // },
       {
         name: 'Payment',
         path: 'payment',

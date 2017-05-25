@@ -29,7 +29,8 @@ const session = new Vue({
   },
   computed: {
     ...mapGetters({
-      logged_in: 'session:logged_in'
+      logged_in: 'session:logged_in',
+      primary_funding_source: 'session:primary_funding_source'
     })
   },
   methods: {
@@ -164,7 +165,8 @@ const session = new Vue({
       const primary = funding_sources.find((funding_source) => {
         return funding_source.id === primary_id
       })
-      this.$store.dispatch('set_primary_funding_source', primary)
+      // NOTE: if there is no primary, pass empty object so watchers will fire
+      this.$store.dispatch('set_primary_funding_source', primary || {})
     },
     clearSessionUser() {
       this.$user.reset()

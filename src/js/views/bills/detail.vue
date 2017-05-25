@@ -66,7 +66,11 @@
 
 <script>
 import _ from 'lodash'
+import app from '@/app'
+import session from '@/session'
 import BillModel from '@/models/bill'
+
+import validateFundingSourceStatus from '@/utils/validateFundingSourceStatus'
 
 import transfersByUserCard from '@/components/cards/transfers_by_user'
 import transferModal from '@/components/modals/transfer'
@@ -111,11 +115,24 @@ export default {
       let output = 'payments made'
       if (!this.$bill.transfers.length) output = `no payments made`
       return output
+    },
+    primary_funding_source() {
+      return session.primary_funding_source
     }
   },
   methods: {
-    showModal() {
-      this.modal_visible = true
+    async showModal() {
+      this.$store.dispatch('loading_begin')
+      this.$become('primary_funding_source')
+      .then((funding_source) => {
+        if (validateFundingSourceStatus(funding_source)) {
+          this.modal_visible = true
+        }
+      })
+      .catch(() => {})
+      .then(() => {
+        this.$store.dispatch('loading_end')
+      })
     },
     closeModal() {
       this.modal_visible = false
@@ -123,17 +140,6 @@ export default {
     updateBill(response) {
       this.$bill.transfers = response.transfers
     }
-    // processType(type) {
-    //   let output
-    //   if (type === 'rent') {
-    //     output = `${type} - ${moment(this.due_date).format('MMMM')}`
-    //   } else if (type === 'previous_bill_overflow') {
-    //     output = 'from_previous_bill'
-    //   } else {
-    //     output = type
-    //   }
-    //   return output
-    // }
   },
   components: {
     transfersByUserCard,

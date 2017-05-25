@@ -52,9 +52,7 @@ export default class Collection {
           state.collection = []
         },
         FETCH(state, collection) {
-          // console.log(_process(collection));
           state.collection = _process(collection)
-          // console.log(state);
         },
         ADD(state, model) {
           if (reverse) {

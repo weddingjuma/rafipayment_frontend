@@ -11,9 +11,9 @@
         <dd :class="['text-color', status_class_handler]">{{ $funding_source.status }}</dd>
       </dl>
     </div>
-    <div class="actions" v-show="!$funding_source.is_primary">
-      <button class="small" @click="promptPrimary">Make primary</button>
-      <button class="danger small" @click="promptDelete">Remove</button>
+    <div class="actions">
+      <button :disabled="$funding_source.is_primary" class="small" @click="promptPrimary">Make primary</button>
+      <button :disabled="$funding_source.is_primary" class="danger small" @click="promptDelete">Remove</button>
     </div>
   </div>
 </template>
@@ -61,7 +61,7 @@ export default {
       app.$store.dispatch('loading_begin')
       this.$funding_source.makePrimary()
       .then(() => {
-        app.$store.dispatch('set_primary_funding_source', this.$funding_source.$data)
+        app.$store.dispatch('set_primary_funding_source', this.$funding_source.toJSON())
       })
       .catch(() => {})
       .then(() => {
@@ -70,7 +70,6 @@ export default {
     },
     confirmDelete() {
       app.$store.dispatch('loading_begin')
-
       this.$store.dispatch('delete', this.$funding_source.id)
       .catch(() => {})
       .then(() => {

@@ -22,7 +22,6 @@
               {{ cancel_label }}
             </button>
             <button
-              v-if="has_confirm"
               type="button"
               ref="default"
               class="primary"
@@ -69,11 +68,7 @@ export default {
     has_cancel() {
       return (this.alert.actions.cancel !== undefined) || this.close
     },
-    has_confirm() {
-      return (this.alert.actions.confirm !== undefined) || this.confirm
-    },
     confirm_label() {
-      console.log(this.alert.button_labels);
       return this.alert.button_labels[0]
     },
     cancel_label() {
@@ -86,18 +81,17 @@ export default {
   methods: {
     closeAlert() {
       if (this.close) this.close()
-      if (this.alert) app.$store.dispatch('alert_hide')
+      app.$store.dispatch('alert_hide')
     },
     async validate(e) {
       this.alert_loading = true
       try {
         if (this.confirm) {
           await this.confirm()
-          this.closeAlert()
         } else if (this.alert.actions.confirm) {
           await this.alert.actions.confirm()
-          this.closeAlert()
         }
+        this.closeAlert()
       } catch(err) {
         console.warn(err)
       } finally {
