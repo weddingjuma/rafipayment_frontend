@@ -111,8 +111,8 @@ export default {
   padding-bottom: 0;
   overflow: hidden;
 }
-.content-box {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
+// .content-box {
+//   padding-top: 20px;
+//   padding-bottom: 20px;
+// }
 </style>
