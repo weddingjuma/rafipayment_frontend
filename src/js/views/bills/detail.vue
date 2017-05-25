@@ -6,9 +6,6 @@
         <!-- <div class="flex-equal text-right">Bill #{{ $bill.identifier }}</div> -->
       </header>
 
-      <!-- <div class="divider"></div> -->
-      <!-- <div class="pad flex">CHARGES</div> -->
-
       <dl class="pad flex" v-for="charge in $bill.charges.recurring">
         <dt>
           <div>{{ $bill.processType(charge.type) | replace('_') | capitalize }}</div>
@@ -39,8 +36,6 @@
         <dd class="strong">{{ $bill.better_display_balance | currency }}</dd>
       </dl>
 
-      <!-- <div class="divider"></div> -->
-
       <div class="pad flex">{{ payments_header | uppercase }}</div>
 
       <div v-for="tenant in $bill.tenants">
@@ -66,7 +61,6 @@
 
 <script>
 import _ from 'lodash'
-// import app from '@/app'
 import session from '@/session'
 import BillModel from '@/models/bill'
 
