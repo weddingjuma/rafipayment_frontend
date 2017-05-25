@@ -85,7 +85,7 @@ To build the app onto an iphone, make sure certificates and profiles are set up,
 
 ## Webpack Aliases
 
-There are 2 nice aliases available as a shortcut to the js and scss modules.
+There are 2 aliases available as a shortcut to the js and scss modules.
 
 @: /src/js
 
