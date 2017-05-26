@@ -1,5 +1,5 @@
 <template>
-  <modal class="full" @close="closeModal" :confirm="validate">
+  <modal @close="closeModal" :confirm="validate">
     <h1 slot="header">Change Name</h1>
     <div slot="body" class="modal-transfer">
       <div class="field-group">

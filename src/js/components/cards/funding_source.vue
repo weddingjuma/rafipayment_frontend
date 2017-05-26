@@ -5,12 +5,39 @@
     </header>
     <div class="content">
       <dl class="details">
-        <dt>Added:</dt>
-        <dd>{{ $funding_source.created | moment('MM/DD/YYYY') }}</dd>
-        <dt>Status:</dt>
-        <dd :class="['text-color', status_class_handler]">{{ $funding_source.status }}</dd>
+        <dt v-if="$funding_source.bankName">Bank</dt>
+        <dd v-if="$funding_source.bankName">{{ $funding_source.bankName }}</dd>
+        <dt>Added</dt>
+        <dd>{{ $funding_source.created | moment('MMMM DD, YYYY') }}</dd>
+        <dt>Status</dt>
+        <dd :class="['text-color', status_class_handler]">{{ status }}</dd>
       </dl>
     </div>
+
+    <div class="divider"></div>
+
+    <div class="message" v-if="status !== 'verified'">
+      <div class="pad">
+        <div v-if="status === 'microdeposits pending' || status === 'microdeposits added'">
+          <p>Microposits will be deposited in your bank account shortly. Please note the amounts before returning here to verify the account.</p>
+          <div class="text-right">
+            <a href="http://payment.rafiproperties.com/help/#microdeposits" target="_blank">More info <icon-external></icon-external></a>
+          </div>
+        </div>
+        <div v-else-if="status === 'microdeposits completed'">
+          <p>Please enter the amounts of the microdeposits from your bank statement.</p>
+          <!-- <div class="text-right">
+            <a href="http://payment.rafiproperties.com/help/#microdeposits" target="_blank">More info <icon-external></icon-external></a>
+          </div> -->
+          <button type="button" @click="modal_visible = true">Verify Microdeposits</button>
+
+          <modal-microdeposits @close="modal_visible = false" @confirm="update" :model="$funding_source" v-if="modal_visible"></modal-microdeposits>
+
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+
     <div class="actions">
       <button :disabled="$funding_source.is_primary" class="small" @click="promptPrimary">Make primary</button>
       <button :disabled="$funding_source.is_primary" class="danger small" @click="promptDelete">Remove</button>
@@ -21,6 +48,7 @@
 <script>
 import app from '@/app'
 import FundingSourceModel from '@/models/funding_source'
+import modalMicrodeposits from '@/components/modals/microdeposits'
 
 export default {
   name: 'funding_source',
@@ -32,16 +60,39 @@ export default {
       return new FundingSourceModel(this.data)
     }
   },
+  data() {
+    return {
+      modal_visible: false
+    }
+  },
   computed: {
+    status() {
+      const microdeposits = this.$funding_source.microdeposits
+      return microdeposits ? `microdeposits ${microdeposits}` : this.$funding_source.status
+    },
     status_class_handler() {
       return {
-        danger: this.$funding_source.status === 'unverified',
-        warning: this.$funding_source.status === 'added',
-        success: this.$funding_source.status === 'verified'
+        danger: [
+          'unverified',
+          'microdeposits failed',
+          'microdeposits maxattempts'
+        ].includes(this.status),
+        warning: [
+          'added',
+          'microdeposits pending',
+          'microdeposits added',
+          'microdeposits completed'
+        ].includes(this.status),
+        success: [
+          'verified'
+        ].includes(this.status)
       }
     }
   },
   methods: {
+    update() {
+      console.log('update confirmed');
+    },
     promptDelete() {
       app.confirm(
         `Are you sure you want to remove your bank account "${this.$funding_source.name}"?`,
@@ -76,6 +127,9 @@ export default {
         app.$store.dispatch('loading_end')
       })
     }
+  },
+  components: {
+    modalMicrodeposits
   }
 }
 </script>
@@ -97,11 +151,14 @@ h3 {
   padding: 4px 14px 14px 14px;
 }
 .details {
+  font-size: 0.75em;
+}
+.message {
   font-size: 0.8em;
 }
 .actions {
   padding: 10px;
-  border-top: 1px solid #ccc;
+  // border-top: 1px solid #ccc;
   text-align: right;
 }
 .flag.success {

@@ -22,31 +22,35 @@ import App from './components/app'
 import Load from './components/load'
 import Logo from './components/logo'
 import Avatar from './components/avatar'
-import Password from './components/password'
-import Select from './components/select'
-import Currency from './components/currency'
 import Tabs from './components/tabs'
 import Tab from './components/tab'
 import Validation from './components/validation'
 import Alert from './components/alert'
 import Modal from './components/modal'
 import Collapse from './components/collapse'
+import Password from './components/password'
+import Select from './components/select'
+import InputCurrency from './components/currency'
+import InputNumber from './components/number'
 import IconSuccess from '@/components/icons/success'
+import IconExternal from '@/components/icons/external'
 
 const components = [
   Load,
   Logo,
   Avatar,
-  Password,
-  Select,
-  Currency,
   Tabs,
   Tab,
   Validation,
   Alert,
   Modal,
   Collapse,
-  IconSuccess
+  Password,
+  Select,
+  InputCurrency,
+  InputNumber,
+  IconSuccess,
+  IconExternal
 ]
 
 const install = (Vue, opts = {}) => {

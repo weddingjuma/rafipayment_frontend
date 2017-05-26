@@ -1,5 +1,5 @@
 <template>
-  <modal type="full" @close="close" :confirm="save">
+  <modal @close="close" :confirm="save">
     <h1 slot="header">Edit Split / Autopay</h1>
     <div slot="body" class="text-left">
       <loading v-if="loading"></loading>

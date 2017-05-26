@@ -156,6 +156,10 @@ export default {
       padding: 10px;
       overflow: hidden;
       text-align: right;
+      
+      button {
+        padding: 0.8em 1em;
+      }
     }
 
     h1 {

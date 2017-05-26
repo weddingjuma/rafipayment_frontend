@@ -3,7 +3,9 @@
     <div v-for="model in funding_sources">
       <funding-source :data="model"></funding-source>
     </div>
-    <button @click="showModal">Add Bank +</button>
+    <div class="actions">
+      <button @click="showModal">Add Bank +</button>
+    </div>
 
     <funding-source-modal
       v-if="modal_visible"
@@ -76,3 +78,10 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.actions {
+  margin-top: 14px;
+  margin-bottom: 60px;
+}
+</style>

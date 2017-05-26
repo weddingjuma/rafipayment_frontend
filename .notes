@@ -29,6 +29,9 @@ BACK END
 
 FRONT END
 
+- deal with token expired
+
+- ask dwolla about passing insecure stylesheets in sandbox
 
 - add modals to the confirm disbale or enable autopay feature
 - shouldnt be able to scroll while loading is a thing

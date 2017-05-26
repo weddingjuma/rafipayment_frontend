@@ -1,5 +1,5 @@
 <template>
-  <modal type="full" @close="close" :confirm="validate">
+  <modal @close="close" :confirm="validate">
     <h1 slot="header">Change Contact</h1>
     <div slot="body">
       <form @submit.prevent="validate">

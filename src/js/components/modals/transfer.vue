@@ -1,5 +1,5 @@
 <template>
-  <modal type="full" @close="close" :confirm="validate">
+  <modal @close="close" :confirm="validate">
     <h1 slot="header">Make a Payment</h1>
     <div slot="body" class="modal-transfer">
 

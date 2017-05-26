@@ -13,6 +13,7 @@
     <preference name="fullscreen" value="false" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <preference name="orientation" value="portrait" />
     <allow-navigation href="https://sandbox.dwolla.com" />
     <platform name="android">

@@ -1,6 +1,6 @@
 <template>
   <transition name="fade-in-only">
-    <div class="container" v-show="errors.has(name)" @click="hide($event, name)">
+    <div class="validation container" v-show="errors.has(name)" @click="hide($event, name)">
       <span class="error">
         {{ errors.first(name) }}
       </span>

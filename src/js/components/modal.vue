@@ -110,6 +110,7 @@ export default {
     background: $color-modal-background;
     box-shadow: 0 1px 4px rgba(0,0,0, 0.3);
     z-index: 2;
+    font-size: 1rem;
     overflow: hidden;
 
     .modal-header {

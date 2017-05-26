@@ -10,6 +10,10 @@ const defaults = {
     is_primary() {
       const primary_id = _.get(session.$user, 'dwolla.primary_funding_source')
       return this.id === primary_id
+    },
+    microdeposits() {
+      const status = _.get(session.$user.dwolla_account.funding_sources, this.id)
+      return _.get(status, 'microdeposits')
     }
   },
   methods: {
