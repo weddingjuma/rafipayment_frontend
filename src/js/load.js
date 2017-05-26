@@ -20,7 +20,6 @@ if (config.debug) {
 }
 
 if (process.env.NODE_ENV === 'cordova') {
-  console.log('yeah setup push');
   require(['./modules/push_notifications'])
 }
 
