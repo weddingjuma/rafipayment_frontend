@@ -14,6 +14,11 @@ const defaults = {
     microdeposits() {
       const status = _.get(session.$user.dwolla_account.funding_sources, this.id)
       return _.get(status, 'microdeposits')
+    },
+    $status() {
+      const status = this.status
+      const microdeposits = this.microdeposits
+      return status === 'verified' ? status : `microdeposits ${microdeposits}`
     }
   },
   methods: {

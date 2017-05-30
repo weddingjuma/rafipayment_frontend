@@ -9,8 +9,8 @@
           $
           <input type="text" value="0" class="mock" disabled>
           .
-          <number @next="next" class="tab-focus-1" v-model="amount1a" maxlength="1" placeholder="0" name="tab-focus-1" ref="default"></number>
-          <number @next="next" class="tab-focus-2" v-model="amount1b" maxlength="1" placeholder="0" name="tab-focus-2" ></number>
+          <number @next="next" v-model="amount1a" maxlength="1" placeholder="0" name="tab-focus-1" ref="default"></number>
+          <number @next="next" v-model="amount1b" maxlength="1" placeholder="0" name="tab-focus-2"></number>
         </div>
         <validation name="input-1" :errors="errors"></validation>
       </div>
@@ -20,8 +20,8 @@
           $
           <input type="text" value="0" class="mock" disabled>
           .
-          <number @next="next" class="tab-focus-3" v-model="amount2a" maxlength="1" placeholder="0" name="tab-focus-3"></number>
-          <number @next="next" class="tab-focus-4" v-model="amount2b" maxlength="1" placeholder="0" name="tab-focus-4"></number>
+          <number @next="next" v-model="amount2a" maxlength="1" placeholder="0" name="tab-focus-3"></number>
+          <number @next="next" v-model="amount2b" maxlength="1" placeholder="0" name="tab-focus-4"></number>
         </div>
         <validation name="input-2" :errors="errors"></validation>
       </div>
@@ -93,7 +93,7 @@ export default {
       if ($next_input) {
         $next_input.focus()
       } else {
-        this.$el.querySelector('.link.confirm').focus()
+        this.$el.querySelector('.confirm').focus()
       }
     },
     validate() {

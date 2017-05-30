@@ -10,21 +10,21 @@
         <dt>Added</dt>
         <dd>{{ $funding_source.created | moment('MMMM DD, YYYY') }}</dd>
         <dt>Status</dt>
-        <dd :class="['text-color', status_class_handler]">{{ status }}</dd>
+        <dd :class="['text-color', status_class_handler]">{{ $funding_source.$status }}</dd>
       </dl>
     </div>
 
     <div class="divider"></div>
 
-    <div class="message" v-if="status !== 'verified'">
+    <div class="message" v-if="$funding_source.$status !== 'verified'">
       <div class="pad">
-        <div v-if="status === 'microdeposits pending' || status === 'microdeposits added'">
+        <div v-if="['microdeposits pending', 'microdeposits added'].includes($funding_source.$status)">
           <p>Microposits will be deposited in your bank account shortly. Please note the amounts before returning here to verify the account.</p>
           <div class="text-right">
             <a href="http://payment.rafiproperties.com/help/#microdeposits" target="_blank">More info <icon-external></icon-external></a>
           </div>
         </div>
-        <div v-else-if="status === 'microdeposits completed'">
+        <div v-else-if="$funding_source.$status === 'microdeposits completed'">
           <p>Please enter the amounts of the microdeposits from your bank statement.</p>
           <!-- <div class="text-right">
             <a href="http://payment.rafiproperties.com/help/#microdeposits" target="_blank">More info <icon-external></icon-external></a>
@@ -66,26 +66,26 @@ export default {
     }
   },
   computed: {
-    status() {
-      const microdeposits = this.$funding_source.microdeposits
-      return microdeposits ? `microdeposits ${microdeposits}` : this.$funding_source.status
-    },
+    // status() {
+    //   const microdeposits = this.$funding_source.microdeposits
+    //   return microdeposits ? `microdeposits ${microdeposits}` : this.$funding_source.status
+    // },
     status_class_handler() {
       return {
         danger: [
           'unverified',
           'microdeposits failed',
           'microdeposits maxattempts'
-        ].includes(this.status),
+        ].includes(this.$funding_source.$status),
         warning: [
           'added',
           'microdeposits pending',
           'microdeposits added',
           'microdeposits completed'
-        ].includes(this.status),
+        ].includes(this.$funding_source.$status),
         success: [
           'verified'
-        ].includes(this.status)
+        ].includes(this.$funding_source.$status)
       }
     }
   },
