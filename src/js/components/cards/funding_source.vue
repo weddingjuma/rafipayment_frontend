@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     update() {
-      console.log('update confirmed');
+      this.$store.dispatch('fetch')
     },
     promptDelete() {
       app.confirm(

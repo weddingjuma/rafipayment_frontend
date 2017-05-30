@@ -9,12 +9,8 @@
           $
           <input type="text" value="0" class="mock" disabled>
           .
-          <number @change="next" class="tab-focus-1" v-model="amount1a" maxlength="1" name="tab-focus-1" ref="default"></number>
-            <!-- <validation name="tab-focus-1" :errors="errors"></validation> -->
-        </div>
-        <div class="field-group">
-          <number @change="next" class="tab-focus-2" v-model="amount1b" maxlength="1" name="tab-focus-2" ></number>
-            <!-- <validation name="tab-focus-2" :errors="errors"></validation> -->
+          <number @next="next" class="tab-focus-1" v-model="amount1a" maxlength="1" placeholder="0" name="tab-focus-1" ref="default"></number>
+          <number @next="next" class="tab-focus-2" v-model="amount1b" maxlength="1" placeholder="0" name="tab-focus-2" ></number>
         </div>
         <validation name="input-1" :errors="errors"></validation>
       </div>
@@ -24,18 +20,18 @@
           $
           <input type="text" value="0" class="mock" disabled>
           .
-          <number @change="next" class="tab-focus-3" v-model="amount2a" maxlength="1" name="tab-focus-3"></number>
-            <!-- <validation name="tab-focus-3" :errors="errors"></validation> -->
-        </div>
-
-        <div class="field-group">
-          <number @change="next" class="tab-focus-4" v-model="amount2b" maxlength="1" name="tab-focus-4"></number>
-            <!-- <validation name="tab-focus-4" :errors="errors"></validation> -->
+          <number @next="next" class="tab-focus-3" v-model="amount2a" maxlength="1" placeholder="0" name="tab-focus-3"></number>
+          <number @next="next" class="tab-focus-4" v-model="amount2b" maxlength="1" placeholder="0" name="tab-focus-4"></number>
         </div>
         <validation name="input-2" :errors="errors"></validation>
       </div>
 
       <loading v-if="loading"></loading>
+<!--
+      {{ amount1a }}
+      {{ amount1b }}
+      {{ amount2a }}
+      {{ amount2b }} -->
 
       <!-- {{ errors }} -->
 
@@ -44,9 +40,9 @@
 </template>
 
 <script>
-import _ from 'lodash'
+// import _ from 'lodash'
 import app from '@/app'
-import { sleep, Deferred } from '@/utils'
+import { sleep, parseCurrency } from '@/utils'
 
 export default {
   store: app.$store,
@@ -63,6 +59,26 @@ export default {
       amount2b: ''
     }
   },
+  computed: {
+    microdeposits_array() {
+      const a = this.amount1a.toString()
+      const b = this.amount1b.toString()
+      const c = this.amount2a.toString()
+      const d = this.amount2b.toString()
+
+      return [a + b, c + d]
+    },
+    microdeposits() {
+      let output = []
+      this.microdeposits_array.forEach((input, index) => {
+        output[`amount${++index}`] = {
+          value: parseFloat('0.' + input),
+          currency: 'USD'
+        }
+      })
+      return output
+    }
+  },
   methods: {
     close() {
       this.$emit('close')
@@ -77,7 +93,6 @@ export default {
       if ($next_input) {
         $next_input.focus()
       } else {
-        console.log(this.$el.querySelector('.link.confirm'));
         this.$el.querySelector('.link.confirm').focus()
       }
     },
@@ -86,7 +101,13 @@ export default {
       return new Promise((resolve, reject) => {
         this.validateInputs()
         .then(() => {
-          resolve()
+          this.confirmMicrodeposits()
+          .then((res) => {
+            resolve()
+          })
+          .catch((err) => {
+            reject(err)
+          })
         })
         .catch((err) => {
           reject(err)
@@ -95,12 +116,7 @@ export default {
     },
     validateInputs() {
       return new Promise((resolve, reject) => {
-        const one = this.amount1a.toString()
-        const two = this.amount1b.toString()
-        const thr = this.amount2a.toString()
-        const fou = this.amount2b.toString()
-
-        const inputs = [one + two, thr + fou]
+        const inputs = this.microdeposits_array
 
         inputs.forEach((input, index) => {
           this.validateInput(input, index)
@@ -113,7 +129,7 @@ export default {
       })
     },
     validateInput(input, _index) {
-      console.log({input});
+      // console.log({input});
       const index = _index + 1
       if (input.length !== 2) {
         this.errors.add(
@@ -131,10 +147,8 @@ export default {
       }
     },
     async confirmMicrodeposits() {
-      const amount = this.transfer_amount
-      return this.model.save({
-        amount
-      }, {
+      const body = this.microdeposits
+      await this.model.save(body, {
         path: 'microdeposits'
       })
       .then((response) => {
@@ -143,7 +157,6 @@ export default {
           null,
           'Verified'
         )
-        this.confirm(response)
       })
       .catch((error) => {
         console.warn(error);
@@ -202,6 +215,9 @@ $input-text-align: center;
 </style>
 
 <style scoped lang="scss">
+legend {
+  text-align: center;
+}
 .message {
   font-size: 0.85em;
   line-height: 1.25em;

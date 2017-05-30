@@ -69,10 +69,10 @@ export default {
       return (this.alert.actions.cancel !== undefined) || this.close
     },
     confirm_label() {
-      return this.alert.button_labels[0]
+      return this.alert.button_labels[0] || 'Ok'
     },
     cancel_label() {
-      return this.alert.button_labels[1]
+      return this.alert.button_labels[1] || 'Cancel'
     },
     alert() {
       return app.$store.getters['app:alert']
@@ -156,7 +156,7 @@ export default {
       padding: 10px;
       overflow: hidden;
       text-align: right;
-      
+
       button {
         padding: 0.8em 1em;
       }

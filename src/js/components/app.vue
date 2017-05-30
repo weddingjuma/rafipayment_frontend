@@ -1,5 +1,8 @@
 <template>
   <div class="app">
+    <div v-if="platform == 'web'">
+      WEB PUT FIXED HEADER HERE
+    </div>
     <div v-if="actions_required.length">
       <activate :actions="actions_required"></activate>
     </div>
@@ -50,6 +53,13 @@ export default {
     },
     backRoute() {
       return _.get(this.$route, 'meta.back')
+    },
+    platform() {
+      let output = 'web'
+      if (process.env.NODE_ENV === 'cordova') {
+        output = _.get(cordova, 'platformId') // eslint-disable-line no-undef
+      }
+      return output
     },
     ...mapGetters({
       loading: 'app:loading',

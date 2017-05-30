@@ -5,6 +5,7 @@
         <div class="field-group">
           <legend>Basic Modals</legend>
           <button @click="showModalConfirm">Show Confirm</button>
+          <button @click="showModalConfirm(['Yes', 'No'])">Show Confirm (custom buttons)</button>
           <button @click="showModalAlert">Show Alert</button>
         </div>
         <div>Accepted: {{ accepted_modal }}</div>
@@ -20,7 +21,7 @@
       </div>
     </div>
     <alert v-if="alert_visible"></alert>
-    <modal v-if="custom_modal_visible" :close="closeCustom" :confirm="confirmCustom">
+    <modal v-if="custom_modal_visible" @close="closeCustom" :confirm="confirmCustom">
       <h1 slot="header">Test custom header</h1>
       <div slot="body" class="text-left">
         <div class="field-group">
@@ -58,8 +59,12 @@ export default {
     })
   },
   methods: {
-    showModalConfirm() {
-      app.confirm('This is a test confirm', this.confirm, 'Test Confirm Title', ['Yes', 'No'])
+    showModalConfirm(buttons) {
+      app.confirm(
+        'This is a test confirm',
+        this.confirm,
+        'Test Confirm Title',
+        buttons)
     },
     confirm() {
       this.accepted_modal = true

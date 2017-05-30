@@ -67,6 +67,40 @@
         </div>
       </div>
     </div>
+
+    <div class="grid">
+      <div class="field-group grid__col grid__col--1-of-2">
+        <legend>Number</legend>
+        <number></number>
+      </div>
+      <div class="field-group grid__col grid__col--1-of-2">
+        <legend>Number (maxlength 1)</legend>
+        <number maxlength="1"></number>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="field-group grid__col grid__col--1-of-2">
+        <legend>Number (maxlength 3)</legend>
+        <number maxlength="3"></number>
+      </div>
+      <div class="field-group grid__col grid__col--1-of-2">
+        <legend>Number (maxlength 3, wrap)</legend>
+        <number maxlength="3" :wrap="true"></number>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="field-group grid__col grid__col--1-of-2">
+        <legend>Number (tab focus)</legend>
+        <number @next="next" v-model="amount1" maxlength="1" placeholder="0" name="tab-focus-1" :wrap="true" class="tiny"></number>
+        <number @next="next" v-model="amount2" maxlength="1" placeholder="0" name="tab-focus-2" :wrap="true" class="tiny"></number>
+        <number @next="next" v-model="amount3" maxlength="1" placeholder="0" name="tab-focus-3" :wrap="true" class="tiny"></number>
+        <number @next="next" v-model="amount4" maxlength="1" placeholder="0" name="tab-focus-4" :wrap="true" class="tiny"></number>
+        <pre>{{ { amount1 } }}, {{ { amount2 } }}, {{ { amount3 } }}, {{ { amount4 } }}</pre>
+      </div>
+    </div>
+
     <div class="grid">
       <div class="field-group grid__col grid__col--1-of-2">
         <legend>
@@ -79,7 +113,7 @@
           Password with Validation
         </legend>
         <div class="field-group">
-          <password value="test" v-validate.disable="'required|min:8|password'" v-model="password" name="password"></password>
+          <password value="test" v-validate="'required|min:8|password'" v-model="password" name="password"></password>
           <validation name="password" :errors="errors"></validation>
         </div>
       </div>
@@ -164,6 +198,8 @@
 </template>
 
 <script>
+import { sleep } from '@/utils'
+
 export default {
   name: 'ui-inputs',
   data() {
@@ -175,7 +211,11 @@ export default {
       }, {
         value: 'test2',
         label: 'Test 2'
-      }]
+      }],
+      amount1: '',
+      amount2: '',
+      amount3: '',
+      amount4: ''
     }
   },
   watch: {
@@ -199,7 +239,35 @@ export default {
       this.$validator.validateAll()
       .then(alert('validated!'))
       .catch(() => {})
+    },
+    async next(e, component) {
+      const name = component.$el.querySelector('input').getAttribute('name')
+      const index = parseInt(name.split('tab-focus-')[1])
+      const next_index = index + 1
+      const $next_input = this.$el.querySelector(`input[name="tab-focus-${next_index}"]`)
+      await sleep(90)
+      if ($next_input) {
+        $next_input.focus()
+      } else {
+        // this.$el.querySelector('.confirm').focus()
+      }
     }
   }
 }
 </script>
+
+<style lang="scss">
+.tiny {
+  width: 2em;
+
+  input {
+    text-align: center;
+  }
+}
+</style>
+<style scoped lang="scss">
+pre {
+  // display: inline-block;
+  text-align: left;
+}
+</style>

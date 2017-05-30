@@ -3,7 +3,7 @@ import VueModel from '@/plugins/model'
 import _ from 'lodash'
 import { mapGetters } from 'vuex'
 
-import { Request } from '@/utils'
+import { Request, Deferred } from '@/utils'
 import store from '@/store'
 
 import UserModel from '@/models/user'
@@ -52,7 +52,27 @@ const session = new Vue({
       }
       let _options = _.merge(defaults, options)
       _options.headers = headers
-      return new Request(url, _options)
+
+      const request = new Request(url, _options)
+      const deferred = new Deferred()
+
+      request.then((response) => {
+        if (response.error === 'token_expired') {
+          this.loadSession()
+          .then(() => {
+            this.request(url, options)
+            .then((response) => {
+              deferred.resolve(response)
+            })
+          })
+        } else {
+          deferred.resolve(response)
+        }
+      })
+      .catch((error) => {
+        deferred.reject(error)
+      })
+      return deferred.promise
     },
     loadActivation(token) {
       const body = { token }

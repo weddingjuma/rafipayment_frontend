@@ -45,7 +45,9 @@ export default class FundingSource extends Model {
       bankName: String,
       channels: Array,
       created: String,
-      removed: Boolean
+      removed: Boolean,
+      'amount1': Object,
+      'amount2': Object
     }
   }
   constructor(attributes, options) {

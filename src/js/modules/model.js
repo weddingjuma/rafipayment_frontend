@@ -7,6 +7,7 @@ import session from '@/session'
 
 const getDiff = (oldData, newData) => {
   const keys = getChangedKeys(oldData, newData)
+  console.log({keys});
   let output = {}
   for (let index in keys) {
     const key = keys[index]
@@ -84,15 +85,19 @@ export default class Model {
           })
         },
         save(_body, options) {
+          console.log('save');
           const _options = {
             path: ''
           }
           _.merge(_options, options)
           const changed = getDiff(this.$data, _body)
+          console.log(this.$data, _body);
+          console.log(changed);
           if (_.isEmpty(changed)) return Promise.resolve()
           const body = utils.decodeWithSchema(changed, schema)
           const method = this.isNew ? 'POST' : 'PUT'
-          return session.request(this.url + _options.path, {
+          const path = _options.path ? '/' + _options.path : ''
+          return session.request(this.url + path, {
             method,
             body
           })

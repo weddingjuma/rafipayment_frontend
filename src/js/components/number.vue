@@ -4,26 +4,28 @@
       v-if="is_mobile"
       v-model="input_value"
       :name="name"
-      type="number"
-      ref="input"
+      :class="[this.name]"
+      :placeholder="placeholder"
       @blur="field_blurred"
       @focus="field_focused"
       @input="field_input"
       @change="field_changed"
-      :placeholder="placeholder"
+      type="number"
+      ref="input"
       autocomplete="off"
       autocapitalize="off">
     <input
       v-else
       v-model="input_value"
       :name="name"
-      type="text"
-      ref="input"
+      :class="[this.name]"
+      :placeholder="placeholder"
       @blur="field_blurred"
       @focus="field_focused"
       @input="field_input"
       @change="field_changed"
-      :placeholder="placeholder"
+      type="text"
+      ref="input"
       autocomplete="off"
       autocapitalize="off">
   </div>
@@ -43,7 +45,8 @@ export default {
     },
     maxlength: [ String, Number ],
     value: [ String, Number ],
-    placeholder: [ String, Number ]
+    placeholder: [ String, Number ],
+    wrap: Boolean
   },
   data() {
     return {
@@ -66,23 +69,39 @@ export default {
     value(value) {
       this.input_value = value
     },
-    async input_value(val) {
-      this.input_value = val.toString().slice(-1 * this.max_length).replace(/[^0-9.]/g, '')
-      if (this.input_value !== '') {
-        this.field_input()
-      }
+    input_value(val) {
+      this.input_value = this.process_input(val)
+      this.field_input()
     }
   },
   methods: {
     focus() {
       this.$refs.input.focus()
     },
+    process_input(input) {
+      const filtered = input
+        .toString()
+        .replace(/[^0-9]/g, '')
+      return this.limit(filtered)
+    },
+    limit(input) {
+      let output = input
+      if (this.maxlength) {
+        const exp = this.wrap ? [-1 * this.max_length] : [0, this.max_length]
+        output = input.slice(...exp)
+      }
+      return output
+    },
     field_input(e) {
       if (!e) return
+      this.input_value = this.process_input(this.input_value)
       if (this.input_value !== '') {
-        this.$emit('change', e, this)
-        this.$emit('input', this.input_value)
+        this.input_value = this.process_input(this.input_value)
+        this.$emit('next', e, this)
+        if (this.input_value.length !== this.max_length) return
       }
+      this.$emit('change', e, this)
+      this.$emit('input', this.input_value)
     },
     field_blurred() {
       this.is_focused = false
@@ -91,7 +110,6 @@ export default {
     },
     field_changed(e) {
       if (!e) return
-      // this.$emit('change', e, this)
     },
     async field_focused(e) {
       await utils.sleep(90)
@@ -103,7 +121,7 @@ export default {
 
 <!--/////////////////////////////////////////////////////////////////////////-->
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '~%/colors';
 
 .number-container {
@@ -114,8 +132,13 @@ export default {
     display: inline-block;
     text-align: right;
     text-overflow: ellipsis;
+    padding: 6px;
   }
 }
+</style>
+
+<style scoped lang="scss">
+@import '~%/colors';
 
 .touched {
   &.invalid {

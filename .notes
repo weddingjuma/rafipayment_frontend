@@ -17,6 +17,30 @@ DOCKER
 
 
 
+NOTIF DESIGNER IDEAS
+
+- switch back end to node, mainly for single install convenience
+- convert to jinja2 templates?
+- sick editor to allow for CRUD in browser or not
+- release to npm and profit
+
+
+Things to document
+
+BE
+- when do users get notifications
+- when are bills generated? charged? for different types of bills?
+
+FE
+- Modals
+- Transitions
+- General UI notes
+- Environment mgmt
+- All custom plugins / components / filters / validations
+- Write fucking tests jesus christ
+
+
+
 
 BACK END
 
@@ -28,6 +52,10 @@ BACK END
 
 
 FRONT END
+
+- use overflow: hidden to prevent scrolling when modals are open, loading
+
+put qr code in invite email, open native app for first time and scan
 
 - deal with token expired
 
