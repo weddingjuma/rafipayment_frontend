@@ -51,8 +51,8 @@ export default class FundingSource extends Model {
       channels: Array,
       created: String,
       removed: Boolean,
-      'amount1': Object,
-      'amount2': Object
+      amount1: Object,
+      amount2: Object
     }
   }
   constructor(attributes, options) {

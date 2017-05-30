@@ -3,7 +3,7 @@ import moment from 'moment'
 import Model from '@/modules/model'
 import session from '@/session'
 
-import { ISODate } from '@/modules/types'
+import { ISODate, Currency } from '@/modules/types'
 
 const defaults = {
   name: 'bill',
@@ -155,10 +155,10 @@ export default class Bill extends Model {
       company: String,
       due_date: ISODate,
       type: String,
-      amount: Number,
-      total: Number,
-      balance: Number,
-      // display_balance: Number,
+      amount: Currency,
+      total: Currency,
+      balance: Currency,
+      // display_balance: Currency,
       charges: Object,
       identifier: String,
       lease: Object,

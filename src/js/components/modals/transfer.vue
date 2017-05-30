@@ -6,7 +6,7 @@
       <loading v-if="loading"></loading>
       <div class="field-group">
         <legend>Amount</legend>
-        <currency v-model="transfer_amount" ref="default" v-validate="'required|min_currency:0.01|max_currency:5000'"></currency>
+        <currency v-model="transfer_amount" ref="default" v-validate="'required|min_currency:0.01|max_currency:10000'"></currency>
         <validation name="amount" :errors="errors"></validation>
       </div>
       <div class="message">
@@ -75,7 +75,14 @@ export default {
         amount
       })
       .then((response) => {
-        this.confirm(response)
+        const callback = () => {
+          return this.confirm(response)
+        }
+        app.alert(
+          'Thank you, your payment is processing',
+          callback,
+          'Payment Successful'
+        )
       })
       .catch((error) => {
         // NOTE: gotta find what the correct error is

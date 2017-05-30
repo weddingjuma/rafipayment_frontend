@@ -85,16 +85,17 @@ export default class Model {
           })
         },
         save(_body, options) {
-          console.log('save');
+          // console.log('save');
           const _options = {
             path: ''
           }
           _.merge(_options, options)
           const changed = getDiff(this.$data, _body)
-          console.log(this.$data, _body);
-          console.log(changed);
-          if (_.isEmpty(changed)) return Promise.resolve()
+          // console.log(this.$data, _body);
+          // console.log(changed);
+          if (_.isEmpty(changed)) return Promise.resolve() // maybe return changed: false
           const body = utils.decodeWithSchema(changed, schema)
+          console.log({body});
           const method = this.isNew ? 'POST' : 'PUT'
           const path = _options.path ? '/' + _options.path : ''
           return session.request(this.url + path, {

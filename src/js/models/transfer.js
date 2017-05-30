@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import moment from 'moment'
 import Model from '@/modules/model'
-import { ISODate } from '@/modules/types'
+import { ISODate, Currency } from '@/modules/types'
 
 const defaults = {
   name: 'transfer',
@@ -30,7 +30,7 @@ export default class Transfer extends Model {
       created: ISODate,
       updated: ISODate,
       status: Object,
-      amount: Number,
+      amount: Currency,
       bill: String,
       bill_original: String,
       error_data: Object,

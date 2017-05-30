@@ -84,8 +84,8 @@ export default {
       this.$emit('close')
     },
     async next(e, component) {
-      const className = component.$el.className
-      const index = parseInt(className.split('tab-focus-')[1])
+      const name = component.$el.querySelector('input').getAttribute('name')
+      const index = parseInt(name.split('tab-focus-')[1])
       const next_index = index + 1
       const $next_input = this.$el.querySelector(`input[name="tab-focus-${next_index}"]`)
 
