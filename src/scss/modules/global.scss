@@ -13,6 +13,10 @@ body {
   color: $color-text-default;
   background-color: $color-background-default;
   touch-events: none;
+
+  &.loading {
+    overflow: hidden;
+  }
 }
 
 ::selection {

@@ -41,7 +41,7 @@ export default {
     }
   },
   async mounted() {
-    await sleep(400)
+    await sleep(300)
     this.visible = true
   },
   methods: {
@@ -55,6 +55,18 @@ export default {
     loadApp() {
       require(['../app'])
     }
+  },
+  watch: {
+    visible(val) {
+      if (val) {
+        document.body.classList.add('loading')
+      } else {
+        document.body.classList.remove('loading')
+      }
+    }
+  },
+  beforeDestroy() {
+    document.body.classList.remove('loading')
   }
 }
 </script>
