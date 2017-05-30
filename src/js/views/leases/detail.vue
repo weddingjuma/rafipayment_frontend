@@ -1,6 +1,6 @@
 <template>
   <div class="panel small">
-    <div class="box lease-detail">
+    <div class="box lease-detail" v-if="loaded">
       <header class="text-left">
         <h3>{{ $lease.address }}</h3>
         <div class="term">{{ $lease.term }}</div>
@@ -76,9 +76,8 @@
         :confirm="confirmSplitChange"
         @close="closeModal">
       </split-modal>
-
-      <loading v-if="loading"></loading>
     </div>
+    <loading v-if="loading"></loading>
   </div>
 
 </template>
@@ -87,7 +86,6 @@
 
 <script>
 import _ from 'lodash'
-// import app from '@/app'
 import { sleep } from '@/utils'
 import session from '@/session'
 import LeaseModel from '@/models/lease'
@@ -107,6 +105,7 @@ export default {
   },
   data() {
     return {
+      loaded: false,
       loading: false,
       modal_visible: false,
       autopay_loading: false,
@@ -115,6 +114,10 @@ export default {
   },
   created() {
     this.fetch()
+      .then(() => {
+        this.loading = false
+        this.loaded = true
+      })
   },
   computed: {
     tenants_with_split_and_autopay() {
@@ -150,12 +153,9 @@ export default {
   methods: {
     fetch() {
       this.loading = true
-      this.$lease.fetch()
+      return this.$lease.fetch()
         .then(() => {})
         .catch(() => {})
-        .then(() => {
-          this.loading = false
-        })
     },
     showModal() {
       this.modal_visible = true

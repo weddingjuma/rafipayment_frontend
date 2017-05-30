@@ -10,6 +10,9 @@ export const handleRoute = (isPrivate, next, nextArgs) => {
 }
 
 export const privateRoute = (to, from, next) => {
+  if (process.env.NODE_ENV === 'cordova') {
+    StatusBar.show() // eslint-disable-line no-undef
+  }
   handleRoute(true, next, {
     path: '/',
     query: { redirect: to.fullPath }
@@ -17,6 +20,9 @@ export const privateRoute = (to, from, next) => {
 }
 
 export const publicRoute = (to, from, next) => {
+  if (process.env.NODE_ENV === 'cordova') {
+    StatusBar.hide() // eslint-disable-line no-undef
+  }
   handleRoute(false, next, {
     path: '/dashboard'
   })

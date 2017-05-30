@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import moment from 'moment'
+import session from '@/session'
 import Model from '@/modules/model'
 import { ISODate, Currency } from '@/modules/types'
 
@@ -18,6 +19,13 @@ const defaults = {
     },
     address() {
       return `${_.get(this.property, 'address')}, ${this.unit_label}`
+    }
+  },
+  methods: {
+    cancel() {
+      return session.request(`dwolla/transfer/${this.id}/cancel`, {
+        method: 'POST'
+      })
     }
   }
 }

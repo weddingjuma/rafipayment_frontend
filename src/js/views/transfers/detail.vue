@@ -1,7 +1,7 @@
 <template>
   <div class="panel small">
     <loading v-if="loading"></loading>
-    <div class="box bill-detail">
+    <div class="box bill-detail" v-if="loaded">
       <header class="flex">
         <div class="flex-equal text-left">{{ $transfer.amount | currency }}</div>
         <div class="flex-equal text-right"><span :class="['text-color', stateClass]">{{ $transfer.status.state }}</span></div>
@@ -24,12 +24,21 @@
         ✖ {{ error }}
       </div>
 
+      <footer
+        class="button button-full danger"
+        v-if="$transfer.is_cancelable"
+        @click="promptCancel">
+        Cancel Transfer
+      </footer>
+
     </div>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
+import { sleep, prettyCurrency } from '@/utils'
+import app from '@/app'
 import TransferModel from '@/models/transfer'
 
 export default {
@@ -44,12 +53,14 @@ export default {
   },
   data() {
     return {
+      loaded: false,
       loading: true
     }
   },
   async created() {
     await this.$transfer.fetch()
     this.loading = false
+    this.loaded = true
   },
   computed: {
     error() {
@@ -83,12 +94,25 @@ export default {
     }
   },
   methods: {
-    // goToBill() {
-    //   const path = this.$transfer.bill
-    //   this.$router.push(`/bills/${path}`)
-    // },
+    promptCancel() {
+      app.confirm(
+        `Are you sure you want to cancel your payment for ${prettyCurrency(this.$transfer.amount)}?`,
+        this.cancelTransfer,
+        'Cancel Payment'
+      )
+    },
     cancelTransfer() {
-      console.log('cancel');
+      const promise = this.$transfer.cancel()
+
+      promise.then(async () => {
+        await sleep(100)
+        app.alert(
+          `Your payment has been canceled`,
+          this.$router.goBack,
+          'Canceled Payment'
+        )
+      })
+      return promise
     }
   }
 }
@@ -115,5 +139,11 @@ dl {
     width: 65%;
     margin-bottom: 5px;
   }
+}
+.button-full {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 </style>

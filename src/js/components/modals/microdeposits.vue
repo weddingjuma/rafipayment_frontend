@@ -27,13 +27,6 @@
       </div>
 
       <loading v-if="loading"></loading>
-<!--
-      {{ amount1a }}
-      {{ amount1b }}
-      {{ amount2a }}
-      {{ amount2b }} -->
-
-      <!-- {{ errors }} -->
 
     </div>
   </modal>
@@ -42,7 +35,7 @@
 <script>
 // import _ from 'lodash'
 import app from '@/app'
-import { sleep, parseCurrency } from '@/utils'
+import { sleep } from '@/utils'
 
 export default {
   store: app.$store,
@@ -129,7 +122,6 @@ export default {
       })
     },
     validateInput(input, _index) {
-      // console.log({input});
       const index = _index + 1
       if (input.length !== 2) {
         this.errors.add(

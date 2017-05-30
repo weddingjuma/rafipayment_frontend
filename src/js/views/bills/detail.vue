@@ -1,6 +1,6 @@
 <template>
   <div class="panel small">
-    <div class="box bill-detail">
+    <div class="box bill-detail" v-if="loaded">
       <header class="flex">
         <div class="flex-equal" style="text-transform:uppercase">Due Date: {{ $bill.due_date | moment('MM/DD/YYYY') }}</div>
         <!-- <div class="flex-equal text-right">Bill #{{ $bill.identifier }}</div> -->
@@ -52,6 +52,7 @@
     </div>
 
     <transfer-modal v-if="modal_visible" @close="closeModal" :confirm="updateBill" :model="$bill"></transfer-modal>
+    <loading v-if="loading"></loading>
 
   </div>
 
@@ -89,10 +90,16 @@ export default {
       const path = `/dashboard/${page}`
       this.$route.meta.back = path
     })
+    .catch(() => {})
+    .then(() => {
+      this.loading = false
+      this.loaded = true
+    })
   },
   data() {
     return {
-      loading: false,
+      loaded: false,
+      loading: true,
       modal_visible: false
     }
   },

@@ -48,34 +48,42 @@ BACK END
 - back end made /bills and /account/bills both resolve lease
 - /activate/contact doesn't show terms accepted
 
+- microdeposits
+  - when dwolla responds with a 200, update cache to verified?
+  - need some solution to pending verification
+- IAV is still always setting primary
 
-
+- transfers
+  - BE should respond with dwolla response so we can show errors right away
 
 FRONT END
 
+- bug - edit split, then cancel, split is blank!
+- cancel transfer endpoint is inconsistent
+  - dwolla/transfer/:id/cancel
+  - transfers/:id
+
+- number component
+  - maybe tabfocus=int should be a prop
 - use overflow: hidden to prevent scrolling when modals are open, loading
 
 put qr code in invite email, open native app for first time and scan
 
-- deal with token expired
+X- deal with token expired
 
-- ask dwolla about passing insecure stylesheets in sandbox
+X- ask dwolla about passing insecure stylesheets in sandbox
 
 - add modals to the confirm disbale or enable autopay feature
-- shouldnt be able to scroll while loading is a thing
+X- shouldnt be able to scroll while loading is a thing
 - forgot / reset buttons should be button.link
 X- activation flow split confirm is broken
-- funding source cards need love
-  - always sho buttons? shome disabled? icons?
-- put preloaders on everyting that loads to fast
+X- funding source cards need love
+  X- always sho buttons? shome disabled? icons?
 
-- i think i can remove cordova plugins and have user use phonegap prepare to install all of them
-
-- bug - edit split, then cancel, split is blank!
-
+X- remove cordova plugins and have user use phonegap prepare to install all of them
 
 - model.save - if no change, resolve but pass false? or use model.changed?
-- set up microdeposits
+X- set up microdeposits
 
 
 - in the future, care less about verifying email, show that changing email is a danger zone, just overwrite email address immediately to simplify

@@ -28,7 +28,6 @@ const app = {
         localStorage.setItem('registrationId', data.registrationId)
       }
       localStorage.setItem('platformId', cordova.platformId) // eslint-disable-line no-undef
-      alert(data.registrationId)
     })
 
     push.on('error', function(e) {
