@@ -1,0 +1,19 @@
+# mac stuff
+.DS_Store
+
+# Node packages
+node_modules/
+
+# debug logs
+npm-debug.log
+yarn-error.log
+/test/unit/coverage
+/test/e2e/reports
+selenium-debug.log
+
+# cordova files
+# /dist/
+/www/
+/platforms/
+/plugins/
+/res/
