@@ -114,7 +114,7 @@ export default {
     },
     payments_header() {
       let output = 'payments made'
-      if (!this.$bill.transfers.length) output = `no payments made`
+      if (!this.$bill.transfers.length) output = `no ${output}`
       return output
     },
     primary_funding_source() {
