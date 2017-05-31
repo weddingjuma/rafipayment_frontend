@@ -48,7 +48,7 @@ const defaults = {
       })
     },
     splits() {
-      let split = this.split || {}
+      let split = _.merge({}, this.split || {})
       if (this.split_amount !== false) {
         split[session.$user.id] = this.split_amount
       }
@@ -101,7 +101,6 @@ const defaults = {
     },
     validateSplit(input) {
       this.split_amount = parseCurrency(input, Number)
-      console.log(this.split_amount, typeof this.split_amount)
       // if input exceeds rent remaining, use max possible amount
       let output
       if (this.rent_remaining < 0) {

@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       loading: false,
-      split_amount: _.get(this.model.split, session.$user.id),
+      split_amount: parseFloat(_.get(this.model.split, session.$user.id)),
       validated: undefined
     }
   },
@@ -67,10 +67,10 @@ export default {
         promise = Promise.reject()
       } else if (this.validated === undefined) {
         promise = this.validateInput()
-        promise.then(() => {
-          this.save()
-        })
-        .catch(() => {})
+        // promise.then(() => {
+        //   this.save()
+        // })
+        // .catch(() => {})
       } else {
         promise = Promise.resolve()
       }
