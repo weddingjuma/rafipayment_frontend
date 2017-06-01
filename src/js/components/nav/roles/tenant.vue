@@ -5,6 +5,7 @@
     <!-- <router-link to="/tenants">Tenants</router-link> -->
     <router-link to="/account">Account</router-link>
     <!-- <a href="#" @click.prevent="logout">Logout</a></a> -->
+    <a href="#" @click.prevent="debug">Debug</a></a>
   </div>
 </template>
 
@@ -15,6 +16,9 @@ export default {
   methods: {
     logout() {
       session.logout()
+    },
+    debug() {
+      window.debug.toggle()
     }
   }
 }

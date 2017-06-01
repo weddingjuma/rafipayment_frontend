@@ -11,7 +11,11 @@ export const handleRoute = (isPrivate, next, nextArgs) => {
 
 export const privateRoute = (to, from, next) => {
   if (process.env.NODE_ENV === 'cordova') {
-    StatusBar.show() // eslint-disable-line no-undef
+    try {
+      StatusBar.show() // eslint-disable-line no-undef
+    } catch(e) {
+      console.warn(e)
+    }
   }
   handleRoute(true, next, {
     path: '/',
@@ -21,7 +25,11 @@ export const privateRoute = (to, from, next) => {
 
 export const publicRoute = (to, from, next) => {
   if (process.env.NODE_ENV === 'cordova') {
-    StatusBar.hide() // eslint-disable-line no-undef
+    try {
+      StatusBar.hide() // eslint-disable-line no-undef
+    } catch(e) {
+      console.warn(e)
+    }
   }
   handleRoute(false, next, {
     path: '/dashboard'

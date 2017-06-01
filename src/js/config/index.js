@@ -2,6 +2,8 @@ import _ from 'lodash'
 
 const defaults = {
   debug: true,
+  sentry: false,
+  sentry_url: null,
   dwolla_env: 'sandbox',
   google_places_key: '',
   urls: {
@@ -15,4 +17,4 @@ const env_config = require(`@/config/env/${env}`).config
 
 const config = _.merge(defaults, env_config)
 
-export { config }
+export default config

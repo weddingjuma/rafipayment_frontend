@@ -1,7 +1,7 @@
 import 'whatwg-fetch'
 import _ from 'lodash'
 import moment from 'moment'
-import { config } from '@/config'
+import config from '@/config'
 
 // import lengthy util functions
 

@@ -24,6 +24,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "pubsub-js": "^1.5.6",
+    "raven-js": "^3.15.0",
     "v-mask": "^1.0.4",
     "vee-validate": "^2.0.0-rc.3",
     "vue": "^2.2.6",

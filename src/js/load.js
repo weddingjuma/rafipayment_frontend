@@ -13,7 +13,11 @@ import Loader from './components/load';
 // global styles
 import '../scss/styles.scss';
 
-import { config } from './config'
+import config from './config'
+
+if (config.sentry) {
+  require(['./modules/sentry'])
+}
 
 if (config.debug) {
   require(['./debug'])

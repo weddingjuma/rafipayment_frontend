@@ -44,11 +44,13 @@ const session = new Vue({
       const Authorization = this.$store.getters['session:auth_token']
       const Refresh = localStorage.getItem('refresh_token')
       const Activation = localStorage.getItem('activation_token')
+      const Origin = 'http://test.rafiproperties.com'
 
       const headers = {
         Authorization,
         Activation,
-        Refresh
+        Refresh,
+        Origin
       }
       let _options = _.merge(defaults, options)
       _options.headers = headers

@@ -26,6 +26,10 @@
           <a href="#" @click.prevent="create_global('app')">window.app</a>
           <a href="#" @click.prevent="create_global('session')">window.session</a>
         </div>
+        <div class="field-group">
+          <h3>Errors</h3>
+          <a href="#" @click.prevent="err">throw TypeError</a>
+        </div>
       </div>
     </transition>
   </div>
@@ -37,7 +41,7 @@
 import app from '@/app'
 import session from '@/session'
 import router from '@/router'
-import { config } from '@/config'
+import config from '@/config'
 
 export default {
   name: 'debug',
@@ -91,6 +95,9 @@ export default {
         default:
           console.log('not found')
       }
+    },
+    err() {
+      throw new Error('test')
     }
   }
 }

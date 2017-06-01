@@ -41,7 +41,6 @@ FE
 
 
 
-
 BACK END
 
 - back end make IAV tokens endpoints consistent
@@ -56,9 +55,14 @@ BACK END
 - transfers
   - BE should respond with dwolla response so we can show errors right away
 
+- person pays, roommate doesn't, overdude bill email should be "not fully paid"
+
 FRONT END
 
-- bug - edit split, then cancel, split is blank!
+X- bug - edit split, then cancel, split is blank!
+
+
+
 - cancel transfer endpoint is inconsistent
   - dwolla/transfer/:id/cancel
   - transfers/:id
