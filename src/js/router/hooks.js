@@ -1,5 +1,15 @@
 import session from './../session'
 
+const env = process.env.NODE_ENV
+
+const toggleStatusBar = (val) => {
+  try {
+    if (env === 'cordova') {
+      val ? StatusBar.show() : StatusBar.hide() // eslint-disable-line no-undef
+    }
+  } catch(e) {}
+}
+
 const closeNav = () => {
   if (session.$store.getters.nav_visible) session.$store.dispatch('nav_hide')
 }
@@ -10,13 +20,7 @@ export const handleRoute = (isPrivate, next, nextArgs) => {
 }
 
 export const privateRoute = (to, from, next) => {
-  if (process.env.NODE_ENV === 'cordova') {
-    try {
-      StatusBar.show() // eslint-disable-line no-undef
-    } catch(e) {
-      console.warn(e)
-    }
-  }
+  toggleStatusBar(true)
   handleRoute(true, next, {
     path: '/',
     query: { redirect: to.fullPath }
@@ -24,13 +28,7 @@ export const privateRoute = (to, from, next) => {
 }
 
 export const publicRoute = (to, from, next) => {
-  if (process.env.NODE_ENV === 'cordova') {
-    try {
-      StatusBar.hide() // eslint-disable-line no-undef
-    } catch(e) {
-      console.warn(e)
-    }
-  }
+  toggleStatusBar(false)
   handleRoute(false, next, {
     path: '/dashboard'
   })

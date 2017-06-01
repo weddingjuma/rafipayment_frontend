@@ -1,6 +1,5 @@
 <template>
   <div class="app">
-    <!-- <div v-if="platform !== 'web'" class="fixed_header"></div> -->
     <div v-if="actions_required.length">
       <activate :actions="actions_required"></activate>
     </div>
@@ -18,15 +17,17 @@
         <div class="page-title">{{ title }}</div>
         <navigation></navigation>
       </header>
-      <loading v-if="loading"></loading>
-      <alert v-if="alert_visible"></alert>
-      <v-touch tag="main" :options="{ touchAction: 'auto' }" @panright="onSwipeRight" @panleft="onSwipeLeft">
-      <!-- <main> -->
+      <v-touch
+      tag="main"
+      :options="{ touchAction: 'auto' }"
+      @panright="onSwipeRight"
+      @panleft="onSwipeLeft">
         <transition name="route-fade" mode="out-in">
           <router-view></router-view>
         </transition>
-      <!-- </main> -->
       </v-touch>
+      <loading v-if="loading"></loading>
+      <alert v-if="alert_visible"></alert>
     </div>
 
   </div>
@@ -52,13 +53,6 @@ export default {
     backRoute() {
       return _.get(this.$route, 'meta.back')
     },
-    // platform() {
-    //   let output = 'web'
-    //   if (process.env.NODE_ENV === 'cordova') {
-    //     output = _.get(cordova, 'platformId') // eslint-disable-line no-undef
-    //   }
-    //   return output
-    // },
     ...mapGetters({
       loading: 'app:loading',
       alert_visible: 'app:alert_visible',
@@ -80,9 +74,12 @@ export default {
       }
     },
     onSwipeLeft(e) {
+      console.log('swipeleft');
       if (!config.debug) return
       const start = getPanStartPosition(e);
+      console.log({start});
       if ((window.innerWidth - start.x) < 50) {
+        console.log('matched if');
         window.debug.toggle()
       }
     },

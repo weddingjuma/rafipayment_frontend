@@ -1,11 +1,15 @@
+import session from '@/session'
+
 const app = {
   init() {
+    session.deviceready = false
     this.bindEvents()
   },
   bindEvents() {
     document.addEventListener('deviceready', this.onDeviceReady.bind(this), false)
   },
   onDeviceReady() {
+    session.deviceready = true
     this.setupPush()
   },
   setupPush() {

@@ -89,7 +89,7 @@ const install = (Vue, opts = {}) => {
 install(Vue)
 
 export default new Vue({
-  el: '.loader-container',
+  el: '.app',
   router,
   store,
   template: '<App/>',

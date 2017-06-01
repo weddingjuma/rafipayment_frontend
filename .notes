@@ -59,7 +59,17 @@ BACK END
 
 FRONT END
 
+X- move app loading logic to load.js, not load.vue
 X- bug - edit split, then cancel, split is blank!
+
+Z- store password in keychain
+
+- load component is broken! wtf
+  - appears to be working until app.js is loaded...
+
+
+
+- profile more native looking
 
 
 

@@ -23,7 +23,6 @@
 
 <script>
 import { sleep } from '@/utils'
-import session from '@/session'
 
 export default {
   name: 'loading',
@@ -32,29 +31,9 @@ export default {
       visible: false
     }
   },
-  created() {
-    if (process.env.NODE_ENV === 'ui') {
-      return this.loadApp()
-    }
-    if (!session.loaded) {
-      this.init()
-    }
-  },
   async mounted() {
     await sleep(300)
     this.visible = true
-  },
-  methods: {
-    init() {
-      session.loadSession()
-      .catch(() => {})
-      .then(response => {
-        this.loadApp()
-      })
-    },
-    loadApp() {
-      require(['../app'])
-    }
   },
   watch: {
     visible(val) {
@@ -72,6 +51,14 @@ export default {
 </script>
 
 <!--/////////////////////////////////////////////////////////////////////////-->
+
+<style lang="scss">
+body {
+  &.loading {
+    overflow: hidden;
+  }
+}
+</style>
 
 <style scoped lang="scss">
 .loader-container {

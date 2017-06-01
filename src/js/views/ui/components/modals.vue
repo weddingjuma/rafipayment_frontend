@@ -43,7 +43,7 @@
 import app from '@/app'
 import { mapGetters } from 'vuex'
 
-import test from './modals/test'
+// import test from './modals/test'
 export default {
   name: 'ui-modals',
   data() {
