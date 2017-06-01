@@ -35,7 +35,7 @@
     </platform>
 
     <platform name="ios">
-      <hook type="before_platform_add" src="build/build_cordova.js" />
+      <hook type="before_platform_add" src="build/build-cordova.js" />
       <icon height="29" width="29" src="res/icons/ios/icon-small.png" />
       <icon height="58" width="58" src="res/icons/ios/icon-small-2x.png" />
       <icon height="40" width="40" src="res/icons/ios/icon-40.png" />
