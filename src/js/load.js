@@ -53,7 +53,7 @@ export default new Vue({
   created() {
     if (env === 'ui') {
       this.loadApp()
-    } else if (!session.loaded) {
+    } else {
       this.init()
     }
   },
