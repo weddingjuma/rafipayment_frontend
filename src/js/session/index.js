@@ -159,7 +159,7 @@ const session = new Vue({
       const platformId = localStorage.getItem('platformId')
       if (platformId) _.set(body, 'device.type', platformId)
     },
-    bindSessionUser(user) {
+    bindSessionUser() {
       this.$user = this.$store.getters['session:user']
       this.checkForActionsRequired()
     },
