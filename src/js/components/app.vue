@@ -9,7 +9,7 @@
         <div class="logo-container">
           <transition name="fade">
             <button v-if="backRoute" @click="$router.goBack" class="back-button">
-              <svg viewBox="-140 146 30 40"><polyline points="-116.6,185.6 -136.2,166 -116.6,146.4 "></polyline></svg>
+              <icon-arrow-left />
             </button>
             <logo v-else></logo>
           </transition>
@@ -26,8 +26,8 @@
           <router-view></router-view>
         </transition>
       </v-touch>
-      <loading v-if="loading"></loading>
-      <alert v-if="alert_visible"></alert>
+      <loading v-if="loading" />
+      <alert v-if="alert_visible" />
     </div>
 
   </div>
@@ -140,20 +140,10 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
+    padding: 0;
     box-shadow: none;
     border-radius: 0;
     background: transparent;
-
-    svg {
-      position: absolute;
-      top: 50%;
-      height: 24px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 5px;
-      stroke-miterlimit: 15;
-      transform: translate(-50%, -50%);
-    }
   }
 }
 .page-title {

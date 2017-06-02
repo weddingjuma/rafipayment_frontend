@@ -18,20 +18,22 @@ import { validators } from './modules/validators'
 import { filters } from './modules/filters'
 
 // custom components
-import App from './components/app'
-import Load from './components/load'
-import Logo from './components/logo'
-import Avatar from './components/avatar'
-import Tabs from './components/tabs'
-import Tab from './components/tab'
-import Validation from './components/validation'
-import Alert from './components/alert'
-import Modal from './components/modal'
-import Collapse from './components/collapse'
-import Password from './components/password'
-import Select from './components/select'
-import InputCurrency from './components/currency'
-import InputNumber from './components/number'
+import App from '@/components/app'
+import Load from '@/components/load'
+import Logo from '@/components/logo'
+import Avatar from '@/components/avatar'
+import Tabs from '@/components/tabs'
+import Tab from '@/components/tab'
+import Validation from '@/components/validation'
+import Alert from '@/components/alert'
+import Modal from '@/components/modal'
+import Collapse from '@/components/collapse'
+import Password from '@/components/password'
+import Select from '@/components/select'
+import InputCurrency from '@/components/currency'
+import InputNumber from '@/components/number'
+import IconArrowLeft from '@/components/icons/arrow_left'
+import IconArrowRight from '@/components/icons/arrow_right'
 import IconSuccess from '@/components/icons/success'
 import IconExternal from '@/components/icons/external'
 
@@ -49,6 +51,8 @@ const components = [
   Select,
   InputCurrency,
   InputNumber,
+  IconArrowLeft,
+  IconArrowRight,
   IconSuccess,
   IconExternal
 ]

@@ -55,7 +55,11 @@ export default {
 <style lang="scss">
 body {
   &.loading {
-    overflow: hidden;
+    // overflow: hidden;
+    .app-container {
+      overflow: hidden;
+      height: calc(100vh - 120px);
+    }
   }
 }
 </style>

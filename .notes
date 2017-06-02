@@ -59,13 +59,16 @@ BACK END
 
 FRONT END
 
+- move account payment from a tab to a list item
+- update Xcode
+
 X- move app loading logic to load.js, not load.vue
 X- bug - edit split, then cancel, split is blank!
 
 Z- store password in keychain
 
-- load component is broken! wtf
-  - appears to be working until app.js is loaded...
+X- load component is broken
+X- figure out why load component breaks
 
 
 
@@ -79,7 +82,7 @@ Z- store password in keychain
 
 - number component
   - maybe tabfocus=int should be a prop
-- use overflow: hidden to prevent scrolling when modals are open, loading
+X- use overflow: hidden to prevent scrolling when modals are open, loading
 
 put qr code in invite email, open native app for first time and scan
 

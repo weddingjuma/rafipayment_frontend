@@ -4,7 +4,7 @@
     <router-link to="/leases">Leases</router-link>
     <router-link to="/account">Account</router-link>
     <!-- <a href="#" @click.prevent="logout">Logout</a></a> -->
-    <a href="#" @click.prevent="debug">Debug</a></a>
+    <!-- <a href="#" @click.prevent="debug">Debug</a></a> -->
   </div>
 </template>
 
