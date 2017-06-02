@@ -15,7 +15,7 @@ const session = new Vue({
   store,
   data() {
     return {
-      loaded: false,
+      //loaded: false,
       deviceready: null
     }
   },
@@ -92,7 +92,7 @@ const session = new Vue({
       return request
     },
     loadSession() {
-      this.loaded = true
+      //this.loaded = true
 
       const token = localStorage.getItem('refresh_token')
       const promise = !token ? Promise.reject('No token') : this.request('users/tokens')
