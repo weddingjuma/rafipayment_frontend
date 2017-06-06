@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import app from '@/app'
+// import app from '@/app'
 import UserModel from '@/models/user'
 
 export default {
@@ -29,24 +29,6 @@ export default {
         output = this.model
       }
       return output
-    }
-  },
-  methods: {
-    promptDelete() {
-      app.$store.dispatch('modal_show', {
-        header: 'Confirm Delete',
-        message: `Are you sure you want to delete ${this.$user.full_name}?`,
-        actions: {
-          confirm: this.deleteUser,
-          cancel: this.cancel
-        }
-      })
-    },
-    deleteUser() {
-      this.$store.dispatch('delete', this.data)
-    },
-    cancel() {
-      console.log(this.$user.full_name);
     }
   }
 }

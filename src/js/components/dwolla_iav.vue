@@ -4,7 +4,7 @@
 
 <script>
 import _ from 'lodash'
-import { config } from '@/config'
+import config from '@/config'
 import { load } from '@/utils'
 import session from '@/session'
 
@@ -89,18 +89,22 @@ export default {
       // console.warn('process error', error);
     },
     processDwollaResponse(response) {
+      const id = _.get(response, '_links.funding-source.href').split('funding-sources/')[1]
+      const status = _.get(response, '_links.verify-micro-deposits') ? 'unverified' : 'verified'
       const body = {
-        id: _.get(response, '_links.funding-source.href').split('funding-sources/')[1],
-        status: _.get(response, '_links.verify-micro-deposits') ? 'unverified' : 'verified'
+        id,
+        status
       }
       const base_path = session.logged_in ? 'account' : 'tenants/activate'
-      const method = session.logged_in ? 'PUT' : 'POST'
+      // const method = session.logged_in ? 'PUT' : 'POST'
+      const method = 'POST'
       // this.$emit('wait')
       return session.request(base_path + '/funding_sources', {
         method,
         body
       })
-      .then((data) => {
+      .then(async (data) => {
+        await session.loadSession()
         this.$emit('complete', data)
       })
       .catch((error) => {

@@ -3,7 +3,7 @@
     <loading v-if="loading"></loading>
     <div @click="showDetails">
       <header>
-        <div class="table" style="width:100%">
+        <div class="table full-width">
           <div class="table-row">
             <div class="table-cell text-left">
               <div class="label">{{ $bill.label }}</div>
@@ -104,6 +104,12 @@ export default {
       this.$bill.transfers = response.transfers
     }
   },
+  // watch: {
+  //   data(data) {
+  //     console.log(data.balance);
+  //     this.$bill = data
+  //   }
+  // },
   components: {
     transferModal
   }

@@ -26,7 +26,7 @@ const defaults = {
       return _.get(this, path)
     },
     is_active() {
-      !!this.status.active
+      return !!this.status.active
     },
     onboarding_steps() {
       return getOnboardingSteps(this.$data)

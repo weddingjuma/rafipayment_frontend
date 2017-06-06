@@ -1,21 +1,18 @@
-import Vue from 'vue'
-import VueModel from '@/plugins/model'
 import _ from 'lodash'
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
-
 import { Request, Deferred } from '@/utils'
 import store from '@/store'
-
+import VueModel from '@/plugins/model'
 import UserModel from '@/models/user'
 
 Vue.use(VueModel)
 
-const session = new Vue({
+export default new Vue({
   name: 'session',
   store,
   data() {
     return {
-      //loaded: false,
       deviceready: null
     }
   },
@@ -92,8 +89,6 @@ const session = new Vue({
       return request
     },
     loadSession() {
-      //this.loaded = true
-
       const token = localStorage.getItem('refresh_token')
       const promise = !token ? Promise.reject('No token') : this.request('users/tokens')
         .then(response => {
@@ -112,7 +107,7 @@ const session = new Vue({
         password: credentials.password
       }
 
-      if (process.env.NODE_ENV === 'cordova') this.bindDeviceData(body)
+      this.bindDeviceData(body)
 
       const request = this.request('users/login', {
         method: 'POST',
@@ -131,7 +126,7 @@ const session = new Vue({
       this.$store.dispatch('loading_begin')
 
       let body = {}
-      if (process.env.NODE_ENV === 'cordova') this.bindDeviceData(body)
+      this.bindDeviceData(body)
 
       const request = this.request('users/logout', {
         method: 'POST',
@@ -154,10 +149,12 @@ const session = new Vue({
       this.bindSessionUser()
     },
     bindDeviceData(body) {
-      const registrationId = localStorage.getItem('registrationId')
-      if (registrationId) _.set(body, 'device.id', registrationId)
-      const platformId = localStorage.getItem('platformId')
-      if (platformId) _.set(body, 'device.type', platformId)
+      if (process.env.NODE_ENV === 'cordova') {
+        const registrationId = localStorage.getItem('registrationId')
+        if (registrationId) _.set(body, 'device.id', registrationId)
+        const platformId = localStorage.getItem('platformId')
+        if (platformId) _.set(body, 'device.type', platformId)
+      }
     },
     bindSessionUser() {
       this.$user = this.$store.getters['session:user']
@@ -173,7 +170,7 @@ const session = new Vue({
     },
     fetchFundingSources() {
       if (!['tenant'].includes(this.$user.role)) return
-      const path = session.logged_in ? 'account' : 'tenants/activate'
+      const path = this.logged_in ? 'account' : 'tenants/activate'
 
       return this.request(path + '/funding_sources')
         .then((response) => {
@@ -194,5 +191,3 @@ const session = new Vue({
     }
   }
 })
-
-export default session

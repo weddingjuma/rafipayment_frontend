@@ -29,7 +29,7 @@ const store = new Collection({
 
 export default {
   store,
-  collection: true,
+  // collection: true,
   data() {
     return {
       loaded: false,
@@ -72,6 +72,11 @@ export default {
       this.fetch()
     }
   },
+  // watch: {
+  //   funding_sources() {
+  //     console.log('funding sources changed, ', this.funding_sources);
+  //   }
+  // },
   components: {
     fundingSource,
     fundingSourceModal

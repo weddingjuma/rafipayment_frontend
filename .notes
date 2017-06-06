@@ -44,23 +44,36 @@ FE
 BACK END
 
 - back end make IAV tokens endpoints consistent
-- back end made /bills and /account/bills both resolve lease
-- /activate/contact doesn't show terms accepted
+X- back end made /bills and /account/bills both resolve lease
+X- /activate/contact doesn't show terms accepted
 
-- microdeposits
-  - when dwolla responds with a 200, update cache to verified?
-  - need some solution to pending verification
-- IAV is still always setting primary
+X- microdeposits
+  X- when dwolla responds with a 200, update cache to verified?
+  X- need some solution to pending verification
+X- IAV is still always setting primary - change to POST
 
-- transfers
-  - BE should respond with dwolla response so we can show errors right away
+X- transfers
+  X- BE should respond with dwolla response so we can show errors right away
 
-- person pays, roommate doesn't, overdude bill email should be "not fully paid"
+- person pays, roommate doesn't, overdue bill email should be "not fully paid"
 
 FRONT END
 
-- move account payment from a tab to a list item
-- update Xcode
+- transfer auto suggest is sometimes zero
+- after making a transfer, redirect to details page
+- past bills undefined address :P
+- dwolla logo during bank activation step?
+- stylesheet for IAV
+- password validation is acting weird
+- test on ipad
+
+X- account payment
+  X- collection is fucked up when adding
+  X- update fs status on md success
+
+X- move account payment from a tab to a list item
+X- profile more native looking
+X- update Xcode
 
 X- move app loading logic to load.js, not load.vue
 X- bug - edit split, then cancel, split is blank!
@@ -71,10 +84,20 @@ X- load component is broken
 X- figure out why load component breaks
 
 
+- add success indicator in onboarding
+- set up basic tests!
 
-- profile more native looking
+
+BIG CHANGES IF LEASING
+- brokers want MLS integreation when it comes to leasing. we could no longer assume that the yser owns the builfing
+- Need a legal precesnse to look over everything
+- need to define what the goals are
+  - we probably need more peopel before we can sell to other comoanies
 
 
+
+X- add sentry to app
+- set up api endpoint for tracking errors
 
 - cancel transfer endpoint is inconsistent
   - dwolla/transfer/:id/cancel
@@ -105,10 +128,6 @@ X- set up microdeposits
 
 - in the future, care less about verifying email, show that changing email is a danger zone, just overwrite email address immediately to simplify
 
-- add success indicator in onboarding
-- add sentry to app
-
-
 
 - dont tell tenants rent is overdue, just say DUE again
 
@@ -118,7 +137,7 @@ X- set up microdeposits
   - debugging
   - deployment
 
-- transfer is waiting for webhook to create cancel_expiration
+Z- transfer is waiting for webhook to create cancel_expiration
 
 - Google Analytics on mobile?
 - vue router scrolling onroute

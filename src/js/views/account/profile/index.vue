@@ -25,7 +25,7 @@
             <svg class="icon icon-email" viewBox="0 0 94 64">
             	<path class="st0" d="M80.8,60.6H13.2c-5.5,0-10-4.5-10-10V13.1c0-5.5,4.5-10,10-10h67.6c5.5,0,10,4.5,10,10v37.5
             		C90.8,56.1,86.3,60.6,80.8,60.6z"/>
-            	<polyline class="st1" points="90.8,15.1 47,51.6 3.2,15.1 	"/>
+            	<polyline class="st1" points="90.8,15.1 47,51.6 3.2,15.1 "/>
             </svg>
           </div>
 
@@ -39,6 +39,25 @@
         </div>
       </div>
 		</div>
+
+    <div class="box" @click="goToPaymentSettings">
+      <div class="table full-width">
+        <div class="table-row">
+          <div class="table-cell icon-column">
+            <svg class="icon icon-money" viewBox="0 0 49.3 104.3">
+            	<path d="M4.3,79.6c0,0,8,8.8,21.2,8.8c9.9,0,17.7-6.1,17.7-15.6c0-22-40.9-16.9-40.9-41.1c0-9.7,8-18.9,20.6-20.3V0.7h4.9v10.7
+            		c11.9,0.5,18.5,7.3,18.5,7.3l-2.7,4.2c0,0-6.8-6.8-17.3-6.8C14.4,16,7.4,23.9,7.4,31.6c0,20.4,40.9,15.1,40.9,41
+            		c0,10.8-7.8,19.5-20.5,20.5v10.5h-4.9V93.1C8.7,92.2,1,83.4,1,83.4L4.3,79.6z"/>
+            </svg>
+          </div>
+
+          <div class="table-cell text-left pad-left">Payment Settings</div>
+          <div class="table-cell text-right">
+            <icon-arrow-right />
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="box" @click="modal_password_visible = true">
       <div class="table full-width">
@@ -66,15 +85,6 @@
     <div class="box" @click="logout" style="margin-top: 40px;">
       <div class="table full-width">
         <div class="table-row">
-
-          <!-- <div class="table-cell icon-column">
-            <svg class="icon icon-power" viewBox="0 0 94 96.3">
-              <line class="st0" x1="47" y1="5.5" x2="47" y2="49.1"/>
-              <path class="st0" d="M21.3,14.1c-10.3,7.8-17,20.2-17,34.1c0,23.6,19.1,42.7,42.7,42.7s42.7-19.1,42.7-42.7c0-13.9-6.7-26.3-17-34.1
-              	"/>
-            </svg>
-          </div> -->
-
           <div class="table-cell text-left">Log Out</div>
           <div class="table-cell text-right">
             <icon-arrow-right />
@@ -90,7 +100,6 @@
 </template>
 
 <script>
-import user from '@/components/cards/user'
 import session from '@/session'
 
 import modalName from '@/components/modals/user_name'
@@ -98,6 +107,7 @@ import modalPassword from '@/components/modals/set_password'
 import modalContact from '@/components/modals/user_contact'
 
 export default {
+  name: 'profile',
   data() {
     return {
       modal_name_visible: false,
@@ -114,15 +124,14 @@ export default {
     confirm() {
       console.log('confirmed');
     },
-    changeContact() {
-      this.$router.push('/account/contact')
+    goToPaymentSettings() {
+      this.$router.push('/account/payment')
     },
     logout() {
       return session.logout()
     }
   },
   components: {
-    user,
     modalName,
     modalPassword,
     modalContact
@@ -147,7 +156,6 @@ legend {
 .avatar {
   width: 100%;
   color: black;
-  // margin-right: 10px;
 }
 
 .pad-left {
@@ -166,7 +174,11 @@ legend {
 .icon-lock {
   fill: currentColor;
   width: 90%;
-  // margin: 0 auto;
+}
+
+.icon-money {
+  fill: currentColor;
+  width: 50%;
 }
 
 .icon-email {

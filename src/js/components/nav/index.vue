@@ -11,7 +11,6 @@
       @click="close">
       <div class="panel small scroll-y">
         <logo></logo>
-        <!-- <avatar :initials="$user.initials" :color="$user.avatar_color"></avatar> -->
         <slot>
           <component :is="$user.role"></component>
         </slot>
@@ -40,7 +39,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      // role: 'session:role',
       nav_visible: 'app:nav_visible'
     })
   },

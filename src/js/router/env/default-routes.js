@@ -120,6 +120,11 @@ const routes = [
         path: 'payment',
         component(resolve) {
           require(['@/views/account/payment'], resolve)
+        },
+        meta: {
+          back($router) {
+            $router.back()
+          }
         }
       }
       // {

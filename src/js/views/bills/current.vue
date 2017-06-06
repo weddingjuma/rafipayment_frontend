@@ -13,6 +13,7 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+import session from '@/session'
 import { mapGetters } from 'vuex'
 import Collection from '@/store/collection'
 

@@ -1,13 +1,13 @@
 <template>
   <modal @close="close" :confirm="validate">
-    <h1 slot="header">Change Contact</h1>
+    <h1 slot="header">Change Password</h1>
     <div slot="body">
       <form @submit.prevent="validate">
         <div class="field-group">
           <legend>Password</legend>
           <password
             v-model="password"
-            v-validate="'required|min:8|password'"
+            v-validate.disable="'required|min:8|password'"
             name="password"
             ref="default"
             >
@@ -19,7 +19,7 @@
           <legend>Confirm Password</legend>
           <password
             v-model="password_confirm"
-            v-validate="'required|confirmed:password'"
+            v-validate.disable="'required|confirmed:password'"
             data-vv-as="password"
             name="confirm password"
             >

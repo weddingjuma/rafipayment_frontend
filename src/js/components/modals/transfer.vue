@@ -59,11 +59,9 @@ export default {
       this.$emit('close')
     },
     getSuggestion() {
-      // NOTE: lease is not resolved here so i can't get split...
-      // it is resolved on /bills, but not /account/bills
-
-      // console.log(_.get(this.model.lease.split, session.$user.id));
-      return this.model.type === 'monthly' ? _.get(this.model.lease.split, session.$user.id) : this.model.better_display_balance
+      return this.model.type === 'monthly'
+      ? _.get(this.model.lease.split, session.$user.id)
+      : this.model.better_display_balance
     },
     async validate() {
       await this.$validator.validateAll()
@@ -84,9 +82,7 @@ export default {
           'Payment Successful'
         )
       })
-      .catch((error) => {
-        // NOTE: gotta find what the correct error is
-        console.warn(error);
+      .catch(() => {
         app.alert(
           'You have exceeded your weekly transfer limit, please wait until next Monday before trying again',
           null,

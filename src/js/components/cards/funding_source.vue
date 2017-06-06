@@ -18,17 +18,16 @@
 
     <div class="message" v-if="$funding_source.$status !== 'verified'">
       <div class="pad">
+
         <div v-if="['microdeposits pending', 'microdeposits added'].includes($funding_source.$status)">
           <p>Microposits will be deposited in your bank account shortly. Please note the amounts before returning here to verify the account.</p>
           <div class="text-right">
             <a href="http://payment.rafiproperties.com/help/#microdeposits" target="_blank">More info <icon-external></icon-external></a>
           </div>
         </div>
+
         <div v-else-if="$funding_source.$status === 'microdeposits completed'">
           <p>Please enter the amounts of the microdeposits from your bank statement.</p>
-          <!-- <div class="text-right">
-            <a href="http://payment.rafiproperties.com/help/#microdeposits" target="_blank">More info <icon-external></icon-external></a>
-          </div> -->
           <button type="button" @click="modal_visible = true">Verify Microdeposits</button>
 
           <modal-microdeposits @close="modal_visible = false" @confirm="update" :model="$funding_source" v-if="modal_visible"></modal-microdeposits>
@@ -47,6 +46,7 @@
 
 <script>
 import app from '@/app'
+import session from '@/session'
 import FundingSourceModel from '@/models/funding_source'
 import modalMicrodeposits from '@/components/modals/microdeposits'
 
@@ -66,10 +66,6 @@ export default {
     }
   },
   computed: {
-    // status() {
-    //   const microdeposits = this.$funding_source.microdeposits
-    //   return microdeposits ? `microdeposits ${microdeposits}` : this.$funding_source.status
-    // },
     status_class_handler() {
       return {
         danger: [
@@ -90,7 +86,8 @@ export default {
     }
   },
   methods: {
-    update() {
+    async update() {
+      await session.loadSession()
       this.$store.dispatch('fetch')
     },
     promptDelete() {
@@ -126,6 +123,11 @@ export default {
       .then(() => {
         app.$store.dispatch('loading_end')
       })
+    }
+  },
+  watch: {
+    data(data) {
+      this.$funding_source = data
     }
   },
   components: {

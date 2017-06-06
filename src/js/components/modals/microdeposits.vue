@@ -9,8 +9,8 @@
           $
           <input type="text" value="0" class="mock" disabled>
           .
-          <number @next="next" v-model="amount1a" maxlength="1" placeholder="0" name="tab-focus-1" ref="default"></number>
-          <number @next="next" v-model="amount1b" maxlength="1" placeholder="0" name="tab-focus-2"></number>
+          <number @next="next" v-model="amount1a" maxlength="1" placeholder="0" name="tab-focus-1" :wrap="true" ref="default"></number>
+          <number @next="next" v-model="amount1b" maxlength="1" placeholder="0" name="tab-focus-2" :wrap="true"></number>
         </div>
         <validation name="input-1" :errors="errors"></validation>
       </div>
@@ -20,8 +20,8 @@
           $
           <input type="text" value="0" class="mock" disabled>
           .
-          <number @next="next" v-model="amount2a" maxlength="1" placeholder="0" name="tab-focus-3"></number>
-          <number @next="next" v-model="amount2b" maxlength="1" placeholder="0" name="tab-focus-4"></number>
+          <number @next="next" v-model="amount2a" maxlength="1" placeholder="0" name="tab-focus-3" :wrap="true"></number>
+          <number @next="next" v-model="amount2b" maxlength="1" placeholder="0" name="tab-focus-4" :wrap="true"></number>
         </div>
         <validation name="input-2" :errors="errors"></validation>
       </div>
@@ -33,7 +33,6 @@
 </template>
 
 <script>
-// import _ from 'lodash'
 import app from '@/app'
 import { sleep } from '@/utils'
 
@@ -82,7 +81,7 @@ export default {
       const next_index = index + 1
       const $next_input = this.$el.querySelector(`input[name="tab-focus-${next_index}"]`)
 
-      await sleep(90)
+      await sleep(10)
       if ($next_input) {
         $next_input.focus()
       } else {
@@ -114,10 +113,11 @@ export default {
         inputs.forEach((input, index) => {
           this.validateInput(input, index)
         })
+        // console.log(this.errors);
         if (this.errors.errors.length) {
-          reject(false)
+          reject()
         } else {
-          resolve(true)
+          resolve()
         }
       })
     },
@@ -138,26 +138,28 @@ export default {
         )
       }
     },
-    async confirmMicrodeposits() {
+    confirmMicrodeposits() {
       const body = this.microdeposits
-      await this.model.save(body, {
+      const request = this.model.save(body, {
         path: 'microdeposits'
       })
-      .then((response) => {
+
+      request.then((response) => {
         app.alert(
           'Thank you for verifying your bank account!',
           null,
           'Verified'
         )
       })
-      .catch((error) => {
-        console.warn(error);
+      .catch(() => {
+        // console.warn(error);
         app.alert(
           'Incorrect microdeposit amounts',
           null,
           'Verification Failed'
         )
       })
+      return request
     }
   }
 }

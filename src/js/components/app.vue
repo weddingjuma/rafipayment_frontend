@@ -37,7 +37,7 @@
 
 <script>
 import _ from 'lodash'
-import { config } from '@/config'
+import config from '@/config'
 import { mapGetters } from 'vuex'
 import { getPanStartPosition } from '@/utils'
 
@@ -74,12 +74,9 @@ export default {
       }
     },
     onSwipeLeft(e) {
-      console.log('swipeleft');
       if (!config.debug) return
       const start = getPanStartPosition(e);
-      console.log({start});
       if ((window.innerWidth - start.x) < 50) {
-        console.log('matched if');
         window.debug.toggle()
       }
     },

@@ -156,6 +156,7 @@ export default {
   .form-model {
     width: 460px;
     max-width: 100%;
+    margin: 0 auto;
     padding: 20px;
   }
 

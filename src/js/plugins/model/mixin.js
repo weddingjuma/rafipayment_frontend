@@ -24,6 +24,9 @@ const init = (vm) => {
     vm.$models[key] = vm._models[key]
   }
   if (isDef(vm.$models)) {
+    if (!vm.$options.computed) {
+      vm.$options.computed = {};
+    }
     for (let key in vm.$models) {
       makeComputedProp(vm, key)
     }
@@ -38,12 +41,12 @@ const init_models = (vm) => {
 
 export default (Vue) => ({
   beforeCreate() {
-    if (isDef(this.$options.models, this.$options.$models)) {
+    if (isDef(this.$options.models)) {
       init(this)
     }
   },
   created() {
-    if (isDef(this.$options.models, this.$options.$models)) {
+    if (isDef(this.$options.models)) {
       init_models(this)
     }
   },
