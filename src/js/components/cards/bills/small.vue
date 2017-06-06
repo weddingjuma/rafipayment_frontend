@@ -1,8 +1,8 @@
 <template>
   <div class="box table bill">
     <div class="table-row" @click="showDetails">
-      <div class="table-cell">{{ $bill.due_date | moment('MMM YYYY') }}</div>
-      <div class="table-cell">{{ $bill.target }}</div>
+      <div class="table-cell text-left" style="width: 30%">{{ $bill.due_date | moment('MMM YYYY') }}</div>
+      <div class="table-cell text-left">{{ $bill.target }}</div>
       <div class="table-cell status">
         <span :class="['flag', flag_class]">{{ bill_total }}</span> {{  }}
       </div>

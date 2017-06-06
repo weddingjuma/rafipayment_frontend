@@ -40,7 +40,7 @@ button, .button {
     // box-shadow: 0 0 5px 2px #5897fb;
   }
 
-  &:disabled {
+  &:disabled, .disabled {
     opacity: 0.5;
 
     &:hover {
@@ -258,6 +258,11 @@ button, .button {
 
   &:hover {
     cursor: pointer;
+  }
+
+  &.disabled {
+    // cursor: not-allowed;
+    pointer-events: none;
   }
 }
 

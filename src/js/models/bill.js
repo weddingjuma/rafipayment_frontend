@@ -91,7 +91,7 @@ const defaults = {
       } else if (type === 'anytime') {
         tenants = this.tenants
         if (tenants.length === 1) {
-          target = `${tenants[0].first_name} ${tenants[0].last_name}`
+          target = session.$user.full_name
         } else {
           target = `${tenants.length} Roommates`
         }

@@ -61,7 +61,7 @@
           <div class="table-cell pad text-left">Remaining Rent</div>
           <div class="table-cell pad text-right">
             <span v-if="$lease.rent_remaining === 0">
-              <icon-success></icon-success>
+              <icon-success />
             </span> {{ $lease.rent_remaining | currency }}</div>
         </div>
       </div>

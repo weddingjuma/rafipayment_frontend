@@ -43,12 +43,20 @@
       </div>
 
       <footer
-        class="button button-full"
-        v-if="$bill.bill_status !== 'paid'"
-        @click="showModal">
-        Make a Payment
+        class="button button-full success disabled"
+        v-if="$bill.bill_status === 'paid'"
+      >
+        <span>Paid in full</span>
+        <icon-success />
       </footer>
 
+      <footer
+        class="button button-full"
+        v-else-if="$bill.status.active"
+        @click="showModal"
+      >
+        Make a Payment
+      </footer>
     </div>
 
     <transfer-modal v-if="modal_visible" @close="closeModal" :confirm="updateBill" :model="$bill"></transfer-modal>
@@ -184,5 +192,15 @@ dl {
   bottom: 0;
   left: 0;
   right: 0;
+
+  span {
+    margin-right: 14px;
+  }
+
+  .icon {
+    position: absolute;
+    margin-left: -8px;
+    margin-top: -2px;
+  }
 }
 </style>

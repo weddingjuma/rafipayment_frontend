@@ -59,13 +59,16 @@ X- transfers
 
 FRONT END
 
-- transfer auto suggest is sometimes zero
-- after making a transfer, redirect to details page
-- past bills undefined address :P
+X- transfer auto suggest is sometimes zero
+X- after making a transfer, redirect to details page
+X- past bills undefined address
+X- bill details - show nice green thing if paid
 - dwolla logo during bank activation step?
 - stylesheet for IAV
-- password validation is acting weird
-- test on ipad
+
+
+X- password validation is acting weird
+X- test on ipad
 
 X- account payment
   X- collection is fucked up when adding

@@ -6,7 +6,10 @@
       <loading v-if="loading"></loading>
       <div class="field-group">
         <legend>Amount</legend>
-        <currency v-model="transfer_amount" ref="default" v-validate="'required|min_currency:0.01|max_currency:10000'"></currency>
+        <currency
+          ref="default"
+          v-model="transfer_amount"
+          v-validate.disable="'required|min_currency:0.01|max_currency:5000'" />
         <validation name="amount" :errors="errors"></validation>
       </div>
       <div class="message">
@@ -38,7 +41,6 @@ export default {
   },
   async created() {
     this.transfer_amount = this.getSuggestion()
-
     const val = await this.$become('primary_funding_source')
     if (val) this.loading = false
   },

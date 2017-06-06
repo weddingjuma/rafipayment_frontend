@@ -102,14 +102,9 @@ export default {
     },
     async updateBill(response) {
       this.$bill.transfers = response.transfers
+      this.$router.push(`/bills/${this.$bill.id}`)
     }
   },
-  // watch: {
-  //   data(data) {
-  //     console.log(data.balance);
-  //     this.$bill = data
-  //   }
-  // },
   components: {
     transferModal
   }
@@ -131,11 +126,6 @@ export default {
 
 .content {
   padding: 20px;
-  // color: #6a7888;
-  // background: #e1e9ec;
-  // border-top-left-radius: 6px;
-  // border-top-right-radius: 6px;
-  // box-shadow: inset -1px 3px 0 -2px hsla(0,0%,100%,.6);
 
   .label {
     font-size: 0.75em;
