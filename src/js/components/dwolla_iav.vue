@@ -8,7 +8,8 @@ import config from '@/config'
 import { load } from '@/utils'
 import session from '@/session'
 
-let _dwolla
+let dwolla_js
+let dwolla_loaded = false
 
 export default {
   data() {
@@ -21,12 +22,13 @@ export default {
       return session.logged_in ? 'account/iav' : 'tenants/activate/dwolla'
     }
   },
-  mounted() {
-    load('https://cdn.dwolla.com/1/dwolla.js')
-    .then(() => {
-      _dwolla = dwolla // eslint-disable-line no-undef
-      this.fetchIAVToken()
-    })
+  async mounted() {
+    if (!dwolla_loaded) {
+      await load('https://cdn.dwolla.com/1/dwolla.js')
+      dwolla_js = dwolla // eslint-disable-line no-undef
+      dwolla_loaded = true
+    }
+    this.fetchIAVToken()
   },
   methods: {
     close() {
@@ -41,13 +43,14 @@ export default {
       });
     },
     renderIAV() {
-      _dwolla.configure(config.dwolla_env);
-      _dwolla.iav.start(this.iav_token, {
+      dwolla_js.configure(config.dwolla_env);
+      dwolla_js.iav.start(this.iav_token, {
         container: 'iav-container',
-        // stylesheets: [
-        //   'https://fonts.googleapis.com/css?family=Roboto',
-        //   config.urls.base_url + 'css/dwolla_style.css'
-        // ],
+        stylesheets: [
+          'https://fonts.googleapis.com/css?family=Roboto',
+          'https://app.payment.rafiproperties.com/css/dwolla_style.css'
+          // config.urls.base_url + 'css/dwolla_style.css'
+        ],
         subscriber: this.iframeSubsciber,
         backButton: true,
         microDeposits: true,
@@ -89,6 +92,7 @@ export default {
       // console.warn('process error', error);
     },
     processDwollaResponse(response) {
+      console.log('callback firing', response);
       const id = _.get(response, '_links.funding-source.href').split('funding-sources/')[1]
       const status = _.get(response, '_links.verify-micro-deposits') ? 'unverified' : 'verified'
       const body = {
@@ -96,7 +100,6 @@ export default {
         status
       }
       const base_path = session.logged_in ? 'account' : 'tenants/activate'
-      // const method = session.logged_in ? 'PUT' : 'POST'
       const method = 'POST'
       // this.$emit('wait')
       return session.request(base_path + '/funding_sources', {
@@ -104,7 +107,12 @@ export default {
         body
       })
       .then(async (data) => {
-        await session.loadSession()
+        if (session.logged_in) {
+          await session.loadSession()
+        } else {
+          const token = _.get(this.$route.query, 'token')
+          await session.loadActivation(token)
+        }
         this.$emit('complete', data)
       })
       .catch((error) => {

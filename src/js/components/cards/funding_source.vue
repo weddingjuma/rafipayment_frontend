@@ -1,7 +1,10 @@
 <template>
   <div class="box funding_source">
     <header>
-      <h3>{{ $funding_source.name }} <span class="flag success" v-show="$funding_source.is_primary">PRIMARY</span></h3>
+      <h3>
+        <span class="name">{{ $funding_source.name }}</span>
+        <span class="flag success" v-show="$funding_source.is_primary">PRIMARY</span>
+      </h3>
     </header>
     <div class="content">
       <dl class="details">
@@ -163,8 +166,13 @@ h3 {
   // border-top: 1px solid #ccc;
   text-align: right;
 }
+span.name {
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 4px;
+}
 .flag.success {
-  margin-left: 8px;
+  // margin-left: 8px;
   font-size: 0.7em;
   font-weight: bold;
 }

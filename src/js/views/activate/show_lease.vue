@@ -104,4 +104,7 @@ legend {
   display: inline-block;
   white-space: nowrap;
 }
+.field-group {
+  text-align: center;
+}
 </style>

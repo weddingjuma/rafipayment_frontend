@@ -7,6 +7,9 @@
     <author email="nford@rafiproperties.com" href="http://payment.rafiproperties.com">
     Rafi Payment Team
   </author>
+    <universal-links>
+      <host name="app.payment.rafiproperties.com" scheme="https" />
+    </universal-links>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />

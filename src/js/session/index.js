@@ -142,7 +142,9 @@ export default new Vue({
     dispatchActivate(user) {
       this.$store.dispatch('activate', user)
       this.$user = this.$store.getters['session:user']
-      this.fetchFundingSources()
+      if (_.get(this.$user, 'dwolla_account.customer_id')) {
+        this.fetchFundingSources()
+      }
     },
     dispatchLogin(user) {
       this.$store.dispatch('login', user)

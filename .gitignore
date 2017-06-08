@@ -16,4 +16,4 @@ selenium-debug.log
 /www/
 /platforms/
 /plugins/
-/res/
+#/res/

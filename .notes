@@ -59,6 +59,17 @@ X- transfers
 
 FRONT END
 
+
+- make app handle urls!
+- srsrly add some success visual when they finish onboarding...
+
+
+Pay your rent with Rafi Payment! You'll receive automatic reminders and notifications when your rent is due, and regarding bills and payments, or you can set up autopay and forget about it!
+
+You must be a tenant of Rafi Properties to use Rafi Payment.
+
+
+
 X- transfer auto suggest is sometimes zero
 X- after making a transfer, redirect to details page
 X- past bills undefined address

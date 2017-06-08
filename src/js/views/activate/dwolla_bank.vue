@@ -23,6 +23,8 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+import _ from 'lodash'
+import session from '@/session'
 import { sleep } from '@/utils'
 import dwollaIav from '@/components/dwolla_iav'
 
@@ -42,7 +44,13 @@ export default {
   methods: {
     async waitForNext() {
       this.loading = true
-      await sleep(4000)
+      // this is the same endpoint we just posted to, so we have to wait over
+      // 1000ms or risk getting throttled
+      await sleep(1200)
+      const token = _.get(this.$route.query, 'token')
+      await session.loadActivation(token)
+      session.fetchFundingSources()
+      await sleep(3000)
       this.loading = false
       this.$parent.next()
     }

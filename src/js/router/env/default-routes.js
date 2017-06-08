@@ -62,12 +62,18 @@ const routes = [
     ]
   },
   {
-    name: 'All Bills',
     path: '/bills',
-    redirect: 'dashboard/current',
-    component(resolve) {
-      require(['@/views/bills'], resolve)
-    }
+    redirect: '/dashboard/current'
+  },
+  // legacy paths to support deep linking for old app paths
+  // remove this when we replace the backbone app
+  {
+    path: '/dashboard/current/:id',
+    redirect: '/bills/:id'
+  },
+  {
+    path: '/dashboard/past/:id',
+    redirect: '/bills/:id'
   },
   {
     name: 'Balance',

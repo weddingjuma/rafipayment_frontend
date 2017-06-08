@@ -56,6 +56,17 @@ export default {
   },
   created() {
     if (!session.logged_in) {
+      const query = this.$route.query
+
+      // legacy app route support
+      if (!('token' in query)) {
+        this.$router.replace({
+          query: {
+            token: Object.keys(query)[0]
+          }
+        })
+      }
+
       const token = _.get(this.$route.query, 'token')
       session.loadActivation(token)
         .then((response) => {
@@ -149,8 +160,6 @@ export default {
     max-width: 100%;
     max-height: 90%;
     transform: translateX(-50%);
-    // text-align: center;
-    // overflow: visible;
   }
 
   .form-model {
@@ -162,8 +171,8 @@ export default {
 
   .logo {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 10px;
+    left: 40px;
     width: 100px;
   }
 
@@ -183,7 +192,7 @@ export default {
 
   .back-container {
     position: absolute;
-    top: 0;
+    top: 18px;
     left: 0;
 
     .back {
@@ -207,10 +216,8 @@ export default {
 
   h1 {
     margin: 0 0 20px;
-    // font-weight: bold;
     font-size: 1.2em;
     line-height: 1.4em;
-    // text-transform: uppercase;
     font-weight: normal;
     text-transform: capitalize;
   }
@@ -251,6 +258,10 @@ export default {
     .icon-container {
       display: none;
     }
+  }
+
+  .back-container {
+    top: 0;
   }
 }
 </style>
