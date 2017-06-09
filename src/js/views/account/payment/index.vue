@@ -13,6 +13,8 @@
       @complete="completeIAV">
     </funding-source-modal>
 
+    <loading v-if="loading" />
+
   </div>
 </template>
 
@@ -33,6 +35,7 @@ export default {
   data() {
     return {
       loaded: false,
+      loading: true,
       modal_visible: false
     }
   },
@@ -50,14 +53,20 @@ export default {
     ])
   },
   created() {
-    this.fetch()
-    .then(() => {})
-    .catch(() => {})
-    .then(() => {
-      this.loaded = true
-    })
+    // console.log('created');
+    this.load()
   },
   methods: {
+    async load() {
+      await session.update()
+      this.fetch()
+      .then(() => {})
+      .catch(() => {})
+      .then(() => {
+        this.loading = false
+        this.loaded = true
+      })
+    },
     fetch() {
       return this.$store.dispatch('fetch')
     },

@@ -90,6 +90,12 @@ const install = (Vue, opts = {}) => {
   })
 }
 
+const env = process.env.NODE_ENV
+
+if (env === 'cordova') {
+  require(['@/modules/universal_links'])
+}
+
 install(Vue)
 
 export default new Vue({
@@ -100,7 +106,7 @@ export default new Vue({
   components: { App },
   computed: {
     is_cordova() {
-      return process.env.NODE_ENV === 'cordova'
+      return env === 'cordova'
     }
   },
   async beforeMount() {
@@ -114,7 +120,6 @@ export default new Vue({
       } catch(error) {
         this.alert(`Your curernt browser does not support local storage. If you
                     are in private browser mode, please disable it.`)
-        // throw new Error('localStorage is required')
       }
     },
     alert(

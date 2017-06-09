@@ -38,31 +38,19 @@ export default {
   watch: {
     visible(val) {
       if (val) {
-        document.body.classList.add('loading')
+        document.body.classList.add('lock')
       } else {
-        document.body.classList.remove('loading')
+        document.body.classList.remove('lock')
       }
     }
   },
   beforeDestroy() {
-    document.body.classList.remove('loading')
+    document.body.classList.remove('lock')
   }
 }
 </script>
 
 <!--/////////////////////////////////////////////////////////////////////////-->
-
-<style lang="scss">
-body {
-  &.loading {
-    // overflow: hidden;
-    .app-container {
-      overflow: hidden;
-      height: calc(100vh - 120px);
-    }
-  }
-}
-</style>
 
 <style scoped lang="scss">
 .loader-container {

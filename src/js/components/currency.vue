@@ -59,12 +59,6 @@ export default {
       this.input_value = utils.prettyCurrency(this.value, false)
     }
   },
-  // computed: {
-  //   $sign() {
-  //     console.log(this.sign, typeof this.sign);
-  //     return this.sign
-  //   }
-  // },
   watch: {
     value(value) {
       this.input_value = value

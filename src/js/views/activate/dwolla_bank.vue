@@ -47,7 +47,7 @@ export default {
       // this is the same endpoint we just posted to, so we have to wait over
       // 1000ms or risk getting throttled
       await sleep(1200)
-      const token = _.get(this.$route.query, 'token')
+      const token = localStorage.getItem('activation_token')
       await session.loadActivation(token)
       session.fetchFundingSources()
       await sleep(3000)

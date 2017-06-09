@@ -96,6 +96,7 @@ export default {
           this.confirmMicrodeposits()
           .then((res) => {
             resolve()
+            this.confirm()
           })
           .catch((err) => {
             reject(err)
@@ -152,7 +153,6 @@ export default {
         )
       })
       .catch(() => {
-        // console.warn(error);
         app.alert(
           'Incorrect microdeposit amounts',
           null,
@@ -168,6 +168,7 @@ export default {
 <style lang="scss">
 $input-width: 44px;
 $input-font-size: 3rem;
+$input-line-height: 3.5rem;
 $input-padding: 5px;
 $input-text-align: center;
 
@@ -189,6 +190,7 @@ $input-text-align: center;
         display: block;
         width: 100%;
         font-size: $input-font-size;
+        line-height: $input-line-height;
         text-align: $input-text-align;
         padding: $input-padding
       }

@@ -1,6 +1,6 @@
 <template>
   <div class="number-container">
-    <input
+    <!-- <input
       v-if="is_mobile"
       v-model="input_value"
       :name="name"
@@ -12,10 +12,10 @@
       @change="field_changed"
       type="number"
       ref="input"
+      pattern="[0-9]*"
       autocomplete="off"
-      autocapitalize="off">
+      autocapitalize="off"> -->
     <input
-      v-else
       v-model="input_value"
       :name="name"
       :class="[this.name]"
@@ -26,6 +26,7 @@
       @change="field_changed"
       type="text"
       ref="input"
+      pattern="[0-9]*"
       autocomplete="off"
       autocapitalize="off">
   </div>

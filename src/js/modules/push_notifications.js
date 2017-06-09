@@ -1,3 +1,4 @@
+/* global cordova PushNotification */
 import session from '@/session'
 
 const app = {
@@ -13,7 +14,7 @@ const app = {
     this.setupPush()
   },
   setupPush() {
-    const push = PushNotification.init({ // eslint-disable-line no-undef
+    const push = PushNotification.init({
       'android': {
         'senderID': '582343470433'
       },
@@ -31,22 +32,22 @@ const app = {
       if (oldRegId !== data.registrationId) {
         localStorage.setItem('registrationId', data.registrationId)
       }
-      localStorage.setItem('platformId', cordova.platformId) // eslint-disable-line no-undef
+      localStorage.setItem('platformId', cordova.platformId)
     })
 
-    push.on('error', function(e) {
-      alert('push error = ' + e.message)
-    })
+    // push.on('error', function(e) {
+    //   alert('push error = ' + e.message)
+    // })
 
-    push.on('notification', function(data) {
-      console.log('notification event', data)
-      // navigator.notification.alert(
-      //   data.message,         // message
-      //   null,                 // callback
-      //   data.title,           // title
-      //   'Ok'                  // buttonName
-      // )
-    })
+    // push.on('notification', function(data) {
+    //   console.log('notification event', data)
+    //   navigator.notification.alert(
+    //     data.message,         // message
+    //     null,                 // callback
+    //     data.title,           // title
+    //     'Ok'                  // buttonName
+    //   )
+    // })
   }
 }
 

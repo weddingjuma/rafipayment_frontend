@@ -13,6 +13,14 @@ body {
   color: $color-text-default;
   background-color: $color-background-default;
   touch-events: none;
+
+  &.lock {
+    // overflow: hidden;
+    .app-container {
+      overflow: hidden;
+      height: calc(100vh - 120px);
+    }
+  }
 }
 
 ::selection {

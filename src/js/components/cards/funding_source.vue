@@ -33,7 +33,7 @@
           <p>Please enter the amounts of the microdeposits from your bank statement.</p>
           <button type="button" @click="modal_visible = true">Verify Microdeposits</button>
 
-          <modal-microdeposits @close="modal_visible = false" @confirm="update" :model="$funding_source" v-if="modal_visible"></modal-microdeposits>
+          <modal-microdeposits @close="modal_visible = false" :confirm="update" :model="$funding_source" v-if="modal_visible"></modal-microdeposits>
 
         </div>
       </div>
@@ -49,7 +49,7 @@
 
 <script>
 import app from '@/app'
-import session from '@/session'
+// import session from '@/session'
 import FundingSourceModel from '@/models/funding_source'
 import modalMicrodeposits from '@/components/modals/microdeposits'
 
@@ -90,8 +90,10 @@ export default {
   },
   methods: {
     async update() {
-      await session.loadSession()
-      this.$store.dispatch('fetch')
+      console.log('updated');
+      // await session.loadSession()
+      this.$parent.load()
+      // this.$store.dispatch('fetch')
     },
     promptDelete() {
       app.confirm(

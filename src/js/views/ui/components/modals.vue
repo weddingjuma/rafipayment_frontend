@@ -64,7 +64,8 @@ export default {
         'This is a test confirm',
         this.confirm,
         'Test Confirm Title',
-        buttons)
+        buttons
+      )
     },
     confirm() {
       this.accepted_modal = true
@@ -73,7 +74,11 @@ export default {
       this.accepted_modal = false
     },
     showModalAlert() {
-      app.alert('This is a test modal to show what you can do with modals.', this.confirm, 'Test Alert Title')
+      app.alert(
+        'This is a test modal to show what you can do with modals.',
+        this.confirm,
+        'Test Alert Title'
+      )
     },
     closeCustom() {
       this.custom_modal_visible = false

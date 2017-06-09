@@ -16,7 +16,7 @@
     		  <legend>Password</legend>
           <password
             v-model="password"
-            v-validate="'required|min:8|password'"
+            v-validate.disable="'required|min:8|password'"
             name="password"
             >
           </password>
@@ -27,7 +27,7 @@
     		  <legend>Confirm Password</legend>
           <password
             v-model="password_confirm"
-            v-validate="'required|confirmed:password'"
+            v-validate.disable="'required|confirmed:password'"
             data-vv-as="password"
             name="confirm password"
             >
@@ -56,19 +56,18 @@ export default {
     }
   },
   watch: {
-    // BRING THESE BACK AS SOON AS VEE-VALIDATE UPDATES
-    // password() {
-    //   const name = 'password'
-    //   if (this.errors.has(name)) {
-    //     this.errors.remove(name)
-    //   }
-    // },
-    // password_confirm() {
-    //   const name = 'password_confirm'
-    //   if (this.errors.has(name)) {
-    //     this.errors.remove(name)
-    //   }
-    // }
+    password() {
+      const name = 'password'
+      if (this.errors.has(name)) {
+        this.errors.remove(name)
+      }
+    },
+    password_confirm() {
+      const name = 'password_confirm'
+      if (this.errors.has(name)) {
+        this.errors.remove(name)
+      }
+    }
   },
   methods: {
     validate() {

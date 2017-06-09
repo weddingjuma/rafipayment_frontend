@@ -15,11 +15,7 @@ import Collection from '@/store/collection'
 import lease from '@/components/cards/lease'
 
 const store = new Collection({
-  basePath() {
-    const activation = localStorage.getItem('activation_token')
-    const path = activation ? 'tenants/activate' : 'account/leases'
-    return path
-  }
+  basePath: 'account/leases'
 })
 
 export default {

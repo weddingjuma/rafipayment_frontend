@@ -19,10 +19,8 @@
 
 <script>
 import _ from 'lodash'
+import app from '@/app'
 import session from '@/session'
-
-// models
-// import UserModel from '@/models/user'
 
 // components
 import noLease from './no_lease'
@@ -71,6 +69,24 @@ export default {
       session.loadActivation(token)
         .then((response) => {
           this.current_step = this.getCurrentStep()
+          if (!this.steps.length) {
+            this.$router.replace('/')
+            app.alert(
+              `You have already activated your account. Please log in.`,
+              () => {},
+              'Already Activated'
+            )
+          }
+        })
+        .catch(() => {
+          this.$router.replace('/')
+          app.alert(
+            `That activation token has expired. If you already activated your
+            account, please log in. Otherwise, ask your property manager to
+            reinvite you.`,
+            () => {},
+            'Token Expired'
+          )
         })
     } else {
       this.$user = session.$user.toJSON()
@@ -258,10 +274,10 @@ export default {
     .icon-container {
       display: none;
     }
-  }
 
-  .back-container {
-    top: 0;
+    .back-container {
+      top: 0;
+    }
   }
 }
 </style>

@@ -120,6 +120,9 @@ export default {
       return session.$user
     }
   },
+  created() {
+    session.update()
+  },
   methods: {
     confirm() {
       console.log('confirmed');

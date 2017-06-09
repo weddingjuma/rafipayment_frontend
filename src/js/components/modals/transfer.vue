@@ -61,6 +61,8 @@ export default {
       this.$emit('close')
     },
     getSuggestion() {
+      console.log(this.model.lease);
+      console.log(_.get(this.model.lease.split, session.$user.id));
       return this.model.type === 'monthly'
       ? _.get(this.model.lease.split, session.$user.id)
       : this.model.better_display_balance

@@ -82,7 +82,9 @@ export default new Vue({
       request.then((response) => {
         this.dispatchActivate(response)
       })
-      .catch(() => {})
+      .catch((error) => {
+        console.warn(error)
+      })
       .then(() => {
         this.$store.dispatch('loading_end')
       })
@@ -94,7 +96,9 @@ export default new Vue({
         .then(response => {
           this.dispatchLogin(response)
         })
-        .catch(() => {})
+        .catch((error) => {
+          console.warn(error)
+        })
         .then(() => {
           this.$store.dispatch('loading_end')
         })
@@ -138,6 +142,13 @@ export default new Vue({
         this.clearSessionUser()
       })
       return request
+    },
+    update() {
+      return this.request('account/')
+      .then((user) => {
+        console.log({user});
+        this.$store.dispatch('update', user)
+      })
     },
     dispatchActivate(user) {
       this.$store.dispatch('activate', user)

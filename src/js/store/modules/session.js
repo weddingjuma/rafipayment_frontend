@@ -51,6 +51,9 @@ export default {
     'session:actions_required': state => {
       return _.get(state, 'actions_required')
     },
+    'session:funding_sources': state => {
+      return _.get(state, 'funding_sources')
+    },
     'session:primary_funding_source': state => {
       return _.get(state, 'primary_funding_source')
     }
@@ -62,6 +65,9 @@ export default {
     LOGIN(state, user) {
       state.user = user
       state.logged_in = true
+    },
+    UPDATE(state, user) {
+      _.merge(state.user, user)
     },
     SET_ACTIONS_REQUIRED(state, steps) {
       state.actions_required = steps
@@ -87,6 +93,9 @@ export default {
     logout({ commit, dispatch }) {
       dispatch('reset_all')
       localStorage.removeItem('refresh_token')
+    },
+    update({ commit }, user) {
+      commit('UPDATE', user)
     },
     set_actions_required({ commit }, steps) {
       commit('SET_ACTIONS_REQUIRED', steps)

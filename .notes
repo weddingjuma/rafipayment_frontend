@@ -40,9 +40,19 @@ FE
 - Write fucking tests jesus christ
 
 
+TODAY
+
+- set time for testing
+X- refetch account in account views!!!!!!!!!!!!
+X- logging in as a different user seems broken
+- collin's bug
+
+
+
 
 BACK END
 
+- inviting a removed user is really weird, it kind of just unremoves them
 - back end make IAV tokens endpoints consistent
 X- back end made /bills and /account/bills both resolve lease
 X- /activate/contact doesn't show terms accepted

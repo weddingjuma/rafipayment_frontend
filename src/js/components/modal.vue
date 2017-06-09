@@ -39,8 +39,12 @@ export default {
     }
   },
   mounted() {
+    document.body.classList.add('lock')
     const default_focus = _.get(this.$parent, '$refs.default')
     if (default_focus) default_focus.focus()
+  },
+  beforeDestroy() {
+    document.body.classList.remove('lock')
   },
   computed: {
     has_confirm() {
