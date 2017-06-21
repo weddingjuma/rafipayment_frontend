@@ -103,6 +103,11 @@ nav {
 }
 
 @media (min-width: $breakpoint-medium) {
+
+  .nav-container {
+    width: 240px;
+  }
+
   nav {
     a {
       padding: 14px 20px;

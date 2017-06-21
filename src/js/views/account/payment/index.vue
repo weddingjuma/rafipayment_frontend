@@ -31,7 +31,7 @@ const store = new Collection({
 
 export default {
   store,
-  // collection: true,
+  collection: true,
   data() {
     return {
       loaded: false,

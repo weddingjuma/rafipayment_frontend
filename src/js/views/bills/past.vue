@@ -30,6 +30,7 @@ const store = new Collection({
 
 export default {
   store,
+  collection: true,
   name: 'past-bills',
   data() {
     return {

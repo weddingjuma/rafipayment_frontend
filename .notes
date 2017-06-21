@@ -40,15 +40,74 @@ FE
 - Write fucking tests jesus christ
 
 
+
+
+
+
+
 TODAY
 
-- set time for testing
+WHAT I DID ON MONDAY
+
+- design app assets for app stores
+- set up deep linking for Android, test extensively
+- set up Google Play console account and app registration/config
+- plan for desktop layout for the app
+
+
+WHAT IS LEFT TO DO
+
+- process testing feedback
+
+- update public site
+  - add buttons for App Store, Google Play
+  - write some copy about the native app
+
+- submit public apps to app stores, get approval
+
+- prepare communication to tenants
+
+
+
+
+
+
+
+- there is an alert stuck on the app somehow?
+
+
+
+Product Manager
+
+WHAT WE NEED
+- someone who can help improve and refine the product
+- someone who can write copy talking about what the product is
+- someone who can talk about additional features while maintaining the integrity and values of the product
+- someone who can help to inform user experience
+- someone who can work with us as a peer
+- someone who is excited about the product and working with our team
+
+- our process gets slowed down because we dont have enough help planning ux and designing stuff, not because we dont have enough coders
+
+Android deep linking notes
+
+- Add domain to Google Webmasters
+- Link domain to Google Play console account
+- add ./well-known/assetlinks.json
+
+- test with
+  adb shell am start -a android.intent.action.VIEW -d "https://app.payment.rafiproperties.com/dashboard" com.rafi.payment
+
+
+X- set time for testing
 X- refetch account in account views!!!!!!!!!!!!
 X- logging in as a different user seems broken
-- collin's bug
+X- collin's bug
 
+X- universal links for android
 
-
+- update public site
+- google index public site
 
 BACK END
 
@@ -155,12 +214,6 @@ X- set up microdeposits
 
 - dont tell tenants rent is overdue, just say DUE again
 
-- finish tenant app in a reasonable amount of time
-  - resolve design issues
-  - testing, details
-  - debugging
-  - deployment
-
 Z- transfer is waiting for webhook to create cancel_expiration
 
 - Google Analytics on mobile?
@@ -169,8 +222,8 @@ Z- transfer is waiting for webhook to create cancel_expiration
 
 TODO
 
-- remove phonegap/cordova deps out of repo, into an install script
-- maybe use Vue with Vuex for collection to make API more consistent
+X- remove phonegap/cordova deps out of repo, into an install script
+Z- maybe use Vue with Vuex for collection to make API more consistent
 
 
 - filtering should work more like excel, just remove useless filters from lists
@@ -258,13 +311,13 @@ X- UI Kit (1 week)
 - Branding (1 week)
 X- Better build flow (1 week)
   Z- Use cordova build script from this guy: https://github.com/scriptPilot/app-framework
-  - Check out Phonegap Build, maybe hydration
+  Z- Check out Phonegap Build, maybe hydration
 X- Push notifications (1 week)
 - Websockets layer (1 week)
 - Improve public facing website (1 week)
   - Improve Help section
   - Add iOS, Android info, screenshots
-- Test deep linking (3 days)
+X- Test deep linking (3 days)
 
 
 DONE

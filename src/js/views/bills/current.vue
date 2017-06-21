@@ -28,6 +28,7 @@ const store = new Collection({
 
 export default {
   store,
+  collection: true,
   name: 'current-bills',
   data() {
     return {

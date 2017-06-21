@@ -4,7 +4,7 @@
     <description>
     Rent payment made easy!
   </description>
-    <author email="nford@rafiproperties.com" href="http://payment.rafiproperties.com">
+  <author email="nford@rafiproperties.com" href="http://payment.rafiproperties.com">
     Rafi Payment Team
   </author>
     <universal-links>
@@ -19,6 +19,7 @@
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <preference name="orientation" value="portrait" />
+    <preference name="AndroidLaunchMode" value="singleInstance" />
     <allow-navigation href="https://sandbox.dwolla.com" />
     <platform name="android">
         <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png" />
