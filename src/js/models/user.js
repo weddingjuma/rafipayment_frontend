@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import Model from '@/modules/model'
+import { Model } from '@/plugins/model'
 
 import getOnboardingSteps from '@/utils/getOnboardingSteps'
 import getSecondarySteps from '@/utils/getSecondarySteps'

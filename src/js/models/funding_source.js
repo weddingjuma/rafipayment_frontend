@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import app from '@/app'
 import session from '@/session'
-import Model from '@/modules/model'
+import { Model } from '@/plugins/model'
 
 const defaults = {
   name: 'funding_source',

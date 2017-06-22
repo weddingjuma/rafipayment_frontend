@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import moment from 'moment'
 import session from '@/session'
-import Model from '@/modules/model'
+import { Model } from '@/plugins/model'
 import { ISODate, Currency } from '@/modules/types'
 
 const defaults = {

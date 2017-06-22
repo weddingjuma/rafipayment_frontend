@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import moment from 'moment'
-import Model from '@/modules/model'
+import { Model } from '@/plugins/model'
 import session from '@/session'
 
 import { ISODate, Currency } from '@/modules/types'
