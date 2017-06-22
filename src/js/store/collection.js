@@ -4,13 +4,13 @@ import { ISODate } from '@/modules/types'
 
 import app from '@/app'
 import session from '@/session'
-import BaseModel from '@/modules/model'
+import { Model } from '@/plugins/model'
 
 import { sort, sortByDate } from '../utils'
 
 export default class Collection {
   constructor({
-    model = BaseModel,
+    model = Model,
     id_attribute = 'id',
     basePath = '',
     createPath = '',
