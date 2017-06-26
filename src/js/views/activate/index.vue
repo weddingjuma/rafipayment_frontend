@@ -3,7 +3,8 @@
     <transition name="fade">
       <component :is="current_step.name" :step="current_step">
         <header>
-          <logo></logo>
+          <dwolla-logo v-if="current_step.name === 'dwolla-bank'"></dwolla-logo>
+          <logo v-else></logo>
           <div class="back-container" v-if="current_step.index">
             <button class="back" @click="back">
               <svg viewBox="-140 146 30 40"><polyline points="-116.6,185.6 -136.2,166 -116.6,146.4 "></polyline></svg>
@@ -21,6 +22,7 @@
 import _ from 'lodash'
 import app from '@/app'
 import session from '@/session'
+import { toggleStatusBar } from '@/utils'
 
 // components
 import noLease from './no_lease'
@@ -30,6 +32,8 @@ import dwollaBank from './dwolla_bank'
 import showLease from './show_lease'
 import split from './split'
 import setPassword from './set_password'
+
+import dwollaLogo from '@/components/dwolla_logo'
 
 export default {
   name: 'activation',
@@ -73,7 +77,7 @@ export default {
             this.$router.replace('/')
             app.alert(
               `You have already activated your account. Please log in.`,
-              () => {},
+              null,
               'Already Activated'
             )
           }
@@ -84,7 +88,7 @@ export default {
             `That activation token has expired. If you already activated your
             account, please log in. Otherwise, ask your property manager to
             reinvite you.`,
-            () => {},
+            null,
             'Token Expired'
           )
         })
@@ -93,11 +97,18 @@ export default {
       this.current_step = this.getCurrentStep()
     }
   },
+  mounted() {
+    toggleStatusBar(false)
+  },
+  beforeDestroy() {
+    toggleStatusBar(true)
+  },
   methods: {
     getCurrentStep() {
       const current_step = this.steps.find((step) => {
         return step.value === false || step.value === undefined
       })
+      // console.log(this.steps);
       return current_step
     },
     next() {
@@ -107,6 +118,7 @@ export default {
       } else {
         this.current_step = this.steps[next_index]
       }
+      // console.log('next');
     },
     back() {
       const prev_index = this.current_step.index - 1
@@ -144,7 +156,8 @@ export default {
     dwollaBank,
     showLease,
     split,
-    setPassword
+    setPassword,
+    dwollaLogo
   }
 }
 </script>
@@ -198,6 +211,11 @@ export default {
     top: 10px;
     left: 40px;
     width: 100px;
+  }
+
+  .dwolla-logo {
+    width: 180px;
+    margin: 0 auto;
   }
 
   header {

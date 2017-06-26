@@ -92,6 +92,9 @@ export default new Vue({
     },
     loadSession() {
       const token = localStorage.getItem('refresh_token')
+      if (token === 'undefined') {
+        return localStorage.removeItem('refresh_token')
+      }
       const promise = !token ? Promise.reject('No token') : this.request('users/tokens')
         .then(response => {
           this.dispatchLogin(response)
@@ -182,6 +185,7 @@ export default new Vue({
       return actions_required
     },
     fetchFundingSources() {
+      console.log('fetchFundingSources');
       if (!['tenant'].includes(this.$user.role)) return
       const path = this.logged_in ? 'account' : 'tenants/activate'
 

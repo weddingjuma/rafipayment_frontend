@@ -24,7 +24,7 @@
 
 <script>
 // import _ from 'lodash'
-import session from '@/session'
+// import session from '@/session'
 import { sleep } from '@/utils'
 import dwollaIav from '@/components/dwolla_iav'
 
@@ -43,13 +43,14 @@ export default {
   },
   methods: {
     async waitForNext() {
+      // console.log('waitForNext');
       this.loading = true
       // this is the same endpoint we just posted to, so we have to wait over
       // 1000ms or risk getting throttled
-      await sleep(1200)
-      const token = localStorage.getItem('activation_token')
-      await session.loadActivation(token)
-      session.fetchFundingSources()
+      // await sleep(1200)
+      // const token = localStorage.getItem('activation_token')
+      // await session.loadActivation(token)
+      // session.fetchFundingSources()
       await sleep(3000)
       this.loading = false
       this.$parent.next()

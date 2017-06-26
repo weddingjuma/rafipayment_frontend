@@ -92,7 +92,7 @@ export default {
       // console.warn('process error', error);
     },
     processDwollaResponse(response) {
-      console.log('callback firing', response);
+      // console.log('callback firing', response);
       const id = _.get(response, '_links.funding-source.href').split('funding-sources/')[1]
       const status = _.get(response, '_links.verify-micro-deposits') ? 'unverified' : 'verified'
       const body = {
@@ -108,6 +108,7 @@ export default {
       })
       .then(async (data) => {
         if (session.logged_in) {
+          // console.log('dwolla_iva.vue thinking session is logged in');
           await session.loadSession()
         } else {
           const token = _.get(this.$route.query, 'token')
