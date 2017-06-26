@@ -1,3 +1,5 @@
+/* global StatusBar */
+
 import 'whatwg-fetch'
 import _ from 'lodash'
 import moment from 'moment'
@@ -7,16 +9,42 @@ import config from '@/config'
 
 import _statesHelper from './statesHelper'
 
+// toggle status bar on Mobile
+
+const env = process.env.NODE_ENV
+
+export const toggleStatusBar = (val) => {
+  if (env === 'cordova') {
+    try {
+      val ? StatusBar.show() : StatusBar.hide()
+    } catch(e) {}
+  }
+}
+
 // return error data from request
 
-export const handleErrors = (response, tracking) => {
+export const handleXHRErrors = (response) => {
   let json = response.json();
   if (!response.ok) return json.then(Promise.reject.bind(Promise))
-  if (tracking) console.log(tracking)// send to sentry
+  // if (tracking) console.log(tracking) // send to sentry
   return json
 }
 
+const handleTimeout = () => {
+  // console.log('TIMEOUT TIMEOUT');
+  import('@/app')
+  .then(({default: app}) => {
+    app.alert(
+      'The request timed out',
+      null,
+      'Timed out'
+    )
+  })
+}
+
 // generic XHR
+
+const timeout_duration = 30000
 
 export const Request = (url = '', {
   method = 'GET',
@@ -35,12 +63,20 @@ export const Request = (url = '', {
   // side effects?
   headers = _headers
 
-  return fetch(url, {
-    method,
-    headers,
-    body
-  })
-  .then(handleErrors)
+  const race = Promise.race([
+    fetch(url, {
+      method,
+      headers,
+      body
+    })
+    .then(handleXHRErrors),
+    new Promise(function (resolve, reject) {
+      setTimeout(() => reject(new Error('request timeout')), timeout_duration)
+    })
+  ])
+
+  race.catch(handleTimeout)
+  return race
 }
 
 // load scripts from cdn

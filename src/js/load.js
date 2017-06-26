@@ -17,15 +17,15 @@ import '../scss/styles.scss';
 const env = process.env.NODE_ENV
 
 if (config.sentry) {
-  require(['./modules/sentry'])
+  import('./modules/sentry')
 }
 
 if (config.debug) {
-  require(['./debug'])
+  import('./debug')
 }
 
 if (env === 'cordova') {
-  require(['./modules/push_notifications'])
+  import('./modules/push_notifications')
 }
 
 const template = `
@@ -69,7 +69,7 @@ export default new Vue({
       await this.$become('ready', true)
       this.loading = false
       this.$destroy()
-      require(['@/app'])
+      import('@/app')
     }
   }
 });

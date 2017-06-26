@@ -23,16 +23,17 @@ const app = {
       'android': {
         'senderID': '582343470433'
       },
-      'browser': {},
       'ios': {
         'sound': true,
         'vibration': true,
         'badge': true
       },
+      'browser': {},
       'windows': {}
     })
 
     push.on('registration', function(data) {
+      console.log({data});
       const oldRegId = localStorage.getItem('registrationId')
       if (oldRegId !== data.registrationId) {
         localStorage.setItem('registrationId', data.registrationId)
@@ -43,26 +44,23 @@ const app = {
     this.bindClearAll()
     this.clearAll()
 
-    // push.on('error', function(e) {
-    //   alert('push error = ' + e.message)
-    // })
+    push.on('error', function(e) {
+      console.warn(e);
+      // alert('push error = ' + e.message)
+    })
 
-    // push.on('notification', function(data) {
-    //   console.log('notification event', data)
-    //   navigator.notification.alert(
-    //     data.message,         // message
-    //     null,                 // callback
-    //     data.title,           // title
-    //     'Ok'                  // buttonName
-    //   )
-    // })
+    push.on('notification', function(data) {
+      console.log('notification event', data)
+      // navigator.notification.alert(
+      //   data.message,         // message
+      //   null,                 // callback
+      //   data.title,           // title
+      //   'Ok'                  // buttonName
+      // )
+    })
   },
   clearAll() {
-    push.clearAllNotifications(() => {
-      console.log('success');
-    }, () => {
-      console.log('error');
-    });
+    return push.clearAllNotifications();
   }
 }
 

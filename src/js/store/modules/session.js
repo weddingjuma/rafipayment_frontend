@@ -84,11 +84,11 @@ export default {
   actions: {
     activate({ commit }, user) {
       commit('ACTIVATE', user)
-      localStorage.setItem('activation_token', user.session.activation_token)
+      localStorage.setItem('activation_token', _.get(user, 'session.activation_token'))
     },
     login({ commit }, user) {
       commit('LOGIN', user)
-      localStorage.setItem('refresh_token', user.session.refresh_token)
+      localStorage.setItem('refresh_token', _.get(user, 'session.refresh_token'))
     },
     logout({ commit, dispatch }) {
       dispatch('reset_all')

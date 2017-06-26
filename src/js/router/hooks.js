@@ -1,14 +1,5 @@
-import session from './../session'
-
-const env = process.env.NODE_ENV
-
-const toggleStatusBar = (val) => {
-  try {
-    if (env === 'cordova') {
-      val ? StatusBar.show() : StatusBar.hide() // eslint-disable-line no-undef
-    }
-  } catch(e) {}
-}
+import session from '@/session'
+import { toggleStatusBar } from '@/utils'
 
 const closeNav = () => {
   if (session.$store.getters.nav_visible) session.$store.dispatch('nav_hide')

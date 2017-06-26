@@ -93,7 +93,7 @@ const install = (Vue, opts = {}) => {
 const env = process.env.NODE_ENV
 
 if (env === 'cordova') {
-  require(['@/modules/universal_links'])
+  import('@/modules/universal_links')
 }
 
 install(Vue)

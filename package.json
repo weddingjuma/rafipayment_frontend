@@ -19,7 +19,7 @@
     },
     "dependencies": {
         "animejs": "^2.0.2",
-        "cordova-ios": "~4.3.1",
+        "cordova-ios": "^4.4.0",
         "cordova-plugin-battery-status": "~1.1.1",
         "cordova-plugin-camera": "~2.1.1",
         "cordova-plugin-console": "~1.0.2",
@@ -162,9 +162,8 @@
             "cordova-plugin-vibration": {},
             "cordova-plugin-whitelist": {},
             "phonegap-plugin-push": {
-                "SENDER_ID": "1:582343470433:android:AAAAh5ZgLWE:APA91bETyDVjD0Ik-yQYVv2KjikDm0nliB2zpInnjjQ9ZEA-TJ4oelsFluuWsNFOXyfTaEf48eY3RqevfArqh7ZzVgSn0hOPKCJjv-mus0rx0r7JAUHQUrdhhOC36oorbPBB8OzC2ECB"
-            },
-            "cordova-plugin-secure-storage": {}
+                "SENDER_ID": "1:582343470433:android:9bde5be4ab52af2c"
+            }
         }
     }
 }

@@ -55,7 +55,7 @@ export default new Vue({
       const deferred = new Deferred()
 
       request.then((response) => {
-        if (response.error === 'token_expired') {
+        if (_.get(response, 'error') === 'token_expired') {
           this.loadSession()
           .then(() => {
             this.request(url, options)

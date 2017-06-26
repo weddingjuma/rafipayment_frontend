@@ -25,6 +25,7 @@
 
 <script>
 import _ from 'lodash'
+import { toggleStatusBar } from '@/utils'
 
 export default {
   name: 'modal',
@@ -40,11 +41,13 @@ export default {
   },
   mounted() {
     document.body.classList.add('lock')
+    toggleStatusBar(false)
     const default_focus = _.get(this.$parent, '$refs.default')
     if (default_focus) default_focus.focus()
   },
   beforeDestroy() {
     document.body.classList.remove('lock')
+    toggleStatusBar(true)
   },
   computed: {
     has_confirm() {

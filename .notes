@@ -42,21 +42,10 @@ FE
 
 
 
-
-
-
-TODAY
-
-WHAT I DID ON MONDAY
-
-- design app assets for app stores
-- set up deep linking for Android, test extensively
-- set up Google Play console account and app registration/config
-- plan for desktop layout for the app
-
-
 WHAT IS LEFT TO DO
 
+
+- invite test users!
 - process testing feedback
 
 - update public site
@@ -64,16 +53,15 @@ WHAT IS LEFT TO DO
   - write some copy about the native app
 
 - submit public apps to app stores, get approval
-
 - prepare communication to tenants
 
 
 
 
+X- add timeout to requests
+- use service workers to check for offline mode
 
-
-
-- there is an alert stuck on the app somehow?
+X- there is an alert stuck on the app somehow?
 
 
 
