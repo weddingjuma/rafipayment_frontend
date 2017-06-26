@@ -45,11 +45,11 @@ FE
 WHAT IS LEFT TO DO
 
 
-- invite test users!
+X- invite test users!
 - process testing feedback
 
 - update public site
-  - add buttons for App Store, Google Play
+  X- add buttons for App Store, Google Play
   - write some copy about the native app
 
 - submit public apps to app stores, get approval
@@ -76,6 +76,9 @@ WHAT WE NEED
 - someone who is excited about the product and working with our team
 
 - our process gets slowed down because we dont have enough help planning ux and designing stuff, not because we dont have enough coders
+
+
+
 
 Android deep linking notes
 
@@ -117,8 +120,11 @@ X- transfers
 FRONT END
 
 
-- make app handle urls!
-- srsrly add some success visual when they finish onboarding...
+X- make app handle urls!
+
+
+
+X- add some success visual when they finish onboarding...
 
 
 Pay your rent with Rafi Payment! You'll receive automatic reminders and notifications when your rent is due, and regarding bills and payments, or you can set up autopay and forget about it!

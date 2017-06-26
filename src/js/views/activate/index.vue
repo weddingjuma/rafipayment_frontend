@@ -102,8 +102,11 @@ export default {
     },
     next() {
       const next_index = this.current_step.index + 1
-      if (next_index === this.steps.length) return this.complete()
-      this.current_step = this.steps[next_index]
+      if (next_index === this.steps.length) {
+        this.complete()
+      } else {
+        this.current_step = this.steps[next_index]
+      }
     },
     back() {
       const prev_index = this.current_step.index - 1
@@ -126,6 +129,11 @@ export default {
       .then(() => {
         // remove query string from url
         this.$router.replace({ query: {} })
+        app.alert(
+          'You\'re all set, thanks for activating your account!',
+          null,
+          'Account Activated'
+        )
       })
     }
   },
