@@ -30,16 +30,17 @@ export const handleXHRErrors = (response) => {
   return json
 }
 
-const handleTimeout = () => {
-  // console.log('TIMEOUT TIMEOUT');
-  import('@/app')
-  .then(({default: app}) => {
-    app.alert(
-      'The request timed out',
-      null,
-      'Timed out'
-    )
-  })
+const handleTimeout = (error) => {
+  if (error.message === 'request_timeout') {
+    import('@/app')
+    .then(({default: app}) => {
+      app.alert(
+        'The request timed out',
+        null,
+        'Timed out'
+      )
+    })
+  }
 }
 
 // generic XHR
@@ -71,7 +72,7 @@ export const Request = (url = '', {
     })
     .then(handleXHRErrors),
     new Promise(function (resolve, reject) {
-      setTimeout(() => reject(new Error('request timeout')), timeout_duration)
+      setTimeout(() => reject(new Error('request_timeout')), timeout_duration)
     })
   ])
 
