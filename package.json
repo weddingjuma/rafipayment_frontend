@@ -4,6 +4,7 @@
   "description": "Rent management at your fingertips",
   "author": "Nick Ford <nickforddesign@gmail.com>",
   "scripts": {
+    "version": "node build/version.js",
     "start": "node build/dev-server.js",
     "ui": "node build/dev-server-ui.js",
     "build": "node build/build.js",
