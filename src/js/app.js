@@ -118,8 +118,8 @@ export default new Vue({
         localStorage.setItem('_ls_test', 'testing_local_storage')
         localStorage.removeItem('_ls_test')
       } catch(error) {
-        this.alert(`Your curernt browser does not support local storage. If you
-                    are in private browser mode, please disable it.`)
+        this.alert(`Your browser does not support local storage. If you
+                    are in private browsing mode, please disable it.`)
       }
     },
     alert(

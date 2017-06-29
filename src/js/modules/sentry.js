@@ -9,9 +9,13 @@ Raven
   .addPlugin(RavenVue, Vue)
   .install()
 
-console.log(Raven);
+const captureException = (error, showReportDialog) => {
+  Raven.captureException(error)
+  if (showReportDialog) Raven.showReportDialog()
+}
 
 window.onerror = (msg, url, lineNo, columnNo, error) => {
-  Raven.captureException(error)
-  // Raven.showReportDialog()
+  captureException(error)
 }
+
+export default captureException

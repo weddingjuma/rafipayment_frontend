@@ -54,6 +54,10 @@
         <button class="neutral" @click="reset4">Reset</button>
       </div>
     </div>
+
+    <h2>Sentry</h2>
+
+    <button @click="captureError">Test Error Capturing</button>
   </div>
 </template>
 
@@ -61,6 +65,8 @@
 
 <script>
 import { sleep } from '@/utils'
+import sentry from '@/modules/sentry'
+
 export default {
   data() {
     return {
@@ -77,6 +83,10 @@ export default {
     this.go3()
   },
   methods: {
+    captureError() {
+      const error = new Error('this is a test error')
+      return sentry(error, true)
+    },
     async start() {
       await sleep(1000)
       this.go()

@@ -7,6 +7,7 @@ import _ from 'lodash'
 import config from '@/config'
 import { load } from '@/utils'
 import session from '@/session'
+import sentry from '@/modules/sentry'
 
 let dwolla_js
 let dwolla_loaded = false
@@ -62,6 +63,7 @@ export default {
         //  IAV failed
         } else if (error) {
           console.warn(error)
+          sentry(error)
         }
       })
       this.iframeListen()
@@ -87,6 +89,7 @@ export default {
       this.$emit('load')
     },
     handleError(error) {
+      // console.log('error', error);
       this.$emit('error', error)
       // console.warn('sentry should send here');
       // console.warn('process error', error);

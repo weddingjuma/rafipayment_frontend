@@ -37,12 +37,21 @@ FE
 - General UI notes
 - Environment mgmt
 - All custom plugins / components / filters / validations
+
+
+
 - Write fucking tests jesus christ
 
 
 
 
 WHAT IS LEFT TO DO
+
+
+
+
+rafiproperties@gmail.com
+burritos4dogzRawesome
 
 
 X- invite test users!
@@ -68,6 +77,12 @@ X- there is an alert stuck on the app somehow?
 Product Manager
 
 WHAT WE NEED
+https://medium.com/@dasilva_jill/how-to-hire-a-ux-designer-d17b360d926d
+https://uxdesign.cc/the-ux-of-hiring-for-ux-positions-255b6149066e
+
+Come up with a design challenge
+UX designers should ask a lot of questions
+
 - someone who can help improve and refine the product
 - someone who can write copy talking about what the product is
 - someone who can talk about additional features while maintaining the integrity and values of the product
@@ -101,6 +116,9 @@ X- universal links for android
 - google index public site
 
 BACK END
+
+- Commercial leasing seems to have different needs from residential
+
 
 - inviting a removed user is really weird, it kind of just unremoves them
 - back end make IAV tokens endpoints consistent

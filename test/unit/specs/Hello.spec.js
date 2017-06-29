@@ -1,5 +1,23 @@
+// import { Model } from '@/plugins/model'
 // import Vue from 'vue'
-import Model from '@/modules/model'
+import User from '@/models/user'
+
+describe('Models', () => {
+  it('create a model', (done) => {
+    done()
+    // const user = new User({
+    //   first_name: 'Jane',
+    //   last_name: 'Goodall'
+    // })
+    // console.log(user);
+    // expect('Jane Goodall')
+    //   .to.equal('Jane Goodall')
+  });
+});
+
+/*
+// import Vue from 'vue'
+import { Model } from '@/plugins/model'
 
 console.log(Model);
 
@@ -45,3 +63,4 @@ describe('Models', () => {
 //       .to.equal('Welcome to Your Vue.js App')
 //   })
 // })
+*/
