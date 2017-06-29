@@ -1,1 +1,3 @@
-console.log('testing version')
+'use strict'
+const version = require('./package.json').version
+console.log(version);
