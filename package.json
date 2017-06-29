@@ -3,6 +3,8 @@
   "version": "1.0.5",
   "description": "Rent management at your fingertips",
   "author": "Nick Ford <nickforddesign@gmail.com>",
+  "repository": "https://github.com/TheRafiApp/rafipayment_frontend",
+  "license": "MIT",
   "scripts": {
     "version": "node build/version.js",
     "start": "node build/dev-server.js",
@@ -52,6 +54,7 @@
     "circular-dependency-plugin": "^3.0.0",
     "connect-history-api-fallback": "^1.3.0",
     "copy-webpack-plugin": "^4.0.1",
+    "cordova-auto-patch": "^1.2.2",
     "cross-env": "^3.1.4",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.26.1",
