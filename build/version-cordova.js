@@ -52,7 +52,7 @@ module.exports = (path = '', version = null) => {
 
       fs.writeFile(file, newConfig, params, function (er) {
         if (er) throw er
-        console.log(`Build version: ${new_version}`)
+        // console.log(`Build version: ${new_version}`)
       })
     })
   })
