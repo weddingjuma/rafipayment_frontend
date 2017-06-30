@@ -3,10 +3,7 @@ import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import { Request, Deferred } from '@/utils'
 import store from '@/store'
-import VueModel from '@/plugins/model'
 import UserModel from '@/models/user'
-
-Vue.use(VueModel)
 
 export default new Vue({
   name: 'session',

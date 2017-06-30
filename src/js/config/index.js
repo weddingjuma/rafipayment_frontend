@@ -13,7 +13,7 @@ const defaults = {
 }
 
 const env = process.env.NODE_ENV
-const env_config = require(`@/config/env/${env}`).config
+const env_config = require(`./env/${env}`).config
 
 const config = _.merge(defaults, env_config)
 

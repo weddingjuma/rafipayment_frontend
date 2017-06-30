@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { ISODate } from '@/modules/types'
 import * as utils from '@/utils/index'
 
-import session from '@/session'
+import { request } from '@/session'
 
 const getDiff = (oldData, newData) => {
   const keys = getChangedKeys(oldData, newData)
@@ -38,10 +38,10 @@ export default class Model {
     // make sure options is an array and then merge items
     let _options = !(options instanceof Array) ? [ options ] : options
     _options = _.reduce(_options, (sum, n) => {
-      return _.merge(sum, n)
+      return _.merge({}, sum, n)
     })
 
-    this.default_options = {
+    const default_options = {
       name: 'model',
       created() {
         this.set(attributes)
@@ -72,14 +72,14 @@ export default class Model {
       },
       methods: {
         fetch() {
-          const request = session.request(this.urlRoot)
+          const request = request(this.urlRoot)
           request.then((response) => {
             this.set(response)
           })
           return request
         },
         destroy() {
-          return session.request(this.urlRoot, {
+          return request(this.urlRoot, {
             method: 'DELETE'
           })
         },
@@ -93,7 +93,7 @@ export default class Model {
           const body = utils.decodeWithSchema(changed, schema)
           const method = this.isNew ? 'POST' : 'PUT'
           const path = _options.path ? '/' + _options.path : ''
-          return session.request(this.url + path, {
+          return request(this.url + path, {
             method,
             body
           })
@@ -110,7 +110,6 @@ export default class Model {
           utils.resetState(this.$data, default_attributes())
         },
         toJSON() {
-          // TODO: can't be used inside a computed property
           return utils.modelToJSON(this)
         },
         decode() {
@@ -122,7 +121,7 @@ export default class Model {
       }
     }
 
-    const model_options = _.merge(this.default_options, _options)
+    const model_options = _.merge({}, default_options, _options)
 
     return new Vue(model_options)
   }

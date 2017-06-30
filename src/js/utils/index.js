@@ -32,7 +32,7 @@ export const handleXHRErrors = (response) => {
 
 const handleTimeout = (error) => {
   if (error.message === 'request_timeout') {
-    import('@/app')
+    require('@/app')
     .then(({default: app}) => {
       app.alert(
         'The request timed out',

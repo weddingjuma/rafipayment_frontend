@@ -1,16 +1,49 @@
 {
-  "presets": [
-    ["latest", {
-      "es2015": { "modules": false }
-    }],
-    "stage-2"
+  "plugins": [
+    "transform-runtime",
+    ["module-resolver", {
+      "alias": {
+        "@": "./src/js"
+      }
+    }]
   ],
-  "plugins": ["transform-runtime"],
   "comments": false,
   "env": {
     "test": {
       "presets": ["latest", "stage-2"],
       "plugins": ["istanbul"]
+    },
+    "cordova": {
+      "presets": [
+        ["latest", {
+          "es2015": { "modules": false }
+        }],
+        "stage-2"
+      ]
+    },
+    "dev": {
+      "presets": [
+        ["latest", {
+          "es2015": { "modules": false }
+        }],
+        "stage-2"
+      ]
+    },
+    "staging": {
+      "presets": [
+        ["latest", {
+          "es2015": { "modules": false }
+        }],
+        "stage-2"
+      ]
+    },
+    "production": {
+      "presets": [
+        ["latest", {
+          "es2015": { "modules": false }
+        }],
+        "stage-2"
+      ]
     }
   }
 }
