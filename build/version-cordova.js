@@ -1,4 +1,4 @@
-'use strict'
+// 'use strict'
 /**
  * Update cordova version and versionCode
  *
@@ -9,23 +9,13 @@
 const xml2js = require('xml2js')
 const fs = require('fs')
 
-module.exports = () => {
+module.exports = (path = '', version = null) => {
   const parser = new xml2js.Parser()
+  const builder = new xml2js.Builder()
+
   const params = { encoding: 'utf8' }
 
   const name = 'config.xml'
-  let path = ''
-  var version = null
-
-  // get manual path to the config folder
-  if (arguments[0] != null) {
-    path = arguments[0]
-  }
-
-  // get manual version string
-  if (arguments[1] != null) {
-    version = arguments[1]
-  }
 
   const file = path + name
 
@@ -57,7 +47,6 @@ module.exports = () => {
         new_version = version
       }
       // write back to config
-      const builder = new xml2js.Builder()
       config.widget.$.version = config.widget.$.versionCode = new_version
       const newConfig = builder.buildObject(config)
 
