@@ -30,14 +30,14 @@ const defaults = {
     length() {
       if (!this.start_date) return
       const { start, end } = this.getTerm()
-      if (!end) return 'N/A';
-      const duration = moment.duration(end.diff(start));
+      if (!end) return 'N/A'
+      const duration = moment.duration(end.diff(start))
 
       // round to the nearest .5 and remove the decimal if zero
-      const months = parseFloat((Math.round(duration.asMonths() * 2) / 2).toFixed(1));
-      const days = duration.asDays();
+      const months = parseFloat((Math.round(duration.asMonths() * 2) / 2).toFixed(1))
+      const days = duration.asDays()
 
-      const auto = months > 1 ? months + ' Months' : days + ' Days';
+      const auto = months > 1 ? months + ' Months' : days + ' Days'
       return { months, days, auto }
     },
     tenants_sorted() {
@@ -66,12 +66,16 @@ const defaults = {
     },
     total_rent_covered() {
       return this.splits_value_array.reduce((sum, value) => {
-        return value === undefined ? sum : sum + value
+        return value === undefined
+          ? sum
+          : sum + value
       }, 0)
     },
     missing_splits() {
       return this.splits_value_array.reduce((sum, value) => {
-        return value === undefined ? ++sum : sum
+        return value === undefined
+          ? ++sum
+          : sum
       }, 0)
     },
     rent_remaining() {
@@ -87,13 +91,17 @@ const defaults = {
     }
   },
   methods: {
-    getTerm(format) {
+    getTerm(format = 'MM/DD/YYYY') {
       if (!this.start_date) return
       const utc = moment.utc
-      const start = format ? utc(this.start_date).format(format) : utc(this.start_date)
+      const start = format
+        ? utc(this.start_date).format(format)
+        : utc(this.start_date)
       let end
       if (this.end_date) {
-        end = format ? utc(this.end_date).format(format) : utc(this.end_date)
+        end = format
+          ? utc(this.end_date).format(format)
+          : utc(this.end_date)
       } else {
         end = false
       }

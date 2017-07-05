@@ -93,7 +93,7 @@ const install = (Vue, opts = {}) => {
 const env = process.env.NODE_ENV
 
 if (env === 'cordova') {
-  import('@/modules/universal_links')
+  require('@/modules/universal_links')
 }
 
 install(Vue)
@@ -118,8 +118,10 @@ export default new Vue({
         localStorage.setItem('_ls_test', 'testing_local_storage')
         localStorage.removeItem('_ls_test')
       } catch(error) {
-        this.alert(`Your browser does not support local storage. If you
-                    are in private browsing mode, please disable it.`)
+        this.alert(
+          `Your browser does not support local storage. If you
+          are in private browsing mode, please disable it.`
+        )
       }
     },
     alert(
@@ -128,7 +130,9 @@ export default new Vue({
       title = 'Alert',
       button_label = 'OK'
     ) {
-      const createAlert = this.is_cordova ? navigator.notification.alert : this._modalAlert
+      const createAlert = this.is_cordova
+        ? navigator.notification.alert
+        : this._modalAlert
       return createAlert(message, callback, title, button_label)
     },
     confirm(
@@ -137,11 +141,15 @@ export default new Vue({
       title = 'Confirm',
       button_labels = ['OK', 'Cancel']
     ) {
-      const createAlert = this.is_cordova ? navigator.notification.confirm : this._modalConfirm
+      const createAlert = this.is_cordova
+        ? navigator.notification.confirm
+        : this._modalConfirm
 
-      const callback = !this.is_cordova ? _callback : (index) => {
-        if (index === 1) _callback()
-      }
+      const callback = !this.is_cordova
+        ? _callback
+        : (index) => {
+          if (index === 1) _callback()
+        }
       return createAlert(message, callback, title, button_labels)
     },
     _modalAlert(message, callback, title, button_label) {
