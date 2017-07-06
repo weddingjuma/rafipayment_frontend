@@ -1,22 +1,10 @@
 import Vue from 'vue'
-// import app from '@/app'
-// import session from '@/app'
-// import User from '@/models/user'
-
-// describe('Bound models', () => {
-//   it('should bind models to a view', () => {
-//     expect(session.user.full_name)
-//       .toBe('')
-//   })
-// })
 import VueModel from '@/plugins/model'
-// import { Model } from '@/plugins/model'
 import User from '@/models/user'
 
 Vue.use(VueModel)
 
 const test_component = new Vue({
-  // el: document.createElement('div'),
   template: '<div/>',
   models: {
     user() {
@@ -29,8 +17,14 @@ const test_component = new Vue({
 })
 
 describe('VueModel', () => {
-  it('should bind models to vue instance', () => {
+  it('should correctly bind models to vue instance', () => {
     expect(test_component.$user.full_name)
       .toBe('Tracy Jordan')
+  })
+
+  it('should reset models on destroy', () => {
+    test_component.$destroy()
+    expect(test_component.$user.first_name)
+      .toBe('')
   })
 })

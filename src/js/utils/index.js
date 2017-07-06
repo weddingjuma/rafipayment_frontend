@@ -179,7 +179,9 @@ export const parseCurrency = (value, constructor) => {
   if (/[^$,.\d\-+]/.test(value)) return false
   const amount = parseFloat(('' + value).replace(/[$,]/g, '')).toFixed(2)
   if (typeof amount !== 'string') return false
-  return constructor ? new constructor(amount).valueOf() : amount
+  return constructor
+    ? new constructor(amount).valueOf()
+    : amount
 }
 
 // make parsed currency floats look pretty
@@ -209,11 +211,14 @@ export const getDefaultsFromSchema = (schema) => {
       if ('type' in attr) {
         constructor = attr.type
         value = attr.default
-        if ([undefined, null].includes(value)) {
-          default_attrs[key] = value
-        } else {
-          default_attrs[key] = new constructor(value).valueOf()
-        }
+        default_attrs[key] = [undefined, null].includes(value)
+          ? value
+          : new constructor(value).valueOf()
+        // if ([undefined, null].includes(value)) {
+        //   default_attrs[key] = value
+        // } else {
+        //   default_attrs[key] = new constructor(value).valueOf()
+        // }
       } else {
         default_attrs[key] = getDefaultsFromSchema(attr)
       }
