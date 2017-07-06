@@ -143,7 +143,18 @@ export default class Lease extends Model {
       start_date: ISODate,
       end_date: ISODate,
       rent: Currency,
-      charges: Object,
+      charges: {
+        type: Object,
+        scheduled: {
+          type: Array,
+          amount: Currency,
+          date: ISODate
+        },
+        recurring: {
+          type: Array,
+          amount: Currency
+        }
+      },
       split: Object,
       first_bill_generation_date: ISODate,
       last_bill_generation_date: ISODate,
