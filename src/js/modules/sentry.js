@@ -4,15 +4,21 @@ import RavenVue from 'raven-js/plugins/vue'
 
 import config from '@/config'
 
-Raven
-  .config(config.sentry_url)
-  .addPlugin(RavenVue, Vue)
-  .install()
+const env = process.env.NODE_ENV
 
-const captureException = (error, showReportDialog) => {
-  Raven.captureException(error)
-  if (showReportDialog) Raven.showReportDialog()
+if (env !== 'dev') {
+  Raven
+    .config(config.sentry_url)
+    .addPlugin(RavenVue, Vue)
+    .install()
 }
+
+const captureException = env === 'dev'
+  ? console.warn
+  : (error, showReportDialog) => {
+    Raven.captureException(error)
+    if (showReportDialog) Raven.showReportDialog()
+  }
 
 window.onerror = (msg, url, lineNo, columnNo, error) => {
   captureException(error)

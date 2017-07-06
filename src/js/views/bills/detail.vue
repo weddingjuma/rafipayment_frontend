@@ -90,6 +90,7 @@ export default {
     }
   },
   created() {
+    // console.log(this.$bill);
     this.$bill.fetch()
     .then((res) => {
       // inject back route

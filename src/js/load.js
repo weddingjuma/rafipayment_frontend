@@ -1,12 +1,16 @@
 // core packages
 import Vue from 'vue';
 import config from './config'
-import session from '@/session'
+import session from './session'
 
-import VueBecome from '@/plugins/become'
+// import VueModel from './plugins/model'
+import VueBecome from './plugins/become'
 Vue.use(VueBecome)
 
 Vue.config.productionTip = false;
+
+// error tracking
+import './modules/sentry'
 
 // components
 import loading from './components/load';
@@ -16,9 +20,9 @@ import '../scss/styles.scss';
 
 const env = process.env.NODE_ENV
 
-if (config.sentry) {
-  import('./modules/sentry')
-}
+// if (config.sentry) {
+//   import('./modules/sentry')
+// }
 
 if (config.debug) {
   import('./debug')

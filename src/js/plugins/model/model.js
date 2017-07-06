@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { ISODate } from '@/modules/types'
 import * as utils from '@/utils/index'
 
-import { request } from '@/session'
+import { request } from './utils'
 
 const getDiff = (oldData, newData) => {
   const keys = getChangedKeys(oldData, newData)
@@ -72,11 +72,11 @@ export default class Model {
       },
       methods: {
         fetch() {
-          const request = request(this.urlRoot)
-          request.then((response) => {
+          const req = request(this.urlRoot)
+          req.then((response) => {
             this.set(response)
           })
-          return request
+          return req
         },
         destroy() {
           return request(this.urlRoot, {

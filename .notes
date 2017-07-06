@@ -40,12 +40,34 @@ FE
 
 
 
+X- figure out why testing isnt working
+X- switch testing to Jest
+- write additional tests
+- write documentation
+  - onboarding
+- separate VueModel into its own repository
+- genericize
+
+const config = {
+  methods: {
+    fetch() {
+      return Request(this.fetch_url)
+    },
+    save() {
+      return Request(this.save_url)
+    },
+    destroy() {
+      return Request(this.destory_url)
+    }
+  }
+}
+Vue.use(VueModel, config)
 
 
 
 WHAT IS LEFT TO DO
 
-
+/account is exposing password, auth data
 
 
 rafiproperties@gmail.com
@@ -53,17 +75,13 @@ burritos4dogzRawesome
 
 
 X- invite test users!
+- process testing feedback
 
-X- update public site
+- update public site
   X- add buttons for App Store, Google Play
   - write some copy about the native app
 
-- iOS follow up
-- android banner has
-
-
-
-
+- submit public apps to app stores, get approval
 - prepare communication to tenants
 
 

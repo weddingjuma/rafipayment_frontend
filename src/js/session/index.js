@@ -5,6 +5,17 @@ import { Request, Deferred } from '@/utils'
 import store from '@/store'
 import UserModel from '@/models/user'
 
+// const config = {
+//   tokens: {
+//     Authorization: store.getters['session:auth_token'],
+//     Authentication: localStorage.getItem('refresh_token'),
+//     Activation: localStorage.getItem('activation_token')
+//   }
+// }
+// console.log({store});
+import VueModel from '@/plugins/model'
+Vue.use(VueModel)
+
 export default new Vue({
   name: 'session',
   store,
@@ -33,9 +44,6 @@ export default new Vue({
       return this.logged_in
     },
     request(url = '', options = {}) {
-      const defaults = {
-        method: 'GET'
-      }
       const Authorization = this.$store.getters['session:auth_token']
       const Refresh = localStorage.getItem('refresh_token')
       const Activation = localStorage.getItem('activation_token')
@@ -45,10 +53,13 @@ export default new Vue({
         Activation,
         Refresh
       }
-      let _options = _.merge(defaults, options)
-      _options.headers = headers
+      const defaults = {
+        method: 'GET',
+        headers
+      }
+      options = _.merge({}, defaults, options)
 
-      const request = new Request(url, _options)
+      const request = new Request(url, options)
       const deferred = new Deferred()
 
       request.then((response) => {
@@ -146,7 +157,7 @@ export default new Vue({
     update() {
       return this.request('account/')
       .then((user) => {
-        console.log({user});
+        // console.log({user});
         this.$store.dispatch('update', user)
       })
     },
@@ -182,7 +193,7 @@ export default new Vue({
       return actions_required
     },
     fetchFundingSources() {
-      console.log('fetchFundingSources');
+      // console.log('fetchFundingSources');
       if (!['tenant'].includes(this.$user.role)) return
       const path = this.logged_in ? 'account' : 'tenants/activate'
 

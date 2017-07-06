@@ -80,6 +80,48 @@ export const Request = (url = '', {
   return race
 }
 
+// export class Request {
+//   constructor(url = '', {
+//     method = 'GET',
+//     body,
+//     headers = {}
+//   } = {}) {
+//     this.url = !/^https?:\/\//i.test(url)
+//       ? config.urls.api + url
+//       : url
+//     this.method = method
+//     if (body) this.body = JSON.stringify(body)
+//     this.headers = headers
+//     return this.init()
+//   }
+//   init() {
+//     const headers = new Headers()
+//     for (let key in this.headers) {
+//       if (this.headers[key]) {
+//         headers.append(key, this.headers[key])
+//       }
+//     }
+//     const race = Promise.race([
+//       fetch(this.url, {
+//         method: this.method,
+//         body: this.body,
+//         headers
+//       })
+//       .then(handleXHRErrors),
+//       new Promise(function (resolve, reject) {
+//         setTimeout(() => {
+//           reject(new Error('request_timeout'))
+//         }, timeout_duration)
+//       })
+//     ])
+//     race.catch(handleTimeout)
+//     return race
+//   }
+//   retry() {
+//     return this.init()
+//   }
+// }
+
 // load scripts from cdn
 
 export const load = (url) => {

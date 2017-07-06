@@ -9,6 +9,7 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+/*
 // import { mapGetters } from 'vuex'
 // import Collection from '@/store/collection'
 //
@@ -37,5 +38,5 @@ export default {
   components: {
     // bill
   }
-}
+}*/
 </script>

@@ -113,6 +113,9 @@ export default new Vue({
     await this.checkBrowserSupport()
   },
   methods: {
+    afterLeave(el) {
+      window.scroll(0, 0)
+    },
     checkBrowserSupport() {
       try {
         localStorage.setItem('_ls_test', 'testing_local_storage')
