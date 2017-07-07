@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import _ from 'lodash'
 import { ISODate } from '@/modules/types'
-import * as utils from '@/utils/index'
+import * as utils from './utils'
 
-import { request } from './utils'
+const { request } = utils
 
 const getDiff = (oldData, newData) => {
   const keys = getChangedKeys(oldData, newData)
@@ -101,9 +101,12 @@ export default class Model {
         set(data) {
           // NOTE: Vue reserves properties that begin with an underscore
           // so it is necessary to remove the underscore before setting
-          for (let key in data) {
-            const _key = key.charAt(0) === '_' ? key.substr(1) : key
-            this[_key] = data[key]
+          for (let _key in data) {
+            const key = _key.charAt(0) === '_'
+              ? _key.substr(1)
+              : _key
+            this[key] = data[_key]
+            // this[key] = utils.encodeWithSchema(data[_key], schema[_key])
           }
         },
         reset(defaults) {

@@ -11,6 +11,7 @@ export default (user) => {
     const split = _.get(lease.split, user.id)
 
     if (split === undefined) {
+      console.log('split missing', lease);
       steps.push({
         name: 'show-lease',
         value: split,

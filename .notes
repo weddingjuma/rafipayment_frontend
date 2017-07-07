@@ -39,6 +39,7 @@ FE
 - All custom plugins / components / filters / validations
 
 
+- make VueCollection api compatible with VueModel
 
 X- figure out why testing isnt working
 X- switch testing to Jest

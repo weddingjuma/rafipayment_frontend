@@ -1,7 +1,7 @@
 /* global StatusBar */
 
 import 'whatwg-fetch'
-import _ from 'lodash'
+// import _ from 'lodash'
 import moment from 'moment'
 import config from '@/config'
 
@@ -149,22 +149,6 @@ export const isMobile = () => {
   return regex.test(window.navigator.userAgent)
 }
 
-// reset collection or modal state
-
-export const resetState = (state, defaults) => {
-  Object.keys(defaults).forEach(key => {
-    state[key] = defaults[key]
-  })
-}
-
-// reset all collection or modal states
-
-export const resetAllStates = (state, modules) => {
-  Object.keys(modules).forEach(key => {
-    resetState(state[key], modules[key].defaults())
-  })
-}
-
 // just chill
 
 export const sleep = (ms) => {
@@ -195,82 +179,6 @@ export const prettyCurrency = (value, _symbol = '$') => {
   if (number_string === false) return ''
   const symbol = _symbol || ''
   return leader + symbol + number_string.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
-}
-
-// turn schema definitions into json
-
-export const getDefaultsFromSchema = (schema) => {
-  let default_attrs = {}
-  for (let key in schema) {
-    let constructor, value
-    const attr = schema[key]
-    if (typeof attr === 'function') {
-      constructor = attr
-      default_attrs[key] = new constructor().valueOf()
-    } else if (typeof attr === 'object') {
-      if ('type' in attr) {
-        constructor = attr.type
-        value = attr.default
-        default_attrs[key] = [undefined, null].includes(value)
-          ? value
-          : new constructor(value).valueOf()
-        // if ([undefined, null].includes(value)) {
-        //   default_attrs[key] = value
-        // } else {
-        //   default_attrs[key] = new constructor(value).valueOf()
-        // }
-      } else {
-        default_attrs[key] = getDefaultsFromSchema(attr)
-      }
-    }
-  }
-  const immutable = () => {
-    return _.merge({}, default_attrs)
-  }
-  return immutable
-}
-
-// convert model data to expected schema format
-
-export const decodeWithSchema = (data, schema) => {
-  // TODO: add array capabilities
-  // console.log(data, schema);
-  let decoded_data = {}
-  for (let key in data) {
-    let value
-    if (key in schema) {
-      if (typeof schema[key] === 'function') {
-        const constructor = schema[key]
-        value = new constructor(data[key]).valueOf()
-        decoded_data[key] = value
-      } else if (schema[key] instanceof Object) {
-        if ('type' in schema[key]) {
-          // console.log('found type:', schema[key].type, 'for:', key, data[key]);
-          const constructor = schema[key].type
-          value = new constructor(data[key]).valueOf()
-          decoded_data[key] = value
-        } else {
-          decoded_data[key] = decodeWithSchema(data[key], schema[key])
-        }
-      } else if (schema[key] instanceof Array) {
-        // handle arrays here
-      }
-    }
-  }
-  return decoded_data
-}
-
-// get all data and computed attributes from model
-
-export const modelToJSON = (model) => {
-  let computed = {}
-  for (let key in model.$options.computed) {
-    computed[key] = model[key]
-  }
-  let output = _.merge({}, model.$data, computed)
-  delete output.errors
-  delete output.fields
-  return output
 }
 
 // get position data for touch
