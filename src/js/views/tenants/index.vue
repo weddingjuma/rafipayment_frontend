@@ -11,38 +11,30 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
-import Collection from '@/store/collection'
+import { Collection } from '@/plugins/collection'
 
 import User from '@/components/cards/user'
 import Invite from '@/components/cards/invite'
 
-const store = new Collection({
-  basePath: 'tenants/',
-  createPath: 'invite'
-})
-
 export default {
-  store,
-  collection: true,
   name: 'tenants',
+  collection() {
+    return new Collection({
+      basePath: 'tenants/',
+      createPath: 'invite'
+    })
+  },
   data() {
     return {
       invite_visible: false
     }
-  },
-  computed: {
-    ...mapGetters([
-      'collection'
-    ])
   },
   created() {
     this.fetch()
   },
   methods: {
     fetch() {
-      this.$store.dispatch('fetch')
+      return this.$collection.fetch()
     },
     showInvite() {
       this.invite_visible = true

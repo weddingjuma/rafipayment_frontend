@@ -7,26 +7,24 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Collection from '@/store/collection'
-
+import { Collection } from '@/plugins/collection'
 import transferCard from '@/components/cards/transfer'
 
-const store = new Collection({
-  basePath: 'account/transfers',
-  sortBy: 'created',
-  reverse: true
-})
-
 export default {
-  store,
-  created() {
-    this.$store.dispatch('fetch')
+  collection() {
+    return new Collection({
+      basePath: 'account/transfers',
+      sortBy: 'created',
+      reverse: true
+    })
   },
-  computed: {
-    ...mapGetters([
-      'collection'
-    ])
+  created() {
+    this.fetch()
+  },
+  methods: {
+    fetch() {
+      return this.$collection.fetch()
+    }
   },
   components: {
     transferCard

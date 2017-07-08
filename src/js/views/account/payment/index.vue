@@ -20,18 +20,16 @@
 
 <script>
 import session from '@/session'
-import { mapGetters } from 'vuex'
 import fundingSource from '@/components/cards/funding_source'
 import fundingSourceModal from '@/components/modals/funding_source'
-import Collection from '@/store/collection'
-
-const store = new Collection({
-  basePath: 'account/funding_sources'
-})
+import { Collection } from '@/plugins/collection'
 
 export default {
-  store,
-  collection: true,
+  collection() {
+    return new Collection({
+      basePath: 'account/funding_sources'
+    })
+  },
   data() {
     return {
       loaded: false,
@@ -47,13 +45,9 @@ export default {
       }).sort((a, b) => {
         return (a.id === primary_id) ? -1 : 1
       })
-    },
-    ...mapGetters([
-      'collection'
-    ])
+    }
   },
   created() {
-    // console.log('created');
     this.load()
   },
   methods: {
@@ -68,7 +62,7 @@ export default {
       })
     },
     fetch() {
-      return this.$store.dispatch('fetch')
+      return this.$collection.fetch()
     },
     showModal() {
       this.modal_visible = true
@@ -81,11 +75,6 @@ export default {
       this.fetch()
     }
   },
-  // watch: {
-  //   funding_sources() {
-  //     console.log('funding sources changed, ', this.funding_sources);
-  //   }
-  // },
   components: {
     fundingSource,
     fundingSourceModal
