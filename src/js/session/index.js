@@ -17,7 +17,7 @@ import UserModel from '@/models/user'
 import VueModel from '@/plugins/model'
 Vue.use(VueModel)
 
-export default new Vue({
+const session = new Vue({
   name: 'session',
   store,
   data() {
@@ -207,7 +207,6 @@ export default new Vue({
       const primary = funding_sources.find((funding_source) => {
         return funding_source.id === primary_id
       })
-      // NOTE: if there is no primary, pass empty object so watchers will fire
       this.$store.dispatch('set_primary_funding_source', primary || {})
     },
     clearSessionUser() {
@@ -215,3 +214,8 @@ export default new Vue({
     }
   }
 })
+
+const { request } = session
+
+export default session
+export { request }

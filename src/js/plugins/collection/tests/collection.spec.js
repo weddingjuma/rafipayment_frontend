@@ -66,4 +66,10 @@ describe('VueCollection', () => {
     expect(test_component.collection.length)
       .toBe(12)
   })
+
+  it('should reset the collection successfully on destroy', () => {
+    test_component.$destroy()
+    expect(test_component.collection.length)
+      .toBe(0)
+  })
 })

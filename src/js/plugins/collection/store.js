@@ -7,6 +7,8 @@ import app from '@/app'
 import { request } from '@/session'
 import { sort, sortByDate } from './utils'
 
+console.log({request});
+
 export default (
   model = Model,
   id_attribute = 'id',
