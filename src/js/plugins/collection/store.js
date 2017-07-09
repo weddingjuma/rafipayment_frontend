@@ -1,13 +1,11 @@
+import _ from 'lodash'
 import Vuex from 'vuex'
 import { Model } from '@/plugins/model'
-import _ from 'lodash'
 import { ISODate } from '@/modules/types'
 
 import app from '@/app'
 import { request } from '@/session'
 import { sort, sortByDate } from './utils'
-
-console.log({request});
 
 export default (
   model = Model,
