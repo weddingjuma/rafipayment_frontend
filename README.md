@@ -4,9 +4,7 @@
 ![build status](https://travis-ci.org/TheRafiApp/rafipayment_frontend.svg?branch=master)
 
 
-> Vue.js and Phonegap hybrid app for mobile and desktop
-
-The primary data store is located in app.$store, which will be automatically reset on logout, but certain views may require their own special Vuex stores which need to be manually reset when their parent component is destroyed.
+> Vue.js and Phonegap hybrid application for mobile and desktop
 
 ## Build Setup
 
@@ -23,13 +21,7 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
+# run all tests using jest
 npm test
 
 # run cordova build for ios
@@ -63,14 +55,16 @@ Note: if using rvm or some other ruby environment manager, make sure to run `rvm
 # run cordova app in browser
 phonegap emulate browser
 
-# run cordova app in ios emulator
+# run cordova app in ios or android emulator
 phonegap emulate ios
+phonegap emulate android
 
 # run phonegap dev server for mobile dev app
 phonegap serve
 
-# build ios app from cordova assets
-phonegap build ios --device
+# build native apps for all platforms
+phonegap build
+
 ```
 To build the app onto an iphone, make sure certificates and profiles are set up, open the xcproject in /platforms/ios, plug in and register the phone with Xcode, and click Run.
 
@@ -85,7 +79,6 @@ To build the app onto an iphone, make sure certificates and profiles are set up,
 1. [moment](https://momentjs.com/docs/)
 1. [lodash](https://lodash.com/docs/)
 1. [whatwg-fetch](https://github.com/github/fetch)
-1. [fastclick](https://github.com/ftlabs/fastclick)
 
 ## Webpack Aliases
 
@@ -149,6 +142,10 @@ new Request('users/login')
   console.log('This always fires')
 })
 ```
+
+## Store
+The primary data store is located in app.$store, which will be automatically reset on logout, but certain views may require their own special Vuex stores which need to be manually reset when their parent component is destroyed.
+
 ## Models
 
 The Model class is an extendable wrapper that returns a Vue instance, which makes it easy to create reusable models with default attributes, shared methods, and methods that use default or dynamic values.
@@ -248,12 +245,24 @@ NOTE: By default, models are reset when the parent component is destroyed. To di
 A light implementation of Collections that binds a collection of models to a Vuex instance, and provides some basic methods for CRUD operations.
 
 ```js
-import Collection from '../store/collection'
+import Collection from '@/plugins/collection'
 
-export default new Collection({
-  basePath: 'tenants',
-  createPath: 'invite'
-})
+export default {
+  collection() {
+    return new Collection({
+      basePath: 'tenants',
+      createPath: 'invite'
+    })
+  },
+  created() {
+    this.fetch()
+  },
+  methods: {
+    fetch() {
+      return this.$collection.fetch()
+    }
+  }
+}
 ```
 
 The `basePath` option will determine the path of the URL following the base path of the API, which is set in ./configs
