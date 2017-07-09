@@ -1,5 +1,9 @@
 # Rafi Payment Front End
 
+
+![build status](https://travis-ci.org/TheRafiApp/rafipayment_frontend.svg?branch=master)
+
+
 > Vue.js and Phonegap hybrid app for mobile and desktop
 
 The primary data store is located in app.$store, which will be automatically reset on logout, but certain views may require their own special Vuex stores which need to be manually reset when their parent component is destroyed.
