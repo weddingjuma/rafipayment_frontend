@@ -22,7 +22,7 @@ export default {
     'scheduled': [
       {
         'amount': '-1300.40',
-        'date': '12/1/2017',
+        'date': '2017-02-14T12:42:34.533000',
         'description': '1/2 Month Credit',
         'type': 'credit'
       }

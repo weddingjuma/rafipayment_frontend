@@ -5,6 +5,8 @@ import { Request, Deferred } from '@/utils'
 import store from '@/store'
 import UserModel from '@/models/user'
 
+console.log('ok', Request());
+
 // const config = {
 //   tokens: {
 //     Authorization: store.getters['session:auth_token'],
@@ -62,7 +64,7 @@ export default new Vue({
       const request = new Request(url, options)
       const deferred = new Deferred()
 
-      console.log({request});
+      console.log('blah!', {request});
 
       request.then((response) => {
         if (_.get(response, 'error') === 'token_expired') {
