@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { ISODate } from '@/modules/types'
 
 import app from '@/app'
-import session from '@/session'
+import { request } from '@/session'
 import { sort, sortByDate } from './utils'
 
 export default (
@@ -75,35 +75,35 @@ export default (
       },
       fetch({ commit }) {
         app.$store.dispatch('loading_begin')
-        const request = session.request(`${_basePath()}`)
-        request.then(response => {
+        const req = request(`${_basePath()}`)
+        req.then(response => {
           commit('FETCH', response)
           app.$store.dispatch('loading_end')
         })
-        return request
+        return req
       },
       add({ commit }, model) {
         app.$store.dispatch('loading_begin')
-        const request = session.request(`${_basePath()}/${createPath}`, {
+        const req = request(`${_basePath()}/${createPath}`, {
           method: 'POST',
           body: model
         })
-        request.then(response => {
+        req.then(response => {
           commit('ADD', response)
           app.$store.dispatch('loading_end')
         })
-        return request
+        return req
       },
       delete({ commit }, id) {
         app.$store.dispatch('loading_begin')
-        const request = session.request(`${_basePath()}/${id}`, {
+        const req = request(`${_basePath()}/${id}`, {
           method: 'DELETE'
         })
-        request.then(response => {
+        req.then(response => {
           commit('DELETE', id)
           app.$store.dispatch('loading_end')
         })
-        return request
+        return req
       }
     }
   })

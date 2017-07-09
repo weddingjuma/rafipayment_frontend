@@ -5,8 +5,6 @@ import { Request, Deferred } from '@/utils'
 import store from '@/store'
 import UserModel from '@/models/user'
 
-console.log('ok', Request());
-
 // const config = {
 //   tokens: {
 //     Authorization: store.getters['session:auth_token'],
@@ -15,6 +13,7 @@ console.log('ok', Request());
 //   }
 // }
 // console.log({store});
+
 import VueModel from '@/plugins/model'
 Vue.use(VueModel)
 
@@ -63,8 +62,6 @@ export default new Vue({
 
       const request = new Request(url, options)
       const deferred = new Deferred()
-
-      console.log('blah!', {request});
 
       request.then((response) => {
         if (_.get(response, 'error') === 'token_expired') {
@@ -161,7 +158,6 @@ export default new Vue({
     update() {
       return this.request('account/')
       .then((user) => {
-        // console.log({user});
         this.$store.dispatch('update', user)
       })
     },
@@ -197,7 +193,6 @@ export default new Vue({
       return actions_required
     },
     fetchFundingSources() {
-      // console.log('fetchFundingSources');
       if (!['tenant'].includes(this.$user.role)) return
       const path = this.logged_in ? 'account' : 'tenants/activate'
 
