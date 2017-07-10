@@ -123,7 +123,8 @@ export default {
     },
     confirmDelete() {
       app.$store.dispatch('loading_begin')
-      this.$store.dispatch('delete', this.$funding_source.id)
+      // this.$store.dispatch('delete', this.$funding_source.id)
+      this.$parent.$collection.delete(this.$funding_source.id)
       .catch(() => {})
       .then(() => {
         app.$store.dispatch('loading_end')

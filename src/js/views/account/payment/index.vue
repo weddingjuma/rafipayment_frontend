@@ -30,8 +30,12 @@ const store = new Collection({
 })
 
 export default {
-  store,
-  collection: true,
+  collection() {
+    return new Collection({
+      id_attribute: 'id',
+      basePath: 'account/funding_sources'
+    })
+  },
   data() {
     return {
       loaded: false,

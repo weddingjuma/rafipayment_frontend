@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { ISODate } from '@/modules/types'
 import * as utils from './utils'
 
-const { request } = utils
+const { Request } = utils
 
 const getDiff = (oldData, newData) => {
   const keys = getChangedKeys(oldData, newData)
@@ -58,12 +58,11 @@ export default class Model {
           return this.id === undefined
         },
         url() {
-          let url
-          if (_options.url) {
-            url = _options.url
-          } else {
-            url = this.isNew ? this.basePath : this.urlRoot
-          }
+          const url = _options.url
+            ? _options.url
+            : this.isNew
+              ? this.basePath
+              : this.urlRoot
           return url
         }
       },
@@ -72,14 +71,14 @@ export default class Model {
       },
       methods: {
         fetch() {
-          const req = request(this.urlRoot)
+          const req = new Request(this.urlRoot)
           req.then((response) => {
             this.set(response)
           })
           return req
         },
         destroy() {
-          return request(this.urlRoot, {
+          return new Request(this.urlRoot, {
             method: 'DELETE'
           })
         },
@@ -93,7 +92,7 @@ export default class Model {
           const body = utils.decodeWithSchema(changed, schema)
           const method = this.isNew ? 'POST' : 'PUT'
           const path = _options.path ? '/' + _options.path : ''
-          return request(this.url + path, {
+          return new Request(this.url + path, {
             method,
             body
           })

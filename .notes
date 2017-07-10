@@ -47,7 +47,8 @@ X- switch testing to Jest
 - write documentation
   - onboarding
 - separate VueModel into its own repository
-- genericize
+X- genericize
+- collection is still using _id
 
 const config = {
   methods: {

@@ -54,9 +54,7 @@ export default (Vue) => ({
   beforeDestroy() {
     if (isDef(this.$models)) {
       for (let key in this.$models) {
-        // console.log({key});
         if (!_.get(this.$models[key], '$options.persist')) {
-          // console.log(this.$models[key]);
           this.$models[key].reset()
         }
       }
