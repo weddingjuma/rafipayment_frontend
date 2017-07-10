@@ -20,30 +20,57 @@ describe('Basic User Models', () => {
           .toBe('tenant')
       })
   })
+
   it('should resolve normal properties', () => {
     expect(user.first_name)
       .toBe('Taco')
   })
+
   it('should resolve computed properties - full_name', () => {
     expect(user.full_name)
       .toBe('Taco Cat')
   })
+
   it('should resolve computed properties - basePath', () => {
     expect(user.basePath)
       .toBe('tenants')
   })
+
   it('should resolve computed properties - initials', () => {
     expect(user.initials)
       .toBe('TC')
   })
-  it('should resolve computed properties - dwolla', () => {
-    expect(user.dwolla.customer_status)
+
+  it('should resolve computed properties - dwolla_account', () => {
+    expect(user.dwolla_account.customer_status)
       .toBe('created')
   })
+
+  it('should resolve computed properties - is_active', () => {
+    expect(user.is_active)
+      .toBe(true)
+  })
+
+  it('should resolve computed properties - initials', () => {
+    expect(user.initials)
+      .toBe('TC')
+  })
+
+  it('should resolve computed properties - onboarding_steps', () => {
+    expect(user.onboarding_steps.length)
+      .toBe(0)
+  })
+
+  it('should resolve computed properties - secondary_steps', () => {
+    expect(user.secondary_steps.length)
+      .toBe(0)
+  })
+
   it('should resolve basePath correctly', () => {
     expect(user.basePath)
       .toBe('tenants')
   })
+
   it('should resolve url correctly', () => {
     expect(user.url)
       .toBe('tenants/593af5eae4e0554e76b71f8a')

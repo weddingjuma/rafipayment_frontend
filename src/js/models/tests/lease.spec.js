@@ -21,11 +21,6 @@ jest.mock('@/session', () => {
 const lease = new Lease()
 
 describe('LeaseModel', () => {
-  it('should have split_amount === undefined on mount', () => {
-    expect(lease.$beforeMount().split_amount)
-      .toBe(false)
-  })
-
   it('should properly fetch a lease model', () => {
     expect.assertions(1)
     return lease.fetch()
