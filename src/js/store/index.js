@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { resetAllStates } from '@/plugins/collection/utils'
+import { resetAllStates } from '@/plugins/collection/utils/index'
 
 import session from './modules/session'
 import main from './modules/main'

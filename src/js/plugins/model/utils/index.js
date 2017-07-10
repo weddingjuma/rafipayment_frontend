@@ -1,7 +1,5 @@
 import _ from 'lodash'
-import Request from './request'
-// import store from '@/store'
-// import { Request, Deferred } from '@/utils'
+import Request from '@/utils/request'
 
 export { Request }
 
@@ -27,11 +25,6 @@ export const getDefaultsFromSchema = (schema) => {
         default_attrs[key] = [undefined, null].includes(value)
           ? value
           : new constructor(value).valueOf()
-        // if ([undefined, null].includes(value)) {
-        //   default_attrs[key] = value
-        // } else {
-        //   default_attrs[key] = new constructor(value).valueOf()
-        // }
       } else {
         default_attrs[key] = getDefaultsFromSchema(attr)
       }

@@ -12,25 +12,14 @@ jest.mock('@/app', function() {
     }
   }
 })
-jest.mock('@/session', function() {
-  const data = require('collection_data').default
-  const Deferred = () => {
-    this.resolve = null
-    this.reject = null
-    this.promise = new Promise((resolve, reject) => {
-      this.resolve = resolve
-      this.reject = reject
-    })
-    return this
-  }
-  const request = () => {
+
+jest.mock('@/utils/request', () => {
+  return () => {
+    const { Deferred } = require('@/utils')
+    const data = require('collection_data').default
     const promise = new Deferred()
     promise.resolve(data())
     return promise.promise
-  }
-  return {
-    request,
-    Deferred
   }
 })
 

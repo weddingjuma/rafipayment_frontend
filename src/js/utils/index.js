@@ -43,7 +43,7 @@ const handleTimeout = (error) => {
   }
 }
 
-// generic XHR
+// generic, unauthenticated XHR
 
 const timeout_duration = 30000
 

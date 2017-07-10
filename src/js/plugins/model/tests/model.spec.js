@@ -4,7 +4,7 @@ import User from '@/models/user'
 
 Vue.use(VueModel)
 
-jest.mock('../utils/request', () => {
+jest.mock('@/utils/request', () => {
   return () => {
     const { Deferred } = require('@/utils')
     const data = require('model_data').default

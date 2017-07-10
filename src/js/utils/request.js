@@ -1,3 +1,5 @@
+// authenticated XHR
+
 import _ from 'lodash'
 import store from '@/store'
 import { Request, Deferred } from '@/utils'
