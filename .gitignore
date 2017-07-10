@@ -1,7 +1,7 @@
-# mac stuff
+# mac filesystem
 .DS_Store
 
-# Node packages
+# node packages
 node_modules/
 
 # debug logs
@@ -10,6 +10,9 @@ yarn-error.log
 /test/unit/coverage
 /test/e2e/reports
 selenium-debug.log
+
+# test coverage
+/coverage/
 
 # cordova files
 /dist/
