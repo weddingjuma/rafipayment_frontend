@@ -1,6 +1,6 @@
 // external libraries
 import './lib'
-import _ from 'lodash'
+// import _ from 'lodash'
 
 // main Vue plugins
 import Vue from 'vue'
@@ -8,6 +8,7 @@ import VeeValidate from 'vee-validate'
 import VueTouch from 'vue-touch'
 import VueMask from 'v-mask'
 import VueModel from './plugins/model'
+import VueCollection from './plugins/collection'
 import VueBecome from './plugins/become'
 import router from './router'
 import store from './store'
@@ -76,18 +77,19 @@ const install = (Vue, opts = {}) => {
   // inject plugins
   Vue.use(VueTouch)
   Vue.use(VueModel)
+  Vue.use(VueCollection)
   Vue.use(VueBecome)
   Vue.use(VueMask)
   Vue.use(VeeValidate, config)
 
   // inject mixins
-  Vue.mixin({
-    beforeDestroy() {
-      if (_.get(this, '$options.collection')) {
-        this.$store.dispatch('reset')
-      }
-    }
-  })
+  // Vue.mixin({
+  //   beforeDestroy() {
+  //     if (_.get(this, '$options.collection')) {
+  //       this.$store.dispatch('reset')
+  //     }
+  //   }
+  // })
 }
 
 const env = process.env.NODE_ENV

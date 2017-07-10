@@ -2,7 +2,7 @@
 
 import 'whatwg-fetch'
 // import _ from 'lodash'
-import moment from 'moment'
+// import moment from 'moment'
 import config from '@/config'
 
 // import lengthy util functions
@@ -212,16 +212,6 @@ export function Deferred() {
 export const unitsHelper = (number) => {
   if (/^[\d]/.test(number)) number = '#' + number
   return number
-}
-
-// sorting
-
-export const sortByDate = (key, a, b) => {
-  return moment.utc(a[key]) > moment.utc(b[key]) ? 1 : -1
-}
-
-export const sort = (key, a, b) => {
-  return a[key] < b[key] ? 1 : -1
 }
 
 // export external utils

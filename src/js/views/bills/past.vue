@@ -15,32 +15,26 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-import { mapGetters } from 'vuex'
-import Collection from '@/store/collection'
+// import { mapGetters } from 'vuex'
+import { Collection } from '@/plugins/collection'
 
 import bill from '@/components/cards/bills/small'
 import model from '@/models/bill'
 
-const store = new Collection({
-  model,
-  basePath: 'account/bills',
-  sortBy: 'due_date',
-  reverse: true
-})
-
 export default {
-  store,
-  collection: true,
   name: 'past-bills',
+  collection() {
+    return new Collection({
+      model,
+      basePath: 'account/bills',
+      sortBy: 'due_date',
+      reverse: true
+    })
+  },
   data() {
     return {
       loaded: false
     }
-  },
-  computed: {
-    ...mapGetters([
-      'collection'
-    ])
   },
   async created() {
     await this.fetch()
@@ -48,7 +42,7 @@ export default {
   },
   methods: {
     fetch() {
-      return this.$store.dispatch('fetch')
+      return this.$collection.fetch()
     }
   },
   components: {

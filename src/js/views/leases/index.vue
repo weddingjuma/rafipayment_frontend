@@ -9,30 +9,22 @@
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
-import { mapGetters } from 'vuex'
-import Collection from '@/store/collection'
-
+import { Collection } from '@/plugins/collection'
 import lease from '@/components/cards/lease'
 
-const store = new Collection({
-  basePath: 'account/leases'
-})
-
 export default {
-  store,
   name: 'leases',
-  collection: true,
-  computed: {
-    ...mapGetters([
-      'collection'
-    ])
+  collection() {
+    return new Collection({
+      basePath: 'account/leases'
+    })
   },
   created() {
     this.fetch()
   },
   methods: {
     fetch() {
-      this.$store.dispatch('fetch')
+      return this.$collection.fetch()
     }
   },
   components: {
