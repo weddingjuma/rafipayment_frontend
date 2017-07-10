@@ -29,7 +29,7 @@ const defaults = {
     },
     length() {
       if (!this.start_date) return
-      const { start, end } = this.getTerm()
+      const { start, end } = this.getTerm(false)
       if (!end) return 'N/A'
       const duration = moment.duration(end.diff(start))
 
