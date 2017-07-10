@@ -81,13 +81,13 @@ const defaults = {
     rent_remaining() {
       return this.rent - this.total_rent_covered
     },
-    totalSplit() {
-      return Object.keys(this.$lease.split).reduce((acc, item) => {
-        return acc + this.$lease.split[item]
+    total_split() {
+      return Object.keys(this.split).reduce((acc, item) => {
+        return acc + this.split[item]
       }, 0)
     },
-    rentCoverage() {
-      return Math.floor(this.totalSplit / this.$lease.rent * 100)
+    rent_coverage() {
+      return Math.floor(this.total_split / this.rent * 100)
     }
   },
   methods: {

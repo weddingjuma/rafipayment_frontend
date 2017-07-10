@@ -52,10 +52,11 @@ export const decodeWithSchema = (data, schema) => {
   } else if (data instanceof Object) {
     for (let key in data) {
       if (key in schema) {
+        // console.log({data});
         decoded_data[key] = processSchemaData(data[key], schema[key])
         for (let attr in schema[key]) {
           if (!['type', 'default'].includes(attr)) {
-            decoded_data[key][attr] = decodeWithSchema(data[key][attr], schema[key][attr])
+            decoded_data[key][attr] = decodeWithSchema(_.get(data[key], attr), schema[key][attr])
           }
         }
       }
@@ -70,6 +71,7 @@ export const processSchemaData = (data, schema) => {
   let decoded_data
   if (typeof schema === 'function') {
     const constructor = schema
+    // console.log({data});
     decoded_data = new constructor(data).valueOf()
   } else if (schema instanceof Object) {
     if ('type' in schema) {

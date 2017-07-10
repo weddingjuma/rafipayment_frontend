@@ -109,6 +109,8 @@ export default class Model {
               ? _key.substr(1)
               : _key
             this[key] = data[_key]
+            // console.log({key});
+            // console.log('value', data[_key]);
             // this[key] = utils.encodeWithSchema(data[_key], schema[_key])
           }
         },

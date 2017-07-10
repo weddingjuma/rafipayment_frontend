@@ -3,10 +3,20 @@ import { parseCurrency, prettyCurrency } from '@/utils'
 
 export class ISODate {
   constructor(value) {
-    this.value = value
+    // console.log({value});
+    if (value) this.set(value)
+    return this
+  }
+  set(value) {
+    const parsed = moment.utc(value)
+    this.value = parsed.isValid()
+      ? value
+      : undefined
   }
   valueOf() {
-    return moment.utc(this.value).toISOString()
+    return this.value
+      ? moment.utc(this.value).toISOString()
+      : undefined
   }
 }
 

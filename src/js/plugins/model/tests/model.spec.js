@@ -7,7 +7,7 @@ Vue.use(VueModel)
 jest.mock('@/utils/request', () => {
   return () => {
     const { Deferred } = require('@/utils')
-    const data = require('model_data').default
+    const data = require('tenant_data').default
     const promise = new Deferred()
     promise.resolve(data())
     return promise.promise
