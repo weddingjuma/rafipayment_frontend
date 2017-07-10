@@ -106,8 +106,9 @@
     "not ie <= 8"
   ],
   "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "<rootDir>/coverage",
     "testPathIgnorePatterns": [
-      "<rootDir>/test/e2e",
       "<rootDir>/plugins",
       "<rootDir>/src/js/config"
     ],

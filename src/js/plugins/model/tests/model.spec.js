@@ -15,7 +15,6 @@ jest.mock('@/utils/request', () => {
 })
 
 const test_component = new Vue({
-  template: '<div/>',
   models: {
     user() {
       return new User()
@@ -41,6 +40,18 @@ describe('VueModel', () => {
         expect(test_component.$user.full_name)
           .toBe('Taco Cat')
       })
+  })
+
+  it('should correctly save new model data', () => {
+    expect.assertions(1)
+    return test_component.$user.save({
+      first_name: 'Robot',
+      last_name: 'Obor'
+    })
+    .then(() => {
+      expect(test_component.$user.full_name)
+        .toBe('Robot Obor')
+    })
   })
 
   it('should reset models on destroy', () => {

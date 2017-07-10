@@ -92,10 +92,14 @@ export default class Model {
           const body = utils.decodeWithSchema(changed, schema)
           const method = this.isNew ? 'POST' : 'PUT'
           const path = _options.path ? '/' + _options.path : ''
-          return new Request(this.url + path, {
+          const req = new Request(this.url + path, {
             method,
             body
           })
+          req.then(() => {
+            this.set(body)
+          })
+          return req
         },
         set(data) {
           // NOTE: Vue reserves properties that begin with an underscore
