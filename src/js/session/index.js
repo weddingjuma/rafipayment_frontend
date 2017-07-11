@@ -114,7 +114,7 @@ const session = new Vue({
         method: 'POST',
         body
       })
-      request.catch(() => {})
+      .catch(() => {})
       .then(response => {
         this.$store.dispatch('logout')
         this.clearSessionUser()
@@ -128,7 +128,6 @@ const session = new Vue({
       })
     },
     dispatchActivate(user) {
-      console.log({user});
       this.$store.dispatch('activate', user)
       this.$user = this.$store.getters['session:user']
       if (_.get(this.$user, 'dwolla_account.customer_id')) {
@@ -177,6 +176,7 @@ const session = new Vue({
       this.$store.dispatch('set_primary_funding_source', primary || {})
     },
     clearSessionUser() {
+      console.log('clearSessionUser');
       this.$user.reset()
     }
   }
