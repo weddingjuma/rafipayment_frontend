@@ -52,13 +52,10 @@ const defaults = {
     display_date() {
       const due_date = moment.utc(this.due_date).startOf('day')
       const updated = moment.utc(this.updated).startOf('day')
-      let display_date
-      if (this.bill_status === 'paid') {
-        display_date = updated
-      } else {
-        display_date = due_date
-      }
-      return display_date
+
+      return this.bill_status === 'paid'
+        ? updated
+        : due_date
     },
     message() {
       const days = this.days_from_due
