@@ -1,7 +1,8 @@
 # Rafi Payment Front End
 
 
-![build status](https://travis-ci.org/TheRafiApp/rafipayment_frontend.svg?branch=master)
+[![Build]](https://travis-ci.org/TheRafiApp/rafipayment_frontend.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/TheRafiApp/plutus_frontend/badge.svg?branch=dev-tests)](https://coveralls.io/github/TheRafiApp/plutus_frontend?branch=dev-tests)
 
 
 > Vue.js and Phonegap hybrid application for mobile and desktop

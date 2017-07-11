@@ -3,7 +3,6 @@ import { parseCurrency, prettyCurrency } from '@/utils'
 
 export class ISODate {
   constructor(value) {
-    // console.log({value});
     if (value) this.set(value)
     return this
   }
