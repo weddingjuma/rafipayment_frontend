@@ -128,6 +128,7 @@ const session = new Vue({
       })
     },
     dispatchActivate(user) {
+      console.log({user});
       this.$store.dispatch('activate', user)
       this.$user = this.$store.getters['session:user']
       if (_.get(this.$user, 'dwolla_account.customer_id')) {
