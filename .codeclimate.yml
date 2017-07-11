@@ -7,3 +7,6 @@ exclude_paths:
 - "__mocks__/"
 - "tests/"
 - "utils/"
+- "/build/"
+- "/plugins/"
+- "/config/"
