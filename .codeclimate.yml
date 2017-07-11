@@ -5,11 +5,11 @@ engines:
     enabled: true
 ratings:
   paths:
-  - "/src/js"
+  - "src/js/**"
 exclude_paths:
-- "__mocks__/"
-- "tests/"
-- "utils/"
-- "/build/"
-- "/plugins/"
-- "/config/"
+- "__mocks__/**/*"
+- "tests/**/*"
+- "utils/**/*"
+- "/build/**/*"
+- "/plugins/**/*"
+- "/config/**/*"
