@@ -3,7 +3,7 @@
 
 [![Build](https://travis-ci.org/TheRafiApp/rafipayment_frontend.svg?branch=master)](#)
 [![Coverage Status](https://coveralls.io/repos/github/TheRafiApp/plutus_frontend/badge.svg?branch=dev-tests)](https://coveralls.io/github/TheRafiApp/plutus_frontend?branch=dev-tests)
-[![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
+[![Code Climate](https://codeclimate.com/github/TheRafiApp/rafipayment_frontend/badges/gpa.svg)](https://codeclimate.com/github/TheRafiApp/rafipayment_frontend)
 
 > Vue.js and Phonegap hybrid application for mobile and desktop
 
