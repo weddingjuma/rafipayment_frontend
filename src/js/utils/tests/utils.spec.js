@@ -4,7 +4,13 @@ import {
   unitsHelper,
   statesHelper,
   sleep,
-  Deferred
+  load,
+  isTouchDevice,
+  isMobile,
+  Deferred,
+  Request,
+  getPanStartPosition,
+  toggleStatusBar
 } from '@/utils'
 
 describe('parseCurrency', () => {
@@ -79,5 +85,91 @@ describe('Deferred', () => {
     return deferred().then((data) => {
       expect(data).toEqual('ok')
     })
+  })
+})
+
+describe('Request', () => {
+  it('should make a request', () => {
+    expect.assertions(1)
+    return new Request('/')
+      .then((res) => {
+        expect(res)
+          .toEqual({message: 'running'})
+      })
+  })
+})
+
+describe('load', () => {
+  it('should load a js file from a cdn', () => {
+    expect(load('test.js'))
+      .toBeInstanceOf(Object)
+  })
+})
+
+describe('isTouchDevice', () => {
+  it('should detect touch devices', () => {
+    const check_touch = isTouchDevice()
+    expect(check_touch)
+      .toBe(false)
+  })
+})
+
+describe('isMobile', () => {
+  it('should detect mobile devices', () => {
+    const check_mobile = isMobile()
+    expect(check_mobile)
+      .toBe(false)
+  })
+})
+
+describe('getPanStartPosition', () => {
+  it('should calculate pan start position - 1', () => {
+    expect(getPanStartPosition({
+      deltaX: 30,
+      deltaY: 78,
+      srcEvent: {
+        pageX: 12,
+        pageY: 48
+      }
+    }))
+    .toEqual({'x': -18, 'y': -30})
+  })
+
+  it('should calculate pan start position - 2', () => {
+    expect(getPanStartPosition({
+      deltaX: 30,
+      deltaY: 78,
+      srcEvent: {
+        screenX: 12,
+        screenY: 48
+      }
+    }))
+    .toEqual({'x': -18, 'y': -30})
+  })
+
+  it('should calculate pan start position - 3', () => {
+    expect(getPanStartPosition({
+      deltaX: 30,
+      deltaY: 78,
+      srcEvent: {}
+    }))
+    .toEqual({'x': -30, 'y': -78})
+  })
+})
+
+global.StatusBar = (value) => {
+  return value
+}
+
+describe('toggleStatusBar', () => {
+  it('should run toggleStatusBar', () => {
+    const check = toggleStatusBar(true)
+    expect(check)
+      .toBe(undefined)
+  })
+  it('should run toggleStatusBar', () => {
+    const check = toggleStatusBar(false)
+    expect(check)
+      .toBe(undefined)
   })
 })

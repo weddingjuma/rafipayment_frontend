@@ -16,7 +16,7 @@ const env = process.env.NODE_ENV
 export const toggleStatusBar = (val) => {
   if (env === 'cordova') {
     try {
-      val ? StatusBar.show() : StatusBar.hide()
+      return val ? StatusBar.show() : StatusBar.hide()
     } catch(e) {}
   }
 }
