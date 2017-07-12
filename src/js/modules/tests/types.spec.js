@@ -1,7 +1,19 @@
 import { ObjectId, ISODate, Currency } from '@/modules/types'
 
 describe('ISODate', () => {
-  it('should create a new ISODate instance', () => {
+  const new_date = new ISODate()
+  it('should create a new empty ISODate instance', () => {
+    expect(new_date.valueOf())
+      .toBe(undefined)
+  })
+
+  it('should set the value on that empty ISODate instance', () => {
+    new_date.set('Mon, 01 Jan 2010 18:41:59 +0000')
+    expect(new_date.valueOf())
+      .toBe('2010-01-01T18:41:59.000Z')
+  })
+
+  it('should create a new ISODate instance with a string argument', () => {
     const date = new ISODate('Tue, 11 Jul 2017 18:41:59 +0000')
     expect(date.valueOf())
       .toBe('2017-07-11T18:41:59.000Z')
@@ -22,13 +34,33 @@ describe('ISODate', () => {
         $date: '2017-07-11T18:41:59.000Z'
       })
   })
+
+  it('should throw an error for invalid date input', () => {
+    const makeDate = () => {
+      return new ISODate('test')
+    }
+    expect(makeDate)
+      .toThrow()
+  })
 })
 
 describe('ObjectId', () => {
+  const new_id = new ObjectId()
+  it('should create a new empty ObjectId instance', () => {
+    expect(new_id.valueOf())
+      .toBe(undefined)
+  })
+
+  it('should create a new ObjectId instance with a string argument', () => {
+    const id = new ObjectId('8f9347uej83r98r3wj9j')
+    expect(id.valueOf())
+      .toBe('8f9347uej83r98r3wj9j')
+  })
+
   const id = new ObjectId({
     $id: '8f9347uej83r98r3wj9j'
   })
-  it('should create a new ObjectId instance', () => {
+  it('should correctly parse extended json', () => {
     expect(id.valueOf())
       .toBe('8f9347uej83r98r3wj9j')
   })
@@ -42,9 +74,14 @@ describe('ObjectId', () => {
 })
 
 describe('Currency', () => {
+  const currency = new Currency('1200.30')
   it('should create a new Currency instance', () => {
-    const currency = new Currency('1200.30')
     expect(currency.valueOf())
       .toBe(1200.3)
+  })
+
+  it('should prettify value', () => {
+    expect(currency.pretty())
+      .toBe('$1,200.30')
   })
 })
