@@ -176,7 +176,6 @@ const session = new Vue({
       this.$store.dispatch('set_primary_funding_source', primary || {})
     },
     clearSessionUser() {
-      console.log('clearSessionUser');
       this.$user.reset()
     }
   }
