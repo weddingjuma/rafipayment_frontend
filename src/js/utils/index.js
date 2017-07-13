@@ -43,6 +43,12 @@ const handleTimeout = (error) => {
   }
 }
 
+export const resetState = (state, defaults) => {
+  Object.keys(defaults).forEach(key => {
+    state[key] = defaults[key]
+  })
+}
+
 // generic, unauthenticated XHR
 
 const timeout_duration = 30000
