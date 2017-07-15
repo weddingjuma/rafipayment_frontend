@@ -20,7 +20,9 @@ export default {
   },
   computed: {
     iav_token_endpoint() {
-      return session.logged_in ? 'account/iav' : 'tenants/activate/dwolla'
+      return session.logged_in
+        ? 'account/iav'
+        : 'tenants/activate/dwolla'
     }
   },
   async mounted() {
@@ -97,12 +99,16 @@ export default {
     processDwollaResponse(response) {
       // console.log('callback firing', response);
       const id = _.get(response, '_links.funding-source.href').split('funding-sources/')[1]
-      const status = _.get(response, '_links.verify-micro-deposits') ? 'unverified' : 'verified'
+      const status = _.get(response, '_links.verify-micro-deposits')
+        ? 'unverified'
+        : 'verified'
       const body = {
         id,
         status
       }
-      const base_path = session.logged_in ? 'account' : 'tenants/activate'
+      const base_path = session.logged_in
+        ? 'account'
+        : 'tenants/activate'
       const method = 'POST'
       // this.$emit('wait')
       return session.request(base_path + '/funding_sources', {
@@ -111,7 +117,6 @@ export default {
       })
       .then(async (data) => {
         if (session.logged_in) {
-          // console.log('dwolla_iva.vue thinking session is logged in');
           await session.loadSession()
         } else {
           const token = _.get(this.$route.query, 'token')
