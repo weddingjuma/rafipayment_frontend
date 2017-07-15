@@ -54,12 +54,9 @@ export default {
       return this.confirm
     },
     confirm_label() {
-      let label
-      if (this.cancel) {
-        label = 'confirm'
-      } else {
-        label = 'OK'
-      }
+      const label = this.cancel
+        ? 'confirm'
+        : 'OK'
       return label
     },
     cancel_label() {
