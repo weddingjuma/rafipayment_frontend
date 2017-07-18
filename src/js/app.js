@@ -1,6 +1,7 @@
 // external libraries
 import './lib'
 // import _ from 'lodash'
+console.log('app loaded....');
 
 // main Vue plugins
 import Vue from 'vue'

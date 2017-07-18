@@ -3,6 +3,7 @@ require('./check-versions')()
 process.env.NODE_ENV = 'production'
 
 var ora = require('ora')
+var fs = require('fs')
 var rm = require('rimraf')
 var path = require('path')
 var chalk = require('chalk')
@@ -25,6 +26,8 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
       chunks: false,
       chunkModules: false
     }) + '\n\n')
+
+    fs.writeFileSync('./stats.json', JSON.stringify(stats.toJson()));
 
     console.log(chalk.cyan('  Build complete.\n'))
     console.log(chalk.yellow(

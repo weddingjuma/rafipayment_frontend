@@ -9,38 +9,29 @@ import NotFound from '@/views/404'
 const routes = [
   {
     path: '/',
-    component: Login,
-    meta: {
-      public: true
-    }
+    component: Login
   },
   {
     path: '/activate',
-    meta: {
-      public: true
-    },
     component(resolve) {
       require(['@/views/activate'], resolve)
     }
   },
   {
     path: '/forgot',
-    component: Forgot,
-    meta: {
-      public: true
-    }
+    component: Forgot
   },
   {
     path: '/reset',
-    component: Reset,
-    meta: {
-      public: true
-    }
+    component: Reset
   },
   {
     name: 'Dashboard',
     path: '/dashboard',
     redirect: '/dashboard/current',
+    meta: {
+      auth: true
+    },
     component(resolve) {
       require(['@/views/dashboard'], resolve)
     },
@@ -48,6 +39,9 @@ const routes = [
       {
         name: 'Current Bills',
         path: 'current',
+        meta: {
+          auth: true
+        },
         component(resolve) {
           require(['@/views/bills/current'], resolve)
         }
@@ -55,6 +49,9 @@ const routes = [
       {
         name: 'Past Bills',
         path: 'past',
+        meta: {
+          auth: true
+        },
         component(resolve) {
           require(['@/views/bills/past'], resolve)
         }
@@ -62,16 +59,25 @@ const routes = [
     ]
   },
   {
+    meta: {
+      auth: true
+    },
     path: '/bills',
     redirect: '/dashboard/current'
   },
   // legacy paths to support deep linking for old app paths
   // remove this when we replace the backbone app
   {
+    meta: {
+      auth: true
+    },
     path: '/dashboard/current/:id',
     redirect: '/bills/:id'
   },
   {
+    meta: {
+      auth: true
+    },
     path: '/dashboard/past/:id',
     redirect: '/bills/:id'
   },
@@ -82,6 +88,7 @@ const routes = [
       require(['@/views/bills/detail'], resolve)
     },
     meta: {
+      auth: true,
       back($router) {
         $router.back()
       }
@@ -94,6 +101,7 @@ const routes = [
       require(['@/views/transfers/detail'], resolve)
     },
     meta: {
+      auth: true,
       back($router) {
         $router.back()
       }
@@ -103,6 +111,9 @@ const routes = [
     name: 'My Account',
     path: '/account',
     redirect: '/account/profile',
+    meta: {
+      auth: true
+    },
     component(resolve) {
       require(['@/views/account'], resolve)
     },
@@ -110,6 +121,9 @@ const routes = [
       {
         name: 'Profile',
         path: 'profile',
+        meta: {
+          auth: true
+        },
         component(resolve) {
           require(['@/views/account/profile'], resolve)
         }
@@ -128,6 +142,7 @@ const routes = [
           require(['@/views/account/payment'], resolve)
         },
         meta: {
+          auth: true,
           back($router) {
             $router.back()
           }
@@ -155,6 +170,9 @@ const routes = [
   {
     name: 'Leases',
     path: '/leases',
+    meta: {
+      auth: true
+    },
     component(resolve) {
       require(['@/views/leases'], resolve)
     }
@@ -166,12 +184,16 @@ const routes = [
       require(['@/views/leases/detail'], resolve)
     },
     meta: {
+      auth: true,
       back: '/leases'
     }
   },
   {
     name: 'Admins',
     path: '/admins',
+    meta: {
+      auth: true
+    },
     component(resolve) {
       require(['@/views/admins'], resolve)
     }
@@ -179,6 +201,9 @@ const routes = [
   {
     name: 'Managers',
     path: '/managers',
+    meta: {
+      auth: true
+    },
     component(resolve) {
       require(['@/views/managers'], resolve)
     }
@@ -186,6 +211,9 @@ const routes = [
   {
     name: 'Tenants',
     path: '/tenants',
+    meta: {
+      auth: true
+    },
     component(resolve) {
       require(['@/views/tenants'], resolve)
     }
