@@ -7,10 +7,10 @@ const closeNav = () => {
 }
 
 export const handleRoute = (is_authorized, next, nextArgs) => {
-  // console.log({is_authorized});
-  is_authorized
-    ? next()
-    : next(nextArgs)
+  const args = is_authorized
+    ? undefined
+    : nextArgs
+  next(args)
   closeNav()
 }
 

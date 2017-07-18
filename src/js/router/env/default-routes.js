@@ -1,6 +1,3 @@
-// es6 modules will be bundled together by webpack
-// while modules using require() will be bundled separately
-
 import Login from '@/views/login'
 import Forgot from '@/views/forgot'
 import Reset from '@/views/reset'
