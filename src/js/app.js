@@ -1,6 +1,5 @@
 // external libraries
 import './lib'
-// import _ from 'lodash'
 
 // main Vue plugins
 import Vue from 'vue'
@@ -96,6 +95,10 @@ const env = process.env.NODE_ENV
 
 if (env === 'cordova') {
   require('@/modules/universal_links')
+}
+
+if (config.debug) {
+  import('./debug')
 }
 
 install(Vue)
