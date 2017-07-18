@@ -34,7 +34,6 @@ module.exports = {
     filename: '[name].js',
     publicPath: assetsPublicPath
   },
-  stats: 'verbose',
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {

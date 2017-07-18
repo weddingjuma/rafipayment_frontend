@@ -2,9 +2,8 @@
 import Vue from 'vue';
 import config from './config'
 import session from './session'
-
-// import VueModel from './plugins/model'
 import VueBecome from './plugins/become'
+
 Vue.use(VueBecome)
 
 Vue.config.productionTip = false;
@@ -73,7 +72,8 @@ export default new Vue({
       await this.$become('ready', true)
       this.loading = false
       this.$destroy()
-      import('@/app')
+      console.log('finished fetching');
+      require('@/app')
     }
   }
 });

@@ -7,7 +7,7 @@ const closeNav = () => {
 }
 
 export const handleRoute = (is_authorized, next, nextArgs) => {
-  console.log({is_authorized});
+  // console.log({is_authorized});
   is_authorized
     ? next()
     : next(nextArgs)
@@ -19,13 +19,13 @@ export const handleRoute = (is_authorized, next, nextArgs) => {
 
 export const checkPermissions = (route) => {
   const auth = _.get(route, 'meta.auth')
-  console.log(typeof auth);
+  // console.log(typeof auth);
   let is_authorized
   if (auth === undefined) {
     is_authorized = true
   } else if (typeof auth === 'boolean') {
-    console.log('is boolean');
-    console.log(session.checkAuth());
+    // console.log('is boolean');
+    // console.log(session.checkAuth());
     is_authorized = session.checkAuth() === auth
   } else if (auth instanceof Array) {
     is_authorized = auth.includes(session.$user.role)
@@ -34,7 +34,7 @@ export const checkPermissions = (route) => {
 }
 
 export const privateRoute = (to, from, next) => {
-  console.log(to.path);
+  // console.log(to.path);
   const is_authorized = checkPermissions(to)
   // console.log({is_authorized});
   toggleStatusBar(true)
