@@ -1,8 +1,6 @@
 // external libraries
 import './lib'
 
-console.log('app loaded');
-
 // main Vue plugins
 import Vue from 'vue'
 import VeeValidate from 'vee-validate'
@@ -82,21 +80,16 @@ const install = (Vue, opts = {}) => {
   Vue.use(VueBecome)
   Vue.use(VueMask)
   Vue.use(VeeValidate, config)
-
-  // inject mixins
-  // Vue.mixin({
-  //   beforeDestroy() {
-  //     if (_.get(this, '$options.collection')) {
-  //       this.$store.dispatch('reset')
-  //     }
-  //   }
-  // })
 }
 
 const env = process.env.NODE_ENV
 
 if (env === 'cordova') {
   require('@/modules/universal_links')
+}
+
+if (config.debug) {
+  require('./debug')
 }
 
 install(Vue)

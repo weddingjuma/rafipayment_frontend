@@ -1,6 +1,5 @@
 // core packages
 import Vue from 'vue';
-import config from './config'
 import session from './session'
 import VueBecome from './plugins/become'
 
@@ -12,20 +11,12 @@ Vue.config.productionTip = false;
 import './modules/sentry'
 
 // components
-import loading from './components/load';
+import loading from './components/load'
 
 // global styles
-import '../scss/styles.scss';
+import '../scss/styles.scss'
 
 const env = process.env.NODE_ENV
-
-// if (config.sentry) {
-//   import('./modules/sentry')
-// }
-
-if (config.debug) {
-  import('./debug')
-}
 
 if (env === 'cordova') {
   import('./modules/push_notifications')
@@ -72,7 +63,6 @@ export default new Vue({
       await this.$become('ready', true)
       this.loading = false
       this.$destroy()
-      console.log('finished fetching');
       require('@/app')
     }
   }
