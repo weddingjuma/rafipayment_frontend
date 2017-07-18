@@ -1,6 +1,6 @@
 import User from '@/models/user'
 
-jest.mock('@/utils/request', () => {
+jest.mock('@/utils/request_auth', () => {
   return () => {
     const { Deferred } = require('@/utils')
     const data = require('tenant_data').default

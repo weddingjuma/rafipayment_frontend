@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import Request from '@/utils/request'
+import Request from '@/utils/request_auth'
 
 export { Request }
 

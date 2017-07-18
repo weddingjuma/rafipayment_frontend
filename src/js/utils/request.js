@@ -1,44 +1,103 @@
-// authenticated XHR
+import 'whatwg-fetch'
+import config from '@/config'
 
-import _ from 'lodash'
-import store from '@/store'
-import { Request, Deferred } from '@/utils'
+// return error data from request
 
-export default function request (url = '', options = {}) {
-  const Authorization = store.getters['session:auth_token']
-  const Refresh = localStorage.getItem('refresh_token')
-  const Activation = localStorage.getItem('activation_token')
-
-  const headers = {
-    Authorization,
-    Activation,
-    Refresh
-  }
-  const defaults = {
-    method: 'GET',
-    headers
-  }
-  options = _.merge({}, defaults, options)
-
-  const req = new Request(url, options)
-  const deferred = new Deferred()
-
-  req.then((response) => {
-    if (_.get(response, 'error') === 'token_expired') {
-      const session = require('@/session')
-      session.loadSession()
-      .then(() => {
-        request(url, options)
-        .then((response) => {
-          deferred.resolve(response)
-        })
-      })
-    } else {
-      deferred.resolve(response)
-    }
-  })
-  .catch((error) => {
-    deferred.reject(error)
-  })
-  return deferred.promise
+export const handleXHRErrors = (response) => {
+  let json = response.json();
+  if (!response.ok) return json.then(Promise.reject.bind(Promise))
+  // if (tracking) console.log(tracking) // send to sentry
+  return json
 }
+
+const handleTimeout = (error) => {
+  if (error.message === 'request_timeout') {
+    require('@/app')
+    .then(({default: app}) => {
+      app.alert(
+        'The request timed out',
+        null,
+        'Timed out'
+      )
+    })
+  }
+}
+
+// generic, unauthenticated XHR
+
+const timeout_duration = 30000
+
+export default (url = '', {
+  method = 'GET',
+  body,
+  headers = {}
+} = {}) => {
+  if (body) body = JSON.stringify(body)
+  if (!/^https?:\/\//i.test(url)) url = config.urls.api + url
+
+  const _headers = new Headers()
+
+  for (let key in headers) {
+    if (headers[key]) _headers.append(key, headers[key])
+  }
+
+  // side effects?
+  headers = _headers
+
+  const race = Promise.race([
+    fetch(url, {
+      method,
+      headers,
+      body
+    })
+    .then(handleXHRErrors),
+    new Promise(function (resolve, reject) {
+      setTimeout(() => reject(new Error('request_timeout')), timeout_duration)
+    })
+  ])
+
+  race.catch(handleTimeout)
+  return race
+}
+
+// export default class Request {
+//   constructor(url = '', {
+//     method = 'GET',
+//     body,
+//     headers = {}
+//   } = {}) {
+//     this.url = !/^https?:\/\//i.test(url)
+//       ? config.urls.api + url
+//       : url
+//     this.method = method
+//     if (body) this.body = JSON.stringify(body)
+//     this.headers = headers
+//     return this.init()
+//   }
+//   init() {
+//     const headers = new Headers()
+//     for (let key in this.headers) {
+//       if (this.headers[key]) {
+//         headers.append(key, this.headers[key])
+//       }
+//     }
+//     const race = Promise.race([
+//       fetch(this.url, {
+//         method: this.method,
+//         body: this.body,
+//         headers
+//       })
+//       .then(handleXHRErrors),
+//       new Promise(function (resolve, reject) {
+//         setTimeout(() => {
+//           reject(new Error('request_timeout'))
+//         }, timeout_duration)
+//       })
+//     ])
+//     race.catch(handleTimeout)
+//     return race
+//   }
+//   retry() {
+//     return this.init()
+//   }
+// }

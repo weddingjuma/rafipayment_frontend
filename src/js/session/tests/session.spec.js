@@ -1,6 +1,6 @@
 import session from '@/session'
 
-jest.mock('@/utils/request', () => {
+jest.mock('@/utils/request_auth', () => {
   return (url) => {
     const { Deferred } = require('@/utils')
     const data = url.includes('funding_sources')

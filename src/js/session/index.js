@@ -2,7 +2,7 @@ import _ from 'lodash'
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import store from '@/store'
-import Request from '@/utils/request'
+import Request from '@/utils/request_auth'
 import UserModel from '@/models/user'
 
 // const config = {

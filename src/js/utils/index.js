@@ -1,13 +1,14 @@
 /* global StatusBar */
 
-import 'whatwg-fetch'
-// import _ from 'lodash'
-// import moment from 'moment'
-import config from '@/config'
-
 // import lengthy util functions
 
+import _Request from './request'
 import _statesHelper from './statesHelper'
+
+// export external utils
+
+export const Request = _Request
+export const statesHelper = _statesHelper
 
 // toggle status bar on Mobile
 
@@ -21,112 +22,11 @@ export const toggleStatusBar = (val) => {
   }
 }
 
-// return error data from request
-
-export const handleXHRErrors = (response) => {
-  let json = response.json();
-  if (!response.ok) return json.then(Promise.reject.bind(Promise))
-  // if (tracking) console.log(tracking) // send to sentry
-  return json
-}
-
-const handleTimeout = (error) => {
-  if (error.message === 'request_timeout') {
-    require('@/app')
-    .then(({default: app}) => {
-      app.alert(
-        'The request timed out',
-        null,
-        'Timed out'
-      )
-    })
-  }
-}
-
 export const resetState = (state, defaults) => {
   Object.keys(defaults).forEach(key => {
     state[key] = defaults[key]
   })
 }
-
-// generic, unauthenticated XHR
-
-const timeout_duration = 30000
-
-export const Request = (url = '', {
-  method = 'GET',
-  body,
-  headers = {}
-} = {}) => {
-  if (body) body = JSON.stringify(body)
-  if (!/^https?:\/\//i.test(url)) url = config.urls.api + url
-
-  const _headers = new Headers()
-
-  for (let key in headers) {
-    if (headers[key]) _headers.append(key, headers[key])
-  }
-
-  // side effects?
-  headers = _headers
-
-  const race = Promise.race([
-    fetch(url, {
-      method,
-      headers,
-      body
-    })
-    .then(handleXHRErrors),
-    new Promise(function (resolve, reject) {
-      setTimeout(() => reject(new Error('request_timeout')), timeout_duration)
-    })
-  ])
-
-  race.catch(handleTimeout)
-  return race
-}
-
-// export class Request {
-//   constructor(url = '', {
-//     method = 'GET',
-//     body,
-//     headers = {}
-//   } = {}) {
-//     this.url = !/^https?:\/\//i.test(url)
-//       ? config.urls.api + url
-//       : url
-//     this.method = method
-//     if (body) this.body = JSON.stringify(body)
-//     this.headers = headers
-//     return this.init()
-//   }
-//   init() {
-//     const headers = new Headers()
-//     for (let key in this.headers) {
-//       if (this.headers[key]) {
-//         headers.append(key, this.headers[key])
-//       }
-//     }
-//     const race = Promise.race([
-//       fetch(this.url, {
-//         method: this.method,
-//         body: this.body,
-//         headers
-//       })
-//       .then(handleXHRErrors),
-//       new Promise(function (resolve, reject) {
-//         setTimeout(() => {
-//           reject(new Error('request_timeout'))
-//         }, timeout_duration)
-//       })
-//     ])
-//     race.catch(handleTimeout)
-//     return race
-//   }
-//   retry() {
-//     return this.init()
-//   }
-// }
 
 // load scripts from cdn
 
@@ -219,7 +119,3 @@ export const unitsHelper = (number) => {
   if (/^[\d]/.test(number)) number = '#' + number
   return number
 }
-
-// export external utils
-
-export const statesHelper = _statesHelper

@@ -1,6 +1,6 @@
 import Lease from '@/models/lease'
 
-jest.mock('@/utils/request', () => {
+jest.mock('@/utils/request_auth', () => {
   return () => {
     const { Deferred } = require('@/utils')
     const data = require('lease_data').default

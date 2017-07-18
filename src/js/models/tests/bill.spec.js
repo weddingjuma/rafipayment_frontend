@@ -1,7 +1,7 @@
 import moment from 'moment'
 import Bill from '@/models/bill'
 
-jest.mock('@/utils/request', () => {
+jest.mock('@/utils/request_auth', () => {
   return () => {
     const { Deferred } = require('@/utils')
     const data = require('bill_data').default
