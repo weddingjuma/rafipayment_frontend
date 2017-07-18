@@ -30,7 +30,7 @@ const routes = [
     path: '/dashboard',
     redirect: '/dashboard/current',
     meta: {
-      auth: true
+      auth: ['tenant']
     },
     component(resolve) {
       require(['@/views/dashboard'], resolve)
@@ -40,7 +40,7 @@ const routes = [
         name: 'Current Bills',
         path: 'current',
         meta: {
-          auth: true
+          auth: ['tenant']
         },
         component(resolve) {
           require(['@/views/bills/current'], resolve)
@@ -50,7 +50,7 @@ const routes = [
         name: 'Past Bills',
         path: 'past',
         meta: {
-          auth: true
+          auth: ['tenant']
         },
         component(resolve) {
           require(['@/views/bills/past'], resolve)
@@ -69,14 +69,14 @@ const routes = [
   // remove this when we replace the backbone app
   {
     meta: {
-      auth: true
+      auth: ['tenant']
     },
     path: '/dashboard/current/:id',
     redirect: '/bills/:id'
   },
   {
     meta: {
-      auth: true
+      auth: ['tenant']
     },
     path: '/dashboard/past/:id',
     redirect: '/bills/:id'
@@ -192,7 +192,7 @@ const routes = [
     name: 'Admins',
     path: '/admins',
     meta: {
-      auth: true
+      auth: ['superadmin', 'admin']
     },
     component(resolve) {
       require(['@/views/admins'], resolve)
@@ -202,7 +202,7 @@ const routes = [
     name: 'Managers',
     path: '/managers',
     meta: {
-      auth: true
+      auth: ['superadmin', 'admin', 'manager']
     },
     component(resolve) {
       require(['@/views/managers'], resolve)
@@ -212,7 +212,7 @@ const routes = [
     name: 'Tenants',
     path: '/tenants',
     meta: {
-      auth: true
+      auth: ['superadmin', 'admin', 'mananger']
     },
     component(resolve) {
       require(['@/views/tenants'], resolve)
