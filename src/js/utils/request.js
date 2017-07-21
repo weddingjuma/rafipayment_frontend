@@ -1,18 +1,23 @@
+import _ from 'lodash'
 import 'whatwg-fetch'
 import config from '@/config'
 
 // return error data from request
 
 export const handleXHRErrors = (response) => {
-  let json = response.json();
-  if (!response.ok) return json.then(Promise.reject.bind(Promise))
-  // if (tracking) console.log(tracking) // send to sentry
+  let json = response.json()
+  if (!response.ok) {
+    return json.then(
+      Promise.reject.bind(Promise)
+    )
+  }
   return json
 }
 
-const handleTimeout = (error) => {
+// show an app alert if xhr times out
+export const handleTimeout = (error) => {
   if (error.message === 'request_timeout') {
-    const app = require('@/app').default
+    const app = require('@/app')
     app.alert(
       'The request timed out',
       null,
@@ -23,25 +28,20 @@ const handleTimeout = (error) => {
 
 // generic, unauthenticated XHR
 
-const timeout_duration = 20000
+export const timeout_duration = 20000
 
-export default (url = '', {
+export default function Request(url = '', {
   method = 'GET',
   body,
   headers = {}
-} = {}) => {
+} = {}) {
   if (body) body = JSON.stringify(body)
-  if (!/^https?:\/\//i.test(url)) url = config.urls.api + url
-
-  const _headers = new Headers()
-
-  for (let key in headers) {
-    if (headers[key]) _headers.append(key, headers[key])
+  if (!/^https?:\/\//i.test(url)) {
+    url = config.urls.api + url
   }
-
-  // side effects?
-  headers = _headers
-
+  headers = new Headers(
+    _.pickBy(headers, _.identity)
+  )
   const race = Promise.race([
     fetch(url, {
       method,
@@ -49,14 +49,24 @@ export default (url = '', {
       body
     })
     .then(handleXHRErrors),
-    new Promise(function (resolve, reject) {
-      setTimeout(() => reject(new Error('request_timeout')), timeout_duration)
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(new Error('request_timeout'))
+      }, timeout_duration)
     })
   ])
-
   race.catch(handleTimeout)
   return race
 }
+
+// const _headers = new Headers()
+
+// for (let key in headers) {
+//   if (headers[key]) _headers.append(key, headers[key])
+// }
+
+// side effects?
+// headers = _headers
 
 // export default class Request {
 //   constructor(url = '', {

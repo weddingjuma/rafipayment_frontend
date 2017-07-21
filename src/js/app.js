@@ -111,7 +111,7 @@ if (config.firebase_analytics) {
 
 install(Vue)
 
-export default new Vue({
+const app = new Vue({
   el: '.app',
   router,
   store,
@@ -192,3 +192,6 @@ export default new Vue({
     }
   }
 })
+
+export default app
+module.exports = app
