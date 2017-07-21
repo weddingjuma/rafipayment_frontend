@@ -85,23 +85,28 @@ const install = (Vue, opts = {}) => {
 
 const env = process.env.NODE_ENV
 
-if (env === 'cordova') {
-  require('@/modules/universal_links')
+if (config.debug) {
+  import('./debug')
 }
 
+if (env === 'cordova') {
+  import('@/modules/universal_links')
+}
+
+let analytics
+
 if (config.google_analytics) {
-  const initAnalytics = require('@/modules/google_analytics')
-  initAnalytics(Vue, router)
+  import('@/modules/google_analytics')
+    .then(GoogleAnalytics => {
+      analytics = new GoogleAnalytics(Vue, router)
+    })
 }
 
 if (config.firebase_analytics) {
-  const FirebaseAnalytics = require('@/modules/firebase_analytics')
-  const fba = new FirebaseAnalytics(router)
-  console.log(fba);
-}
-
-if (config.debug) {
-  require('./debug')
+  import('@/modules/firebase_analytics')
+    .then(FirebaseAnalytics => {
+      analytics = new FirebaseAnalytics(router)
+    })
 }
 
 install(Vue)
@@ -110,6 +115,7 @@ export default new Vue({
   el: '.app',
   router,
   store,
+  analytics,
   template: '<App/>',
   components: { App },
   computed: {
@@ -126,8 +132,8 @@ export default new Vue({
     },
     checkBrowserSupport() {
       try {
-        localStorage.setItem('_ls_test', 'testing_local_storage')
-        localStorage.removeItem('_ls_test')
+        localStorage.setItem('_test', '123')
+        localStorage.removeItem('_test')
       } catch(error) {
         this.alert(
           `Your browser does not support local storage. If you

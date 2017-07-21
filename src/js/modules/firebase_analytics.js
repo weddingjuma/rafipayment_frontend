@@ -1,6 +1,6 @@
 /* global cordova */
 
-class FirebaseAnalytics {
+export default class FirebaseAnalytics {
   constructor(router) {
     this.router = router
     this.analytics = cordova.plugins.firebase.analytics
