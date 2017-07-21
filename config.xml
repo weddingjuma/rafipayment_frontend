@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.rafi.payment" version="1.0.10" versionCode="1.0.10" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.rafi.payment" version="1.0.11" versionCode="1.0.11" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Rafi Payment</name>
     <description>
     Rent management at your fingertips
@@ -91,5 +91,5 @@
     <plugin name="phonegap-plugin-push" spec="~1.10.5">
         <variable name="SENDER_ID" value="1:582343470433:android:9bde5be4ab52af2c" />
     </plugin>
-    <plugin name="cordova-plugin-google-analytics" spec="^1.8.3" />
+    <plugin name="cordova-plugin-firebase-analytics" spec="^0.10.1" />
 </widget>

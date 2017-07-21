@@ -15,7 +15,7 @@ const ul = {
     universalLinks.subscribe('launch', (eventData) => {
       const path = eventData.path + eventData.url.split(eventData.path)[1]
       app.$router.replace(path)
-    });
+    })
   }
 }
 

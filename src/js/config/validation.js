@@ -1,4 +1,4 @@
-const config = {
+const validation_config = {
   errorBagName: 'errors', // change if property conflicts.
   fieldsBagName: 'fields',
   delay: 0,
@@ -16,4 +16,4 @@ const config = {
   }
 }
 
-export { config }
+export { validation_config }

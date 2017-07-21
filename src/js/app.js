@@ -6,16 +6,17 @@ import Vue from 'vue'
 import VeeValidate from 'vee-validate'
 import VueTouch from 'vue-touch'
 import VueMask from 'v-mask'
-import VueModel from './plugins/model'
-import VueCollection from './plugins/collection'
-import VueBecome from './plugins/become'
-import router from './router'
-import store from './store'
+import VueModel from '@/plugins/model'
+import VueCollection from '@/plugins/collection'
+import VueBecome from '@/plugins/become'
+import router from '@/router'
+import store from '@/store'
+import config from '@/config'
 
 // validators, config, filters
-import { config } from './config/validation'
-import { validators } from './modules/validators'
-import { filters } from './modules/filters'
+import { validation_config } from '@/config/validation'
+import { validators } from '@/modules/validators'
+import { filters } from '@/modules/filters'
 
 // custom components
 import App from '@/components/app'
@@ -79,16 +80,7 @@ const install = (Vue, opts = {}) => {
   Vue.use(VueCollection)
   Vue.use(VueBecome)
   Vue.use(VueMask)
-  Vue.use(VeeValidate, config)
-
-  // inject mixins
-  // Vue.mixin({
-  //   beforeDestroy() {
-  //     if (_.get(this, '$options.collection')) {
-  //       this.$store.dispatch('reset')
-  //     }
-  //   }
-  // })
+  Vue.use(VeeValidate, validation_config)
 }
 
 const env = process.env.NODE_ENV
@@ -97,8 +89,17 @@ if (env === 'cordova') {
   require('@/modules/universal_links')
 }
 
+if (config.google_analytics) {
+  const initAnalytics = require('@/modules/google_analytics')
+  initAnalytics(Vue, router)
+}
+
+if (config.firebase_analytics) {
+  require('@/modules/firebase_analytics')
+}
+
 if (config.debug) {
-  import('./debug')
+  require('./debug')
 }
 
 install(Vue)

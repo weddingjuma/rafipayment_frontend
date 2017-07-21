@@ -6,7 +6,7 @@ import session from './session'
 import VueBecome from './plugins/become'
 Vue.use(VueBecome)
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 // error tracking
 import './modules/sentry'
@@ -37,7 +37,7 @@ export default new Vue({
   components: { loading },
   data() {
     return {
-      loading: false
+      loading: true
     }
   },
   computed: {
@@ -61,8 +61,8 @@ export default new Vue({
       })
     },
     async loadApp() {
-      await this.$become('ready', true)
       this.loading = false
+      await this.$become('ready', true)
       this.$destroy()
       import('@/app')
     }
