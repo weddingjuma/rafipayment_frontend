@@ -23,7 +23,7 @@ const handleTimeout = (error) => {
 
 // generic, unauthenticated XHR
 
-const timeout_duration = 5000
+const timeout_duration = 20000
 
 export default (url = '', {
   method = 'GET',

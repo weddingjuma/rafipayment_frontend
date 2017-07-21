@@ -23,17 +23,14 @@ if (env === 'cordova') {
   import('./modules/push_notifications')
 }
 
-const template = `
-  <div class="app-container">
-    <loading v-if="loading" />
-    <div class="app" />
-  </div>
-`
-
 // load session state before rendering app
 export default new Vue({
   el: '#app',
-  template,
+  template: `
+    <div class="app-container">
+      <loading v-if="loading" />
+      <div class="app" />
+    </div>`,
   components: { loading },
   data() {
     return {
@@ -55,15 +52,15 @@ export default new Vue({
   methods: {
     init() {
       session.loadSession()
-      .catch(() => {})
-      .then(response => {
-        this.loadApp()
-      })
+        .catch(() => {})
+        .then(response => {
+          this.loadApp()
+        })
     },
     async loadApp() {
-      this.loading = false
       await this.$become('ready', true)
-      this.$destroy()
+      this.loading = false
+      // this.$destroy() // this kills the crab
       import('@/app')
     }
   }

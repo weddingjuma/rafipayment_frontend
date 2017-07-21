@@ -9,10 +9,18 @@ const app = {
     this.bindEvents()
   },
   bindEvents() {
-    document.addEventListener('deviceready', this.onDeviceReady.bind(this), false)
+    document.addEventListener(
+      'deviceready',
+      this.onDeviceReady.bind(this),
+      false
+    )
   },
   bindClearAll() {
-    document.addEventListener('resume', this.clearAll.bind(this), false)
+    document.addEventListener(
+      'resume',
+      this.clearAll.bind(this),
+      false
+    )
   },
   onDeviceReady() {
     session.deviceready = true
@@ -33,7 +41,7 @@ const app = {
     })
 
     push.on('registration', function(data) {
-      console.log({data});
+      // console.log({data});
       const oldRegId = localStorage.getItem('registrationId')
       if (oldRegId !== data.registrationId) {
         localStorage.setItem('registrationId', data.registrationId)

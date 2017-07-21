@@ -12,7 +12,7 @@ body {
   text-align: center;
   color: $color-text-default;
   background-color: $color-background-default;
-  // touch-events: none;
+  touch-events: none;
 
   &.lock {
     // overflow: hidden;
