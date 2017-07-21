@@ -73,7 +73,6 @@
         <host event="launch" name="app.staging.payment.rafiproperties.com" scheme="https" />
     </universal-links>
     <engine name="ios" spec="~4.4.0" />
-    <engine name="browser" spec="~4.1.0" />
     <plugin name="cordova-plugin-battery-status" spec="~1.1.1" />
     <plugin name="cordova-plugin-console" spec="~1.0.2" />
     <plugin name="cordova-plugin-device" spec="~1.1.1" />
@@ -88,8 +87,9 @@
     <plugin name="cordova-plugin-statusbar-hide-on-startup" spec="~0.1.7" />
     <plugin name="cordova-plugin-vibration" spec="~2.1.0" />
     <plugin name="cordova-plugin-whitelist" spec="~1.2.1" />
+    <plugin name="cordova-plugin-firebase-analytics" spec="^0.10.1" />
     <plugin name="phonegap-plugin-push" spec="~1.10.5">
         <variable name="SENDER_ID" value="1:582343470433:android:9bde5be4ab52af2c" />
     </plugin>
-    <plugin name="cordova-plugin-firebase-analytics" spec="^0.10.1" />
+    <engine name="browser" spec="~4.1.0" />
 </widget>

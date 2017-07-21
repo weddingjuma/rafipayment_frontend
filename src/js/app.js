@@ -95,7 +95,9 @@ if (config.google_analytics) {
 }
 
 if (config.firebase_analytics) {
-  require('@/modules/firebase_analytics')
+  const FirebaseAnalytics = require('@/modules/firebase_analytics')
+  const fba = new FirebaseAnalytics(router)
+  console.log(fba);
 }
 
 if (config.debug) {
