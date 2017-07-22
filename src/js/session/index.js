@@ -70,16 +70,18 @@ const session = new Vue({
       if (token === 'undefined') {
         return localStorage.removeItem('refresh_token')
       }
-      const promise = !token ? Promise.reject('No token') : this.request('users/tokens')
-        .then(response => {
-          this.dispatchLogin(response)
-        })
-        .catch((error) => {
-          console.warn(error)
-        })
-        .then(() => {
-          this.$store.dispatch('loading_end')
-        })
+      const promise = !token
+        ? Promise.reject('No token')
+        : this.request('users/tokens')
+          .then(response => {
+            this.dispatchLogin(response)
+          })
+          .catch((error) => {
+            console.warn(error)
+          })
+          .then(() => {
+            this.$store.dispatch('loading_end')
+          })
 
       return promise
     },
@@ -166,6 +168,9 @@ const session = new Vue({
         .then((response) => {
           this.$store.dispatch('set_funding_sources', response)
           this.setPrimaryFundingSource(response)
+        })
+        .catch((error) => {
+          console.warn(error)
         })
     },
     setPrimaryFundingSource(funding_sources) {

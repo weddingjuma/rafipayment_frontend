@@ -6,16 +6,17 @@ import Vue from 'vue'
 import VeeValidate from 'vee-validate'
 import VueTouch from 'vue-touch'
 import VueMask from 'v-mask'
-import VueModel from './plugins/model'
-import VueCollection from './plugins/collection'
-import VueBecome from './plugins/become'
-import router from './router'
-import store from './store'
+import VueModel from '@/plugins/model'
+import VueCollection from '@/plugins/collection'
+import VueBecome from '@/plugins/become'
+import router from '@/router'
+import store from '@/store'
+import config from '@/config'
 
 // validators, config, filters
-import { config } from './config/validation'
-import { validators } from './modules/validators'
-import { filters } from './modules/filters'
+import { validation_config } from '@/config/validation'
+import { validators } from '@/modules/validators'
+import { filters } from '@/modules/filters'
 
 // custom components
 import App from '@/components/app'
@@ -79,26 +80,33 @@ const install = (Vue, opts = {}) => {
   Vue.use(VueCollection)
   Vue.use(VueBecome)
   Vue.use(VueMask)
-  Vue.use(VeeValidate, config)
-
-  // inject mixins
-  // Vue.mixin({
-  //   beforeDestroy() {
-  //     if (_.get(this, '$options.collection')) {
-  //       this.$store.dispatch('reset')
-  //     }
-  //   }
-  // })
+  Vue.use(VeeValidate, validation_config)
 }
 
 const env = process.env.NODE_ENV
 
-if (env === 'cordova') {
-  require('@/modules/universal_links')
-}
-
 if (config.debug) {
   import('./debug')
+}
+
+if (env === 'cordova') {
+  import('@/modules/universal_links')
+}
+
+let analytics
+
+if (config.google_analytics) {
+  import('@/modules/google_analytics')
+    .then(GoogleAnalytics => {
+      analytics = new GoogleAnalytics(Vue, router)
+    })
+}
+
+if (config.firebase_analytics) {
+  import('@/modules/firebase_analytics')
+    .then(FirebaseAnalytics => {
+      analytics = new FirebaseAnalytics(router)
+    })
 }
 
 install(Vue)
@@ -107,6 +115,7 @@ export default new Vue({
   el: '.app',
   router,
   store,
+  analytics,
   template: '<App/>',
   components: { App },
   computed: {
@@ -123,8 +132,8 @@ export default new Vue({
     },
     checkBrowserSupport() {
       try {
-        localStorage.setItem('_ls_test', 'testing_local_storage')
-        localStorage.removeItem('_ls_test')
+        localStorage.setItem('_test', '123')
+        localStorage.removeItem('_test')
       } catch(error) {
         this.alert(
           `Your browser does not support local storage. If you

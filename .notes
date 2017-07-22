@@ -15,6 +15,22 @@ DOCKER
   - nginx
 
 
+SESSION 
+- Login with creds
+- Login with tokens
+- Fetch updated account data
+
+
+PUSH notifications
+- get .cer file from apple
+- convert .cer directly to .pem 
+  openssl x509 -inform der -in cert.cer -out cert.pem
+- get .cer developer identity
+- convert to .p12 in keychain access
+- convert .p12 to .pem with a password
+  openssl pkcs12 -in private.p12 -out key.pem -nocerts
+- combine the cert and the key together
+  cat key.pem cert.pem > dev.pem
 
 
 NOTIF DESIGNER IDEAS

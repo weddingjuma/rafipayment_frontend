@@ -12,20 +12,18 @@ export const handleXHRErrors = (response) => {
 
 const handleTimeout = (error) => {
   if (error.message === 'request_timeout') {
-    require('@/app')
-    .then(({default: app}) => {
-      app.alert(
-        'The request timed out',
-        null,
-        'Timed out'
-      )
-    })
+    const app = require('@/app').default
+    app.alert(
+      'The request timed out',
+      null,
+      'Timed out'
+    )
   }
 }
 
 // generic, unauthenticated XHR
 
-const timeout_duration = 30000
+const timeout_duration = 20000
 
 export default (url = '', {
   method = 'GET',
