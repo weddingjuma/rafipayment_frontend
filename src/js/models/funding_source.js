@@ -43,7 +43,7 @@ export default class FundingSource extends Model {
   static schema() {
     return {
       id: String,
-      _links: Array,
+      links: Array,
       name: String,
       type: String,
       status: String,
