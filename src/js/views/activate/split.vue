@@ -12,7 +12,7 @@
       <div class="form-model panel small">
         <h1>Set Your Rent Split</h1>
 
-        <form @submit.prevent="modalOpen">
+        <form @submit.prevent="modalOpen" novalidate>
           <div class="field-group">
             <div class="money">
               <currency
@@ -111,7 +111,7 @@
 
 <script>
 import session from '@/session'
-import { prettyCurrency, Deferred, sleep } from '@/utils'
+import { parseCurrency, prettyCurrency, Deferred, sleep } from '@/utils'
 import { mapGetters } from 'vuex'
 import userDl from '@/components/cards/user_dl'
 import LeaseModel from '@/models/lease'
@@ -137,14 +137,16 @@ export default {
       return this.$parent.$user
     },
     lease() {
-      const basePath = session.logged_in ? 'account/leases' : 'tenants/activate/leases'
+      const basePath = session.logged_in
+        ? 'account/leases'
+        : 'tenants/activate/leases'
       return new LeaseModel(this.lease, {
         basePath
       })
     }
   },
   created() {
-    const split_suggestion = this.$lease.rent_remaining / this.$lease.missing_splits
+    const split_suggestion = parseCurrency(this.$lease.rent_remaining / this.$lease.missing_splits)
     this.$lease.split_amount = this.split_input = split_suggestion
   },
   computed: {
@@ -160,7 +162,9 @@ export default {
   },
   methods: {
     prettySplit(val) {
-      return val !== undefined ? prettyCurrency(val) : 'Not Set'
+      return val !== undefined
+        ? prettyCurrency(val)
+        : 'Not Set'
     },
 
     async checkIfValidated() {
@@ -205,7 +209,9 @@ export default {
     async modalOpen() {
       await this.checkIfValidated()
       this.loading = true
-      const promise = this.primary_funding_source ? Promise.resolve(true) : this.$become('primary_funding_source')
+      const promise = this.primary_funding_source
+        ? Promise.resolve(true)
+        : this.$become('primary_funding_source')
       promise.then((value) => {
         if (value) {
           this.loading = false

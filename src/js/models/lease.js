@@ -36,15 +36,20 @@ const defaults = {
       // round to the nearest .5 and remove the decimal if zero
       const months = parseFloat((Math.round(duration.asMonths() * 2) / 2).toFixed(1))
       const days = duration.asDays()
-
-      const auto = months > 1 ? months + ' Months' : days + ' Days'
+      const auto = months > 1
+        ? months + ' Months'
+        : days + ' Days'
       return { months, days, auto }
     },
     tenants_sorted() {
       return this.tenants.sort((a, b) => {
-        return _.get(this.split, a._id) !== undefined ? -1 : 1
+        return _.get(this.split, a._id) !== undefined
+          ? -1
+          : 1
       }).sort((a, b) => {
-        return a._id === session.$user.id ? -1 : 1
+        return a._id === session.$user.id
+          ? -1
+          : 1
       })
     },
     splits() {

@@ -33,6 +33,20 @@ PUSH notifications
   cat key.pem cert.pem > dev.pem
 
 
+
+
+  - test push notifs in prod
+    - test on ed's phone
+    - make anytime bill
+    - make $1 payment
+
+  X- update production mailchimp server
+
+- form novalidate currency -> stop using number input probably
+
+- push notifications
+  - 
+
 NOTIF DESIGNER IDEAS
 
 - switch back end to node, mainly for single install convenience
