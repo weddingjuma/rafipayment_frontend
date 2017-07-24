@@ -1,11 +1,16 @@
 /* global cordova */
 
+import session from '@/session'
+
 export default class FirebaseAnalytics {
   constructor(router) {
     this.router = router
     this.analytics = cordova.plugins.firebase.analytics
-    console.log(this.analytics);
     this.bindEvents()
+    return this
+  }
+  onDeviceReady() {
+    this.setupFirebaseAnalytics()
     return this
   }
   bindEvents() {
@@ -24,13 +29,13 @@ export default class FirebaseAnalytics {
     })
     return this
   }
-  onDeviceReady() {
-    this.setupFirebaseAnalytics()
-    return this
+  bindSessionHook() {
+    session.$on('login', this.setUser)
   }
   setupFirebaseAnalytics() {
     this.analytics.setEnabled(true)
     this.bindRouterHook()
+    this.bindSessionHook()
     return this
   }
   logEvent(type, options) {
@@ -38,11 +43,18 @@ export default class FirebaseAnalytics {
     this.analytics.logEvent(type, options, this.onSuccess, this.onError)
     return this
   }
-  onSuccess(response) {
-    console.log('success', response);
+  setUser(user) {
+    console.log('logging login', user);
+    this.analytics.setUserId(user._id)
+    this.analytics.setUserProperty('full_name', user.full_name)
+    this.analytics.setUserProperty('role', user.role)
+    return this
   }
-  onError(error) {
-    console.warn('error', error)
+  onSuccess() {
+    console.log('Firebase Analytics success');
+  }
+  onError() {
+    console.warn('Firebase Analytics error')
   }
 }
 

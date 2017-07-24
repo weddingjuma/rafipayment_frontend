@@ -4,17 +4,8 @@ import { mapGetters } from 'vuex'
 import store from '@/store'
 import Request from '@/utils/request_auth'
 import UserModel from '@/models/user'
-
-// const config = {
-//   tokens: {
-//     Authorization: store.getters['session:auth_token'],
-//     Authentication: localStorage.getItem('refresh_token'),
-//     Activation: localStorage.getItem('activation_token')
-//   }
-// }
-// console.log({store});
-
 import VueModel from '@/plugins/model'
+
 Vue.use(VueModel)
 
 const session = new Vue({
@@ -138,6 +129,7 @@ const session = new Vue({
     },
     dispatchLogin(user) {
       this.$store.dispatch('login', user)
+      // this.$emit('login', user)
       this.bindSessionUser()
     },
     bindDeviceData(body) {
@@ -150,6 +142,7 @@ const session = new Vue({
     },
     bindSessionUser() {
       this.$user = this.$store.getters['session:user']
+      this.$emit('login', this.$user)
       this.checkForActionsRequired()
     },
     checkForActionsRequired() {

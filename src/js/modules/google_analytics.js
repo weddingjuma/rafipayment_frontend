@@ -12,6 +12,7 @@ export default class GoogleAnalytics {
       id: config.google_analytics.key,
       router
     })
+    return this
   }
 }
 
