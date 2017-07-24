@@ -88,7 +88,9 @@ export default {
     limit(input) {
       let output = input
       if (this.maxlength) {
-        const exp = this.wrap ? [-1 * this.max_length] : [0, this.max_length]
+        const exp = this.wrap
+          ? [ -1 * this.max_length ]
+          : [ 0, this.max_length ]
         output = input.slice(...exp)
       }
       return output
