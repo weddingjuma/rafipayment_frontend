@@ -15,7 +15,6 @@ export default class FirebaseAnalytics {
     return this
   }
   checkSession() {
-    console.log('checkSession');
     if (session.logged_in) {
       this.setUser(session.$user)
     }
@@ -58,7 +57,6 @@ export default class FirebaseAnalytics {
     return this
   }
   setUser(user) {
-    console.log('setUser', user);
     this.analytics.setUserId(user._id)
     this.analytics.setUserProperty('full_name', user.full_name)
     this.analytics.setUserProperty('role', user.role)
