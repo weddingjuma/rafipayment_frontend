@@ -39,6 +39,12 @@ const routes = [
         }
       },
       {
+        path: 'events',
+        component: function(resolve) {
+          require(['@/views/ui/components/events'], resolve)
+        }
+      },
+      {
         path: 'inputs',
         component: function(resolve) {
           require(['@/views/ui/components/inputs'], resolve)

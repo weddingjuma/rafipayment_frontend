@@ -40,7 +40,7 @@
         </div>
         <div class="box">
           <h3>Collapse</h3>
-          <button type="button" @click="expanded4 = !expanded4">Toggle</button>
+          <button type="button" @click="expanded3 = !expanded3">Toggle</button>
           <collapse :expanded="expanded3">
             <div v-for="(item, index) in array" :key="index">
               {{ item }}
@@ -68,7 +68,6 @@ export default {
       expanded: false,
       expanded2: false,
       expanded3: false,
-      // expanded4: false,
       array: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
       array_proxy: [],
       show_check: true,

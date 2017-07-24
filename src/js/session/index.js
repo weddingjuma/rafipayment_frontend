@@ -5,6 +5,7 @@ import store from '@/store'
 import Request from '@/utils/request_auth'
 import UserModel from '@/models/user'
 import VueModel from '@/plugins/model'
+import events from 'pubsub-js'
 
 Vue.use(VueModel)
 
@@ -129,7 +130,6 @@ const session = new Vue({
     },
     dispatchLogin(user) {
       this.$store.dispatch('login', user)
-      // this.$emit('login', user)
       this.bindSessionUser()
     },
     bindDeviceData(body) {
@@ -142,7 +142,7 @@ const session = new Vue({
     },
     bindSessionUser() {
       this.$user = this.$store.getters['session:user']
-      this.$emit('login', this.$user)
+      events.publish('login', this.$user)
       this.checkForActionsRequired()
     },
     checkForActionsRequired() {

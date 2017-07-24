@@ -6,6 +6,7 @@
         <router-link to="/ui/typography">Typography</router-link>
         <router-link to="/ui/flags">Flags</router-link>
         <router-link to="/ui/buttons">Buttons</router-link>
+        <router-link to="/ui/events">Events</router-link>
         <router-link to="/ui/inputs">Inputs</router-link>
         <router-link to="/ui/forms">Forms</router-link>
         <router-link to="/ui/cards">Cards</router-link>

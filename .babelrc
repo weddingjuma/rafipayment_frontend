@@ -20,6 +20,14 @@
         "stage-2"
       ]
     },
+    "ui": {
+      "presets": [
+        ["latest", {
+          "es2015": { "modules": false }
+        }],
+        "stage-2"
+      ]
+    },
     "dev": {
       "presets": [
         ["latest", {
