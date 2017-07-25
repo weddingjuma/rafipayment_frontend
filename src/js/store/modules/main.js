@@ -9,7 +9,7 @@ const defaults = () => ({
   alert: {
     header: '',
     message: '',
-    template: null,
+    // template: null,
     actions: {},
     button_labels: []
   }
