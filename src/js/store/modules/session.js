@@ -36,18 +36,18 @@ export default {
       const path = getDwollaAccountPath(state.user)
       return _.get(state, path)
     },
-    'session:isSuperAdmin': state => {
-      return _.get(state, 'user.role') === 'superadmin'
-    },
-    'session:isAdmin': state => {
-      return _.get(state, 'user.role') === 'admin'
-    },
-    'session:isManager': state => {
-      return _.get(state, 'user.role') === 'manager'
-    },
-    'session:isTenant': state => {
-      return _.get(state, 'user.role') === 'tenant'
-    },
+    // 'session:isSuperAdmin': state => {
+    //   return _.get(state, 'user.role') === 'superadmin'
+    // },
+    // 'session:isAdmin': state => {
+    //   return _.get(state, 'user.role') === 'admin'
+    // },
+    // 'session:isManager': state => {
+    //   return _.get(state, 'user.role') === 'manager'
+    // },
+    // 'session:isTenant': state => {
+    //   return _.get(state, 'user.role') === 'tenant'
+    // },
     'session:actions_required': state => {
       return _.get(state, 'actions_required')
     },

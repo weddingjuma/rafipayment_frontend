@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import VueModel from '@/plugins/model'
+import VueModel, { Model } from '@/plugins/model'
 import User from '@/models/user'
 
 Vue.use(VueModel)
@@ -12,6 +12,45 @@ jest.mock('@/utils/request', () => {
     promise.resolve(data())
     return promise.promise
   }
+})
+
+describe('VueModel basics', () => {
+  it('should access static schema property', () => {
+    expect(Model.schema())
+      .toBeInstanceOf(Object)
+  })
+
+  const model = new User({
+    id: '123'
+  })
+  it('should fetch a model', () => {
+    expect.assertions(1)
+    return model.fetch()
+      .then(() => {
+        expect(model.full_name)
+          .toBe('Taco Cat')
+      })
+  })
+
+  it('should resolve toJSON', () => {
+    expect(model.toJSON())
+      .toBeInstanceOf(Object)
+  })
+
+  it('should resolve decode', () => {
+    expect(model.decode())
+      .toBeInstanceOf(Object)
+  })
+
+  it('should resolve schema', () => {
+    expect(model.schema())
+      .toBeInstanceOf(Object)
+  })
+
+  it('should destroy a model', () => {
+    expect(model.destroy())
+      .toBeInstanceOf(Promise)
+  })
 })
 
 const test_component = new Vue({
@@ -27,7 +66,7 @@ const test_component = new Vue({
   }
 })
 
-describe('VueModel', () => {
+describe('VueModel binding', () => {
   it('should correctly bind models to vue instance', () => {
     expect(test_component.$user.first_name)
       .toBe('')

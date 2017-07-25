@@ -117,4 +117,10 @@ describe('LeaseModel', () => {
     expect(validate.validated)
       .toBe(true)
   })
+
+  it('should properly resolve length - month to month', () => {
+    lease.end_date = undefined
+    expect(lease.length)
+      .toBe('N/A')
+  })
 })

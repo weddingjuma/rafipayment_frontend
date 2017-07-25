@@ -1,4 +1,5 @@
 import moment from 'moment'
+import session from '@/session'
 import Bill from '@/models/bill'
 
 jest.mock('@/utils/request_auth', () => {
@@ -10,6 +11,13 @@ jest.mock('@/utils/request_auth', () => {
     return promise.promise
   }
 })
+
+session.$user = {
+  _id: '587e3ebbe4e05574a3f91e28',
+  first_name: 'Test',
+  last_name: 'Tester',
+  role: 'tenant'
+}
 
 const bill = new Bill()
 
@@ -38,11 +46,6 @@ describe('BillModel', () => {
       .toBe('rent - February')
   })
 
-  it('should resolve computed properties - is_autopay', () => {
-    expect(bill.is_autopay)
-      .toBe(false)
-  })
-
   it('should resolve computed properties - days_from_due', () => {
     expect(bill.days_from_due)
       .toBe(150)
@@ -50,7 +53,7 @@ describe('BillModel', () => {
 
   it('should resolve computed properties - is_autopay', () => {
     expect(bill.is_autopay)
-      .toBe(false)
+      .toBe(true)
   })
 
   it('should resolve computed properties - display_date', () => {
@@ -62,12 +65,6 @@ describe('BillModel', () => {
     expect(bill.message)
       .toBe('Overdue 150 days')
   })
-
-  // NOTE: property and unit aren't currently resolved
-  // it('should resolve computed properties - target', () => {
-  //   expect(bill.target)
-  //     .toBe('4 Roommates')
-  // })
 
   it('should resolve computed properties - better_display_balance', () => {
     expect(bill.better_display_balance)
@@ -84,8 +81,75 @@ describe('BillModel', () => {
       .toBe(1)
   })
 
-  it('should handle processType method', () => {
-    expect(bill.processType(bill.type))
-      .toBe('monthly')
+  it('should resolve computed properties - targets', () => {
+    expect(bill.target)
+      .toBe('533 Washington St, #1A')
+  })
+
+  it('should resolve bill_status with zero balance', () => {
+    bill.total = 0
+    expect(bill.bill_status)
+      .toBe('paid')
+  })
+
+  it('should resolve bill message with zero balance', () => {
+    expect(bill.message)
+      .toBe('Paid in full')
+  })
+
+  it('should resolve bill_status with balance and future due date', () => {
+    MockDate.set(moment.utc().format('M/D/YYYY'))
+    bill.total = 9000
+    bill.due_date = moment.utc().add(3, 'months').toISOString()
+    expect(bill.bill_status)
+      .toBe('future')
+  })
+
+  it('should resolve bill message when due in the future', () => {
+    expect(bill.message)
+      .toBe('Due in 92 days')
+  })
+
+  it('should resolve bill_status with balance today as due date', () => {
+    bill.due_date = moment.utc().toISOString()
+    expect(bill.bill_status)
+      .toBe('due')
+  })
+
+  it('should resolve bill message when today', () => {
+    expect(bill.message)
+      .toBe('Due today')
+  })
+
+  it('should handle processType method - fee', () => {
+    expect(bill.processType('fee'))
+      .toBe('fee')
+  })
+
+  it('should handle processType method - rent', () => {
+    expect(bill.processType('rent'))
+      .toBe('rent - July')
+  })
+
+  it('should handle processType method - previous_bill_overflow', () => {
+    expect(bill.processType('previous_bill_overflow'))
+      .toBe('from_previous_bill')
+  })
+
+  it('should resolve label for anytime bill', () => {
+    bill.type = 'anytime'
+    expect(bill.label)
+      .toBe('one-time bill')
+  })
+
+  it('should resolve target for anytime', () => {
+    expect(bill.target)
+      .toBe('Test Tester')
+  })
+
+  it('should resolve is_autopay with no session user', () => {
+    session.clearSessionUser()
+    expect(bill.is_autopay)
+      .toBe(false)
   })
 })

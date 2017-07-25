@@ -26,6 +26,7 @@ export default function request (url = '', options = {}) {
   req.then((response) => {
     if (_.get(response, 'error') === 'token_expired') {
       const session = require('@/session')
+      console.log({session});
       session.loadSession()
       .then(() => {
         request(url, options)

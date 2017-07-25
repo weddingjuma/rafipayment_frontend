@@ -23,7 +23,7 @@ export const toggleStatusBar = (val) => {
 }
 
 export const resetState = (state, defaults) => {
-  Object.keys(defaults).forEach(key => {
+  return Object.keys(defaults).forEach(key => {
     state[key] = defaults[key]
   })
 }
