@@ -31,8 +31,16 @@ PUSH notifications
   openssl pkcs12 -in private.p12 -out key.pem -nocerts
 - combine the cert and the key together
   cat key.pem cert.pem > dev.pem
+- NOTE: APNS token types are dependent on how the app is build (use an archived ipa for prod testing)
 
+Android deep linking notes
 
+- Add domain to Google Webmasters
+- Link domain to Google Play console account
+- add ./well-known/assetlinks.json
+
+- test with
+  adb shell am start -a android.intent.action.VIEW -d "https://app.payment.rafiproperties.com/dashboard" com.rafi.payment
 
 
   - test push notifs in prod
@@ -43,9 +51,9 @@ PUSH notifications
   X- update production mailchimp server
 
 - form novalidate currency -> stop using number input probably
+- marketing site seo
 
-- push notifications
-  - 
+
 
 NOTIF DESIGNER IDEAS
 
@@ -69,31 +77,17 @@ FE
 - All custom plugins / components / filters / validations
 
 
-- make VueCollection api compatible with VueModel
+X- make VueCollection api compatible with VueModel
 
 X- figure out why testing isnt working
 X- switch testing to Jest
-- write additional tests
+X- write additional tests
 - write documentation
   - onboarding
 - separate VueModel into its own repository
 X- genericize
 - collection is still using _id
 
-const config = {
-  methods: {
-    fetch() {
-      return Request(this.fetch_url)
-    },
-    save() {
-      return Request(this.save_url)
-    },
-    destroy() {
-      return Request(this.destory_url)
-    }
-  }
-}
-Vue.use(VueModel, config)
 
 
 
@@ -107,14 +101,14 @@ burritos4dogzRawesome
 
 
 X- invite test users!
-- process testing feedback
 
-- update public site
+X- update public site
   X- add buttons for App Store, Google Play
   - write some copy about the native app
+  - add images/video
 
-- submit public apps to app stores, get approval
-- prepare communication to tenants
+X- submit public apps to app stores, get approval
+X- prepare communication to tenants
 
 
 
@@ -149,17 +143,6 @@ UX designers should ask a lot of questions
 
 
 
-
-Android deep linking notes
-
-- Add domain to Google Webmasters
-- Link domain to Google Play console account
-- add ./well-known/assetlinks.json
-
-- test with
-  adb shell am start -a android.intent.action.VIEW -d "https://app.payment.rafiproperties.com/dashboard" com.rafi.payment
-
-
 X- set time for testing
 X- refetch account in account views!!!!!!!!!!!!
 X- logging in as a different user seems broken
@@ -167,8 +150,8 @@ X- collin's bug
 
 X- universal links for android
 
-- update public site
-- google index public site
+X- update public site
+X- google index public site
 
 BACK END
 
@@ -190,13 +173,11 @@ X- transfers
 
 - person pays, roommate doesn't, overdue bill email should be "not fully paid"
 
+
 FRONT END
 
 
 X- make app handle urls!
-
-
-
 X- add some success visual when they finish onboarding...
 
 
@@ -234,8 +215,8 @@ X- load component is broken
 X- figure out why load component breaks
 
 
-- add success indicator in onboarding
-- set up basic tests!
+X- add success indicator in onboarding
+X- set up basic tests!
 
 
 BIG CHANGES IF LEASING
@@ -247,14 +228,12 @@ BIG CHANGES IF LEASING
 
 
 X- add sentry to app
-- set up api endpoint for tracking errors
 
 - cancel transfer endpoint is inconsistent
   - dwolla/transfer/:id/cancel
   - transfers/:id
 
-- number component
-  - maybe tabfocus=int should be a prop
+X- number component
 X- use overflow: hidden to prevent scrolling when modals are open, loading
 
 put qr code in invite email, open native app for first time and scan
@@ -283,8 +262,8 @@ X- set up microdeposits
 
 Z- transfer is waiting for webhook to create cancel_expiration
 
-- Google Analytics on mobile?
-- vue router scrolling onroute
+X- Google Analytics on mobile?
+>- vue router scrolling onroute
 
 
 TODO
@@ -294,14 +273,14 @@ Z- maybe use Vue with Vuex for collection to make API more consistent
 
 
 - filtering should work more like excel, just remove useless filters from lists
-- travis tests
+X- travis tests
 
 
 
 
 - ACTIVATION FLOW
-  - include links to the app store stuff in the email?
-  - or link to the website where they can get the links
+  X- include links to the app store stuff in the email?
+  X- or link to the website where they can get the links
 
 - build debug API swapper
 - make bank account cards nicer

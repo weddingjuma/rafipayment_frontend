@@ -1,5 +1,5 @@
 export const config = {
-  debug: true,
+  debug: false,
   urls: {
     // api: 'https://api.staging.payment.rafiproperties.com/'
     api: 'https://api.payment.rafiproperties.com/'
