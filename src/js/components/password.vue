@@ -31,15 +31,11 @@ export default {
   name: 'password',
   props: {
     name: String,
-    // ref: String,
     value: {
       type: String,
       default: ''
     }
   },
-  // created() {
-  //   console.log(this);
-  // },
   data() {
     return {
       field_name: this.name,
@@ -49,7 +45,9 @@ export default {
   },
   computed: {
     button_label() {
-      return this.is_visible ? 'hide' : 'show'
+      return this.is_visible
+        ? 'hide'
+        : 'show'
     }
   },
   watch: {

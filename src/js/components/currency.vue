@@ -80,11 +80,10 @@ export default {
     },
     field_blurred() {
       this.is_focused = false
-      if (this.is_mobile) {
-        this.input_value = utils.parseCurrency(this.input_value, String)
-      } else {
-        this.input_value = utils.prettyCurrency(this.input_value, false)
-      }
+      const args = this.is_mobile
+        ? [ this.input_value, String ]
+        : [ this.input_value, false ]
+      this.input_value = utils.parseCurrency(...args)
       this.$emit('blur')
     },
     field_changed(e) {
