@@ -176,9 +176,15 @@ export default function bill () {
     '_id': '59381297e4e055330b538d36',
     'balance': 197.0,
     'company': '587e3e15e4e05574a3f91e23',
-    'unit': '587e3edae4e05574a3f91e29',
+    'unit': {
+      '_id': '587e3edae4e05574a3f91e29',
+      'number': '1A'
+    },
     'updated': '2017-06-23T11:27:37.061000',
-    'property': '587e3ecce4e05574a49cdcd1',
+    'property': {
+      '_id': '587e3ecce4e05574a49cdcd1',
+      'address': '533 Washington St'
+    },
     'charges': {
       'scheduled': [
         {

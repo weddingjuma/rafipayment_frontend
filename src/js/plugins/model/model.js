@@ -113,9 +113,10 @@ export default class Model {
             // console.log('value', data[_key]);
             // this[key] = utils.encodeWithSchema(data[_key], schema[_key])
           }
+          return this
         },
         reset(defaults) {
-          utils.resetState(this.$data, default_attributes())
+          return utils.resetState(this.$data, default_attributes())
         },
         toJSON() {
           return utils.modelToJSON(this)

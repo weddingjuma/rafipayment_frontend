@@ -11,7 +11,7 @@ const defaults = {
     bill_status() {
       const due_date = moment.utc(this.due_date).startOf('day')
       const today = moment.utc().startOf('day')
-      const balance = parseFloat(this.display_balance)
+      const balance = parseFloat(this.better_display_balance)
       let status
       if (balance <= 0) {
         status = 'paid'
@@ -36,11 +36,13 @@ const defaults = {
       return label
     },
     is_autopay() {
-      const lease = this.lease
+      const autopay = _.get(this, 'lease.autopay')
       let is_autopay = false
-      _.each(lease.autopay, function(value, key) {
-        if (value && key === session.$user.id) is_autopay = true
-      })
+      for (let key in autopay) {
+        if (autopay[key] && key === session.$user.id) {
+          is_autopay = true
+        }
+      }
       return is_autopay
     },
     days_from_due() {
@@ -69,7 +71,9 @@ const defaults = {
           break
         case 'future':
           const autopay = this.has_autopay;
-          message = autopay ? `Autopay in ${days} days` : `Due in ${days} days`
+          message = autopay
+            ? `Autopay in ${days} days`
+            : `Due in ${days} days`
           break
         case 'due':
           message = `Due today`
@@ -79,21 +83,19 @@ const defaults = {
     },
     target() {
       const type = this.type
-      if (!type) return
+      // if (!type) return
       let target, property, unit, tenants
       if (type === 'monthly') {
         property = this.property
         unit = this.unit
-        target = `${property.address} #${unit.number}`
+        target = `${property.address}, #${unit.number}`
       } else if (type === 'anytime') {
         tenants = this.tenants
-        if (tenants.length === 1) {
-          target = session.$user.full_name
-        } else {
-          target = `${tenants.length} Roommates`
-        }
+        target = tenants.length === 1
+          ? session.$user.full_name
+          : `${tenants.length} Roommates`
       }
-      return target;
+      return target
     },
     better_display_balance() {
       const valid_transfers = this.transfers.filter((transfer) => {
