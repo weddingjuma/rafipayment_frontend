@@ -1,9 +1,8 @@
 // core packages
 import Vue from 'vue';
 import session from './session'
-
-// import VueModel from './plugins/model'
 import VueBecome from './plugins/become'
+
 Vue.use(VueBecome)
 
 Vue.config.productionTip = false

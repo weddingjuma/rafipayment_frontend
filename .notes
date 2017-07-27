@@ -143,6 +143,12 @@ UX designers should ask a lot of questions
 
 
 
+
+- polyfill Array.includes
+- sentry blacklist
+
+
+
 X- set time for testing
 X- refetch account in account views!!!!!!!!!!!!
 X- logging in as a different user seems broken
@@ -262,8 +268,13 @@ X- set up microdeposits
 
 Z- transfer is waiting for webhook to create cancel_expiration
 
+<<<<<<< HEAD
 X- Google Analytics on mobile?
 >- vue router scrolling onroute
+=======
+- Google Analytics on mobile?
+X- vue router scrolling onroute
+>>>>>>> dev-permissions
 
 
 TODO

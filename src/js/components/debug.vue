@@ -40,7 +40,6 @@
 <script>
 import app from '@/app'
 import session from '@/session'
-import router from '@/router'
 import config from '@/config'
 
 export default {
@@ -78,7 +77,7 @@ export default {
           console.log(session)
           break
         case 'router':
-          console.log(router)
+          console.log(app.$router)
           break
         default:
           console.log('not found')

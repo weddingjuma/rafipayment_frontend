@@ -1,4 +1,5 @@
 var path = require('path')
+var webpack = require('webpack')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
@@ -42,14 +43,17 @@ module.exports = {
       '%': resolve('src/scss/modules')
     }
   },
-  // plugins: [
-  //   new CircularDependencyPlugin({
-  //     // exclude detection of files based on a RegExp
-  //     exclude: /a\.js|node_modules/,
-  //     // add errors to webpack instead of warnings
-  //     failOnError: true
-  //   })
-  // ],
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.version': JSON.stringify(require("../package.json").version)
+    }),
+    // new CircularDependencyPlugin({
+    //   // exclude detection of files based on a RegExp
+    //   exclude: /a\.js|node_modules/,
+    //   // add errors to webpack instead of warnings
+    //   failOnError: true
+    // })
+  ],
   module: {
     rules: [
       {

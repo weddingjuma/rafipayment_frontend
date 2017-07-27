@@ -1,6 +1,7 @@
 {
   "plugins": [
     "transform-runtime",
+    "array-includes",
     ["module-resolver", {
       "alias": {
         "@": "./src/js"

@@ -30,12 +30,12 @@ router.goBack = () => {
 
 router.beforeEach((to, from, next) => {
   try {
-    if (to.matched.some(route => route.meta.public)) {
-      publicRoute(to, from, next)
+    if (to.matched.some(route => route.meta.auth)) {
+      privateRoute(to, from, next)
     } else if (to.matched.some(route => route.name === '404')) {
       notFoundRoute(to, from, next)
     } else {
-      privateRoute(to, from, next)
+      publicRoute(to, from, next)
     }
   } catch(e) {
     console.warn(e)
