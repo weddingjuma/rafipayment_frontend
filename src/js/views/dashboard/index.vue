@@ -18,6 +18,11 @@ export default {
       role: 'session:role'
     })
   },
+  methods: {
+    afterLeave() {
+      window.scroll(0, 0)
+    }
+  },
   components: {
     superadmin,
     admin,
