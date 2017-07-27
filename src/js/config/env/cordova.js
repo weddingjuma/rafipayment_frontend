@@ -8,5 +8,5 @@ export const config = {
   google_analytics: false,
   google_places_key: '',
   dwolla_env: 'prod',
-  sentry_url: 'https://cc3c9149d8184a7f9a2361989a17d873@sentry.io/174609'
+  sentry_dsn: 'https://cc3c9149d8184a7f9a2361989a17d873@sentry.io/174609'
 }
