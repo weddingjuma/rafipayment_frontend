@@ -9,9 +9,9 @@ import { publicRoute, privateRoute, notFoundRoute } from './hooks'
 Vue.use(Router)
 
 const mode = process.env.NODE_ENV === 'cordova' ? 'hash' : 'history'
-const scrollBehavior = (to, from, savedPosition) => {
-  return { x: 0, y: 0 }
-}
+// const scrollBehavior = (to, from, savedPosition) => {
+//   return { x: 0, y: 0 }
+// }
 
 const router = new Router({
   mode,

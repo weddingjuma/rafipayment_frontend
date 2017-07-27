@@ -175,6 +175,7 @@ const session = new Vue({
     },
     clearSessionUser() {
       this.$user.reset()
+      events.publish('logout')
     }
   }
 })
