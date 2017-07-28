@@ -4,7 +4,8 @@ import Router from 'vue-router'
 import _ from 'lodash'
 
 import { routes } from './routes'
-import { publicRoute, privateRoute, notFoundRoute } from './hooks'
+// import { publicRoute, privateRoute, notFoundRoute } from './hooks'
+import routeHook from './hooks'
 
 Vue.use(Router)
 
@@ -28,18 +29,6 @@ router.goBack = () => {
   }
 }
 
-router.beforeEach((to, from, next) => {
-  try {
-    if (to.matched.some(route => route.meta.auth)) {
-      privateRoute(to, from, next)
-    } else if (to.matched.some(route => route.name === '404')) {
-      notFoundRoute(to, from, next)
-    } else {
-      publicRoute(to, from, next)
-    }
-  } catch(e) {
-    console.warn(e)
-  }
-})
+router.beforeEach(routeHook)
 
 export default router
