@@ -3,10 +3,13 @@ import session from '@/session'
 import { toggleStatusBar } from '@/utils'
 
 const closeNav = () => {
-  if (session.$store.getters.nav_visible) session.$store.dispatch('nav_hide')
+  if (session.$store.getters.nav_visible) {
+    session.$store.dispatch('nav_hide')
+  }
 }
 
 export const handleRoute = (is_authorized, next, nextArgs) => {
+  // console.log({is_authorized});
   const args = is_authorized
     ? undefined
     : nextArgs
@@ -20,6 +23,7 @@ export const checkPermissions = (route) => {
   if (auth === undefined) {
     is_authorized = true
   } else if (typeof auth === 'boolean') {
+    console.log('auth is boolean, ', auth, session.checkAuth());
     is_authorized = session.checkAuth() === auth
   } else if (auth instanceof Array) {
     is_authorized = auth.includes(session.$user.role)

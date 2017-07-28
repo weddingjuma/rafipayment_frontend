@@ -6,7 +6,10 @@ import NotFound from '@/views/404'
 const routes = [
   {
     path: '/',
-    component: Login
+    component: Login,
+    meta: {
+      auth: false
+    }
   },
   {
     path: '/activate',

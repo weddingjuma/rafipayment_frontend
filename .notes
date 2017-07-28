@@ -144,9 +144,14 @@ UX designers should ask a lot of questions
 
 
 
-- polyfill Array.includes
+X- polyfill Array.includes
 - sentry blacklist
-
+- robomongo
+  host: staging.rafipayment.com
+  auth:
+    db: admin
+    user: user
+    password: password
 
 
 X- set time for testing
