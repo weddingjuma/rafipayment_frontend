@@ -19,11 +19,17 @@ const routes = [
   },
   {
     path: '/forgot',
-    component: Forgot
+    component: Forgot,
+    meta: {
+      auth: false
+    }
   },
   {
     path: '/reset',
-    component: Reset
+    component: Reset,
+    meta: {
+      auth: false
+    }
   },
   {
     name: 'Dashboard',
