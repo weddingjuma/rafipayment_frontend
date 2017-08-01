@@ -51,7 +51,16 @@ Android deep linking notes
   X- update production mailchimp server
 
 - form novalidate currency -> stop using number input probably
+
+
+
+
+
 - marketing site seo
+- handle modules notfound
+X- refactor router hooks to be functional
+
+
 
 
 
@@ -144,9 +153,14 @@ UX designers should ask a lot of questions
 
 
 
-- polyfill Array.includes
+X- polyfill Array.includes
 - sentry blacklist
-
+- robomongo
+  host: staging.rafipayment.com
+  auth:
+    db: admin
+    user: user
+    password: password
 
 
 X- set time for testing

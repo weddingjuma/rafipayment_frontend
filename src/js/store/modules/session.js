@@ -76,9 +76,11 @@ export default {
       state.funding_sources = funding_sources
     },
     SET_PRIMARY_FUNDING_SOURCE(state, funding_source) {
-      state.primary_funding_source = funding_source
-      const path = getDwollaAccountPath(state.user)
-      return _.set(state, `${path}.primary_funding_source`, funding_source.id)
+      if (state.user) {
+        state.primary_funding_source = funding_source
+        const path = getDwollaAccountPath(state.user)
+        return _.set(state, `${path}.primary_funding_source`, funding_source.id)
+      }
     }
   },
   actions: {

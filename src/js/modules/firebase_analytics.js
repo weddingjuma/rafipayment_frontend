@@ -57,7 +57,7 @@ export default class FirebaseAnalytics {
     return this
   }
   setUser(user) {
-    this.analytics.setUserId(user._id)
+    this.analytics.setUserId(user.id)
     this.analytics.setUserProperty('full_name', user.full_name)
     this.analytics.setUserProperty('role', user.role)
     return this

@@ -2,49 +2,53 @@ import _ from 'lodash'
 import session from '@/session'
 import { toggleStatusBar } from '@/utils'
 
-const closeNav = () => {
-  if (session.$store.getters.nav_visible) session.$store.dispatch('nav_hide')
-}
-
-export const handleRoute = (is_authorized, next, nextArgs) => {
-  const args = is_authorized
-    ? undefined
-    : nextArgs
-  next(args)
+export default (to, from, next) => {
+  const route_type = getRouteType(to)
+  const is_authorized = checkPermissions(to, route_type)
+  const config = require(`./hook_types`)[route_type]
+  const options = config.options(to)
+  handleRoute(is_authorized, next, options)
+  toggleStatusBar(config.statusbar)
   closeNav()
 }
 
-export const checkPermissions = (route) => {
+const getRouteType = (route) => {
+  const auth = _.get(route, 'meta.auth')
+  let type
+  if (auth === undefined) {
+    type = 'all'
+  } else if (auth === false) {
+    type = 'public'
+  } else if (auth === true) {
+    type = 'private'
+  } else if (auth instanceof Array) {
+    type = 'roles'
+  }
+  return type
+}
+
+const checkPermissions = (route, type) => {
   const auth = _.get(route, 'meta.auth')
   let is_authorized
-  if (auth === undefined) {
+  if (type === 'all') {
     is_authorized = true
   } else if (typeof auth === 'boolean') {
     is_authorized = session.checkAuth() === auth
-  } else if (auth instanceof Array) {
+  } else if (type === 'roles') {
     is_authorized = auth.includes(session.$user.role)
   }
   return is_authorized
 }
 
-export const privateRoute = (to, from, next) => {
-  const is_authorized = checkPermissions(to)
-  toggleStatusBar(true)
-  handleRoute(is_authorized, next, {
-    path: '/',
-    query: { redirect: to.fullPath }
-  })
+const handleRoute = (is_authorized, next, options) => {
+  const args = is_authorized
+    ? undefined
+    : options
+  next(args)
 }
 
-export const publicRoute = (to, from, next) => {
-  toggleStatusBar(false)
-  handleRoute(false, next, {
-    path: '/dashboard'
-  })
-}
-
-export const notFoundRoute = (to, from, next) => {
-  handleRoute(true, next, {
-    path: '/'
-  })
+const closeNav = () => {
+  if (session.$store.getters.nav_visible) {
+    session.$store.dispatch('nav_hide')
+  }
 }

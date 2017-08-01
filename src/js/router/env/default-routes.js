@@ -6,7 +6,10 @@ import NotFound from '@/views/404'
 const routes = [
   {
     path: '/',
-    component: Login
+    component: Login,
+    meta: {
+      auth: false
+    }
   },
   {
     path: '/activate',
@@ -16,11 +19,17 @@ const routes = [
   },
   {
     path: '/forgot',
-    component: Forgot
+    component: Forgot,
+    meta: {
+      auth: false
+    }
   },
   {
     path: '/reset',
-    component: Reset
+    component: Reset,
+    meta: {
+      auth: false
+    }
   },
   {
     name: 'Dashboard',
