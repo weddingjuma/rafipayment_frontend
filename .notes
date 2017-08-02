@@ -1,4 +1,7 @@
-Vue notes
+
+- make sure .includes polyfill and release version are working!!!
+
+
 
 DOCKER
 
@@ -48,19 +51,11 @@ Android deep linking notes
     - make anytime bill
     - make $1 payment
 
-  X- update production mailchimp server
-
 - form novalidate currency -> stop using number input probably
 
 
-
-
-
 - marketing site seo
-- handle modules notfound
-X- refactor router hooks to be functional
-
-
+- handle models notfound
 
 
 
@@ -94,7 +89,6 @@ X- write additional tests
 - write documentation
   - onboarding
 - separate VueModel into its own repository
-X- genericize
 - collection is still using _id
 
 
@@ -108,24 +102,14 @@ WHAT IS LEFT TO DO
 rafiproperties@gmail.com
 burritos4dogzRawesome
 
-
-X- invite test users!
-
 X- update public site
   X- add buttons for App Store, Google Play
   - write some copy about the native app
   - add images/video
 
-X- submit public apps to app stores, get approval
-X- prepare communication to tenants
 
 
-
-
-X- add timeout to requests
 - use service workers to check for offline mode
-
-X- there is an alert stuck on the app somehow?
 
 
 UI/UX designer
@@ -150,10 +134,6 @@ UX designers should ask a lot of questions
 
 - our process gets slowed down because we dont have enough help planning ux and designing stuff, not because we dont have enough coders
 
-
-
-
-X- polyfill Array.includes
 - sentry blacklist
 - robomongo
   host: staging.rafipayment.com
@@ -163,6 +143,63 @@ X- polyfill Array.includes
     password: password
 
 
+BACK END
+
+- Commercial leasing seems to have different needs from residential
+
+
+- inviting a removed user is really weird, it kind of just unremoves them
+- back end make IAV tokens endpoints consistent
+
+- person pays, roommate doesn't, overdue bill email should be "not fully paid"
+- dwolla logo during bank activation step?
+- stylesheet for IAV
+
+
+Pay your rent with Rafi Payment! You'll receive automatic reminders and notifications when your rent is due, and regarding bills and payments, or you can set up autopay and forget about it!
+You must be a tenant of Rafi Properties to use Rafi Payment.
+
+
+BIG CHANGES IF LEASING
+- brokers want MLS integreation when it comes to leasing. we could no longer assume that the yser owns the builfing
+- Need a legal precesnse to look over everything
+- need to define what the goals are
+  - we probably need more peopel before we can sell to other comoanies
+
+- cancel transfer endpoint is inconsistent
+  - dwolla/transfer/:id/cancel
+  - transfers/:id
+
+- add modals to the confirm disbale or enable autopay feature
+- forgot / reset buttons should be button.link
+
+- model.save - if no change, resolve but pass false? or use model.changed?
+- in the future, care less about verifying email, show that changing email is a danger zone, just overwrite email address immediately to simplify
+- dont tell tenants rent is overdue, just say DUE again
+
+- vue router scrolling onroute (workin in desktop but not mobile)
+
+
+- filtering should work more like excel, just remove useless filters from lists
+- update invite email
+- build debug API swapper
+- make bank account cards nicer
+- use password strength on validate?
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+DONE
+
+X- update production mailchimp server
+X- refactor router hooks to be functional
+X- invite test users!
+X- submit public apps to app stores, get approval
+X- prepare communication to tenants
+X- add timeout to requests
+X- clear push notifications on open
+X- polyfill Array.includes
 X- set time for testing
 X- refetch account in account views!!!!!!!!!!!!
 X- logging in as a different user seems broken
@@ -173,13 +210,6 @@ X- universal links for android
 X- update public site
 X- google index public site
 
-BACK END
-
-- Commercial leasing seems to have different needs from residential
-
-
-- inviting a removed user is really weird, it kind of just unremoves them
-- back end make IAV tokens endpoints consistent
 X- back end made /bills and /account/bills both resolve lease
 X- /activate/contact doesn't show terms accepted
 
@@ -190,129 +220,23 @@ X- IAV is still always setting primary - change to POST
 
 X- transfers
   X- BE should respond with dwolla response so we can show errors right away
-
-- person pays, roommate doesn't, overdue bill email should be "not fully paid"
-
-
-FRONT END
-
-
-X- make app handle urls!
+X- make app handle deep urls!
 X- add some success visual when they finish onboarding...
-
-
-Pay your rent with Rafi Payment! You'll receive automatic reminders and notifications when your rent is due, and regarding bills and payments, or you can set up autopay and forget about it!
-
-You must be a tenant of Rafi Properties to use Rafi Payment.
-
-
-
-X- transfer auto suggest is sometimes zero
-X- after making a transfer, redirect to details page
-X- past bills undefined address
-X- bill details - show nice green thing if paid
-- dwolla logo during bank activation step?
-- stylesheet for IAV
-
-
-X- password validation is acting weird
-X- test on ipad
-
-X- account payment
-  X- collection is fucked up when adding
-  X- update fs status on md success
-
-X- move account payment from a tab to a list item
-X- profile more native looking
-X- update Xcode
-
-X- move app loading logic to load.js, not load.vue
-X- bug - edit split, then cancel, split is blank!
-
-Z- store password in keychain
-
-X- load component is broken
-X- figure out why load component breaks
-
-
-X- add success indicator in onboarding
-X- set up basic tests!
-
-
-BIG CHANGES IF LEASING
-- brokers want MLS integreation when it comes to leasing. we could no longer assume that the yser owns the builfing
-- Need a legal precesnse to look over everything
-- need to define what the goals are
-  - we probably need more peopel before we can sell to other comoanies
-
-
-
 X- add sentry to app
-
-- cancel transfer endpoint is inconsistent
-  - dwolla/transfer/:id/cancel
-  - transfers/:id
-
 X- number component
 X- use overflow: hidden to prevent scrolling when modals are open, loading
-
-put qr code in invite email, open native app for first time and scan
-
 X- deal with token expired
-
 X- ask dwolla about passing insecure stylesheets in sandbox
-
-- add modals to the confirm disbale or enable autopay feature
-X- shouldnt be able to scroll while loading is a thing
-- forgot / reset buttons should be button.link
+X- shouldnt be able to scroll while loading
 X- activation flow split confirm is broken
 X- funding source cards need love
   X- always sho buttons? shome disabled? icons?
 
 X- remove cordova plugins and have user use phonegap prepare to install all of them
-
-- model.save - if no change, resolve but pass false? or use model.changed?
 X- set up microdeposits
-
-
-- in the future, care less about verifying email, show that changing email is a danger zone, just overwrite email address immediately to simplify
-
-
-- dont tell tenants rent is overdue, just say DUE again
-
-Z- transfer is waiting for webhook to create cancel_expiration
-
-<<<<<<< HEAD
-X- Google Analytics on mobile?
->- vue router scrolling onroute
-=======
-- Google Analytics on mobile?
-X- vue router scrolling onroute
->>>>>>> dev-permissions
-
-
-TODO
-
 X- remove phonegap/cordova deps out of repo, into an install script
-Z- maybe use Vue with Vuex for collection to make API more consistent
-
-
-- filtering should work more like excel, just remove useless filters from lists
+X- maybe use Vue with Vuex for collection to make API more consistent
 X- travis tests
-
-
-
-
-- ACTIVATION FLOW
-  X- include links to the app store stuff in the email?
-  X- or link to the website where they can get the links
-
-- build debug API swapper
-- make bank account cards nicer
-
-- resolve scrolling woes
-
-
 X- inputs larger on mobile
 X- update activate to use session?
 X- slideup animation is buggy on transfers
@@ -374,31 +298,42 @@ X- build account views
 X- webfonts
 X- solve dynamic modals
 X- use classes for collection
-
-- use password strength on validate?
-
-BIG PICTURE (6-8 weeks)
 X- UI Kit (1 week)
-- Branding (1 week)
+X- Branding (1 week)
 X- Better build flow (1 week)
   Z- Use cordova build script from this guy: https://github.com/scriptPilot/app-framework
   Z- Check out Phonegap Build, maybe hydration
 X- Push notifications (1 week)
-- Websockets layer (1 week)
-- Improve public facing website (1 week)
-  - Improve Help section
-  - Add iOS, Android info, screenshots
+Z- Websockets layer (1 week)
+X- Improve public facing website (1 week)
+  X- Improve Help section
+  X- Add iOS, Android info, screenshots
 X- Test deep linking (3 days)
-
-
-DONE
-
+X- Google Analytics on mobile?
+X- transfer auto suggest is sometimes zero
+X- after making a transfer, redirect to details page
+X- past bills undefined address
+X- bill details - show nice green thing if paid
+X- password validation is acting weird
+X- test on ipad
+X- account payment
+  X- collection is fucked up when adding
+  X- update fs status on md success
+X- move account payment from a tab to a list item
+X- profile more native looking
+X- update Xcode
+X- move app loading logic to load.js, not load.vue
+X- bug - edit split, then cancel, split is blank!
+Z- store password in keychain
+X- load component is broken
+X- figure out why load component breaks
+X- add success indicator in onboarding
+X- set up basic tests!
 X- build out nav
 X- password toggle component
 X- figure out roles
 X- reset stores on logout! lol
 X- figure out how destroy lifecycle works
-
 X- loading
 X- better global error handling
 X- modals
@@ -406,31 +341,14 @@ X- modals
 X- debug view?
 X- vue-touch
 X- transitions
-
 X- use global or regular mixin for collection views to clear store!
 X- confirm delete with a modal
-
 X- clean up build script flow
 X- add validation error component
-
 X- UI Kit arch
 X- user models in vuex/session
 
 
-
-https://github.com/paularmstrong/normalizr
-
-
-https://github.com/karol-f/vue-custom-element
-http://vuex.vuejs.org/en/intro.html
- or event bus
-https://vuejs.org/v2/guide/components.html#Non-Parent-Child-Communication
-
-http://vee-validate.logaretm.com/examples.html#flags-example
-
-http://blog.toast38coza.me/building-a-mobile-app-with-vuejs-cordova-webpack-and-framework-7/
-
-impressive albeit weird architecture
 https://github.com/scriptPilot/app-framework
 
 X- get vue build tools working
