@@ -11,6 +11,18 @@
           <label for="filter">Show Removed</label>
         </div>
       </div>
+      <div class="field-group grid__col grid__col--1-of-2" v-if="filter">
+        <select-menu v-model="filter_key">
+          <option v-for="key in filter_keys" :key="key" :value="key">{{ key }}</option>
+        </select-menu>
+      </div>
+      <div class="field-group grid__col grid__col--1-of-2" v-if="filter">
+        <input type="radio" id="true" name="filter" v-model="filter_value" :value="true">
+        <label for="true">true</label>
+
+        <input type="radio" id="false" name="filter" v-model="filter_value" :value="false">
+        <label for="false">false</label>
+      </div>
     </div>
     <div class="grid">
       <div class="field-group grid__col grid__col--1-of-1">
@@ -57,7 +69,12 @@ export default {
   data() {
     return {
       filter: false,
+      filter_value: true,
       filter_key: 'removed',
+      filter_keys: [
+        'removed',
+        'id'
+      ],
       sort: false,
       sort_value: '1',
       sort_key: 'created',
@@ -71,7 +88,7 @@ export default {
     query_string() {
       let query = {}
       if (this.filter) {
-        query[`filter_${this.filter_key}`] = true
+        query[`filter_${this.filter_key}`] = this.filter_value
       }
       if (this.sort) {
         query[`sort_${this.sort_key}`] = this.sort_value
@@ -88,8 +105,15 @@ export default {
   },
   methods: {
     parseQuery(query) {
-      if (query.filter_removed) {
+      const filter = _.pickBy(query, (value, key) => {
+        return key.includes('filter')
+      })
+      if (!_.isEmpty(filter)) {
         this.filter = true
+        for (let key in filter) {
+          this.filter_key = key.replace('filter_', '')
+          this.filter_value = filter[key]
+        }
       }
       const sort = _.pickBy(query, (value, key) => {
         return key.includes('sort')
