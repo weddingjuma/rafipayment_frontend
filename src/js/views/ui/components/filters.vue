@@ -1,6 +1,9 @@
 <template>
   <div>
     <h2>Filters</h2>
+    <div class="box text-left">
+      <pre>{{ query_string }}</pre>
+    </div>
     <div class="grid">
       <div class="field-group grid__col grid__col--1-of-1">
         <div class="box">
@@ -27,6 +30,11 @@
 
         <input type="radio" id="desc" name="order" v-model="sort_value" value="-1">
         <label for="desc">Desc</label>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="field-group grid__col grid__col--1-of-1">
+        <button @click="fetchNew">Fetch</button>
       </div>
     </div>
   </div>
@@ -61,32 +69,44 @@ export default {
   },
   computed: {
     query_string() {
-      let query = ''
+      let query = {}
       if (this.filter) {
-        query += `&filter_${this.filter_key}=true`
+        query[`filter_${this.filter_key}`] = true
       }
       if (this.sort) {
-        query += `&sort_${this.sort_key}=${this.sort_value}`
+        query[`sort_${this.sort_key}`] = this.sort_value
       }
       return query
     }
   },
   watch: {
-    filter(value) {
-      console.log(value)
-    },
     query_string(value) {
-      console.log('querystring changed', value);
+      this.$router.push({
+        query: value
+      })
     }
   },
   methods: {
     parseQuery(query) {
-      console.log(query);
-    },
-    modifiersChanged() {
-      collection = new Collection({
-        basePath: `admins${this.query_string}`
+      if (query.filter_removed) {
+        this.filter = true
+      }
+      const sort = _.pickBy(query, (value, key) => {
+        return key.includes('sort')
       })
+      if (!_.isEmpty(sort)) {
+        this.sort = true
+        for (let key in sort) {
+          this.sort_key = key.replace('sort_', '')
+          this.sort_value = sort[key]
+        }
+      }
+    },
+    fetchNew() {
+      collection = new Collection({
+        basePath: `admins${window.location.search}`
+      })
+      return collection.fetch()
     }
   }
 }
