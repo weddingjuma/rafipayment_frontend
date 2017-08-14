@@ -12,6 +12,7 @@
         <router-link to="/ui/cards">Cards</router-link>
         <router-link to="/ui/modals">Modals</router-link>
         <router-link to="/ui/plugins">Plugins</router-link>
+        <router-link to="/ui/filters">Filters</router-link>
         <router-link to="/ui/transitions">Transitions</router-link>
         <router-link to="/ui/loaders">Loaders</router-link>
       </navigation>

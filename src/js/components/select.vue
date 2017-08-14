@@ -1,8 +1,8 @@
 <template>
   <div :class="classHandler">
-    <select :name="name" :disabled="field_disabled" :multiple="field_multiple">
+    <select :name="name" :disabled="field_disabled" :multiple="field_multiple" v-model="component_model">
       <slot>
-        <option v-for="option in options" value="option.value">
+        <option v-for="option in options" value="option.value" :key="option">
           {{ option.label }}
         </option>
       </slot>
@@ -19,11 +19,22 @@ export default {
     name: String,
     options: Array,
     multiple: Boolean,
-    disabled: Boolean
+    disabled: Boolean,
+    value: [String, Number]
+  },
+  data() {
+    return {
+      component_model: this.value
+    }
   },
   created() {
     if (this.$slots.default && this.options) {
       throw new Error('Cannot use both content slot and options property')
+    }
+  },
+  watch: {
+    component_model(value) {
+      this.$emit('input', value)
     }
   },
   computed: {

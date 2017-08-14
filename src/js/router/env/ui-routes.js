@@ -69,6 +69,12 @@ const routes = [
         }
       },
       {
+        path: 'filters',
+        component: function(resolve) {
+          require(['@/views/ui/components/filters'], resolve)
+        }
+      },
+      {
         path: 'plugins',
         component: function(resolve) {
           require(['@/views/ui/components/plugins'], resolve)
