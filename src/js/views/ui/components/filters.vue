@@ -1,9 +1,7 @@
 <template>
   <div>
     <h2>Filters</h2>
-    <div class="box text-left">
-      <pre>{{ query_string }}</pre>
-    </div>
+
     <div class="grid">
       <div class="field-group grid__col grid__col--1-of-1">
         <div class="box">
@@ -24,6 +22,7 @@
         <label for="false">false</label>
       </div>
     </div>
+
     <div class="grid">
       <div class="field-group grid__col grid__col--1-of-1">
         <div class="box">
@@ -44,11 +43,34 @@
         <label for="desc">Desc</label>
       </div>
     </div>
+
+    <div class="grid">
+      <div class="field-group grid__col grid__col--1-of-1">
+        <div class="box">
+          <input type="checkbox" id="paginate" v-model="paginate">
+          <label for="paginate">Paginate</label>
+        </div>
+      </div>
+      <div class="field-group grid__col grid__col--1-of-2" v-if="paginate">
+        <legend>Skip</legend>
+        <number v-model="paginator_skip" name="paginator skip" :wrap="false" />
+      </div>
+      <div class="field-group grid__col grid__col--1-of-2" v-if="paginate">
+        <legend>Limit</legend>
+        <number v-model="paginator_limit" name="paginator limit" :wrap="false" />
+      </div>
+    </div>
+
+    <div class="box text-left">
+      <pre>{{ query_string }}</pre>
+    </div>
+
     <div class="grid">
       <div class="field-group grid__col grid__col--1-of-1">
         <button @click="fetchNew">Fetch</button>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -68,6 +90,8 @@ export default {
   },
   data() {
     return {
+      query_modifiers: ['filter', 'sort'],
+      paginator_keys: ['limit', 'skip'],
       filter: false,
       filter_value: true,
       filter_key: 'removed',
@@ -81,18 +105,27 @@ export default {
       sort_keys: [
         'created',
         'updated'
-      ]
+      ],
+      paginate: false,
+      paginator_limit: 1,
+      paginator_skip: 0
     }
   },
   computed: {
     query_string() {
       let query = {}
-      if (this.filter) {
-        query[`filter_${this.filter_key}`] = this.filter_value
-      }
-      if (this.sort) {
-        query[`sort_${this.sort_key}`] = this.sort_value
-      }
+      this.query_modifiers.forEach(modifier => {
+        if (this[modifier]) {
+          const key = `${modifier}_${this[`${modifier}_key`]}`
+          query[key] = this[`${modifier}_value`]
+        }
+      })
+      this.paginator_keys.forEach(prop => {
+        if (this.paginate) {
+          const key = `paginator_${prop}`
+          query[key] = this[key]
+        }
+      })
       return query
     }
   },
@@ -105,25 +138,31 @@ export default {
   },
   methods: {
     parseQuery(query) {
-      const filter = _.pickBy(query, (value, key) => {
-        return key.includes('filter')
+      this.query_modifiers.forEach(modifier => {
+        this.setQuery(modifier, query)
       })
-      if (!_.isEmpty(filter)) {
-        this.filter = true
-        for (let key in filter) {
-          this.filter_key = key.replace('filter_', '')
-          this.filter_value = filter[key]
+      this.paginator_keys.forEach(key => {
+        this.setPagination(key, query)
+      })
+    },
+    setQuery(modifier, query) {
+      const match = _.pickBy(query, (value, key) => {
+        return key.includes(modifier)
+      })
+      if (!_.isEmpty(match)) {
+        this[modifier] = true
+        for (let key in match) {
+          this[`${modifier}_key`] = key.replace(`${modifier}_`, '')
+          this[`${modifier}_value`] = match[key]
         }
       }
-      const sort = _.pickBy(query, (value, key) => {
-        return key.includes('sort')
-      })
-      if (!_.isEmpty(sort)) {
-        this.sort = true
-        for (let key in sort) {
-          this.sort_key = key.replace('sort_', '')
-          this.sort_value = sort[key]
-        }
+    },
+    setPagination(key, query) {
+      const full_key = `paginator_${key}`
+      const query_value = query[full_key]
+      if (query_value) {
+        this.paginate = true
+        this[full_key] = query_value
       }
     },
     fetchNew() {

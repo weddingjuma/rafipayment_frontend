@@ -101,7 +101,12 @@ export default {
       if (this.input_value !== '') {
         this.input_value = this.process_input(this.input_value)
         this.$emit('next', e, this)
-        if (this.input_value.length !== this.max_length) return
+
+        if (this.max_length) {
+          if (this.input_value.length !== this.max_length) {
+            return
+          }
+        }
       }
       this.$emit('change', e, this)
       this.$emit('input', this.input_value)
