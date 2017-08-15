@@ -2,8 +2,8 @@
   <div :class="classHandler">
     <select :name="name" :disabled="field_disabled" :multiple="field_multiple" v-model="component_model">
       <slot>
-        <option v-for="option in options" value="option.value" :key="option">
-          {{ option.label }}
+        <option v-for="option in options" :value="getValue(option)" :key="option">
+          {{ getLabel(option) }}
         </option>
       </slot>
     </select>
@@ -50,6 +50,22 @@ export default {
         'multiple': this.field_multiple,
         'disabled': this.field_disabled
       }
+    }
+  },
+  methods: {
+    getValue(option) {
+      return typeof option === 'object'
+        ? 'value' in option
+          ? option.value
+          : option
+        : option
+    },
+    getLabel(option) {
+      return typeof option === 'object'
+        ? 'label' in option
+          ? option.label
+          : option
+        : option
     }
   }
 }

@@ -51,14 +51,40 @@
           <label for="paginate">Paginate</label>
         </div>
       </div>
-      <div class="field-group grid__col grid__col--1-of-2" v-if="paginate">
-        <legend>Skip</legend>
-        <number v-model="paginator_skip" name="paginator skip" :wrap="false" />
+      <div class="field-group grid__col grid__col--1-of-1">
+        <div class="box">
+          <legend>Pagination Mode</legend>
+
+          <input type="radio" id="simple" name="paginator_mode" v-model="paginator_mode" value="simple">
+          <label for="simple">Simple</label>
+
+          <input type="radio" id="advanced" name="paginator_mode" v-model="paginator_mode" value="advanced">
+          <label for="advanced">Advanced</label>
+        </div>
       </div>
-      <div class="field-group grid__col grid__col--1-of-2" v-if="paginate">
-        <legend>Limit</legend>
-        <number v-model="paginator_limit" name="paginator limit" :wrap="false" />
+      <div v-if="paginate">
+        <div v-if="paginator_mode === 'simple'">
+          <div class="field-group grid__col grid__col--1-of-2">
+            <legend>Page</legend>
+            <number v-model="page_simple" name="page" :wrap="false" />
+          </div>
+          <div class="field-group grid__col grid__col--1-of-2">
+            <legend>Models Per Page</legend>
+            <select-menu :options="page_limits" v-model="paginator_limit"></select-menu>
+          </div>
+        </div>
+        <div v-else>
+          <div class="field-group grid__col grid__col--1-of-2">
+            <legend>Skip</legend>
+            <number v-model="paginator_skip" name="paginator skip" :wrap="false" />
+          </div>
+          <div class="field-group grid__col grid__col--1-of-2">
+            <legend>Limit</legend>
+            <number v-model="paginator_limit" name="paginator limit" :wrap="false" />
+          </div>
+        </div>
       </div>
+      
     </div>
 
     <div class="box text-left">
@@ -106,9 +132,20 @@ export default {
         'created',
         'updated'
       ],
+      page_simple: 1,
       paginate: false,
       paginator_limit: 1,
-      paginator_skip: 0
+      paginator_skip: 0,
+      paginator_mode: 'simple',
+      page_limits: [
+        1,
+        5,
+        10,
+        20,
+        30,
+        50,
+        100
+      ]
     }
   },
   computed: {
@@ -134,7 +171,10 @@ export default {
       this.$router.push({
         query: value
       })
-    }
+    },
+    page_simple: updatePageSimple,
+    paginator_mode: updatePageSimple,
+    paginator_limit: updatePageSimple
   },
   methods: {
     parseQuery(query) {
@@ -171,6 +211,12 @@ export default {
       })
       return collection.fetch()
     }
+  }
+}
+
+function updatePageSimple() {
+  if (this.paginator_mode === 'simple') {
+    this.paginator_skip = this.paginator_limit * this.page_simple
   }
 }
 </script>
