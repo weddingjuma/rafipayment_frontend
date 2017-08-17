@@ -1,20 +1,5 @@
 <template>
   <div class="number-container">
-    <!-- <input
-      v-if="is_mobile"
-      v-model="input_value"
-      :name="name"
-      :class="[this.name]"
-      :placeholder="placeholder"
-      @blur="field_blurred"
-      @focus="field_focused"
-      @input="field_input"
-      @change="field_changed"
-      type="number"
-      ref="input"
-      pattern="[0-9]*"
-      autocomplete="off"
-      autocapitalize="off"> -->
     <input
       v-model="input_value"
       :name="name"
@@ -101,7 +86,12 @@ export default {
       if (this.input_value !== '') {
         this.input_value = this.process_input(this.input_value)
         this.$emit('next', e, this)
-        if (this.input_value.length !== this.max_length) return
+
+        if (this.max_length) {
+          if (this.input_value.length !== this.max_length) {
+            return
+          }
+        }
       }
       this.$emit('change', e, this)
       this.$emit('input', this.input_value)
