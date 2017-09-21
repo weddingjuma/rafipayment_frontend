@@ -15,7 +15,10 @@ describe('$user.onboarding_steps - tenants', () => {
     role: 'tenant',
     leases: [
       1
-    ]
+    ],
+    status: {
+      password: false
+    }
   })
   it('should push accept terms for new tenant', () => {
     expect(user.onboarding_steps[0].name)
