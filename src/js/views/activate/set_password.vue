@@ -72,8 +72,10 @@ export default {
   methods: {
     validate() {
       this.$validator.validateAll()
-      .then(() => {
-        this.savePassword()
+      .then((passed) => {
+        if (passed) {
+          this.savePassword()
+        }
       })
       .catch(() => {})
     },

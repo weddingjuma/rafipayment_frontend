@@ -25,7 +25,7 @@
       	<div class="field-group">
       	  <legend>Fees Collected</legend>
           <h2>
-            <span v-for="(fee, index) in fees_collected" class="nofold">
+            <span v-for="(fee, index) in fees_collected" class="nofold" :key="index">
               <span>{{ fee }}<span v-if="index !== fees_collected.length-1">,&nbsp;</span></span>
             </span>
           </h2>
@@ -34,14 +34,14 @@
       	<div class="field-group" v-if="this.roommates.length">
       	  <legend>Your Roommates</legend>
       	  <h2>
-            <span v-for="(roommate, index) in roommates" class="nofold">
+            <span v-for="(roommate, index) in roommates" class="nofold" :key="index">
               {{ roommate }}<span v-if="index !== roommates.length-1">,&nbsp;</span>
             </span>
           </h2>
       	</div>
 
       	<div class="action">
-      	  <button class="primary" @click="next">Confirm</button>
+      	  <button class="primary" @click="next">Next</button>
       	</div>
       </div>
     </div>
@@ -77,8 +77,7 @@ export default {
     },
     roommates() {
       return this.lease.tenants.filter((tenant) => {
-        if (tenant._id === this.$parent.$user.id) return
-        return true
+        return tenant._id !== this.$parent.$user.id
       }).map((tenant) => {
         return `${tenant.first_name} ${tenant.last_name}`
       })
@@ -86,6 +85,7 @@ export default {
   },
   methods: {
     next() {
+      // this.step.value = true
       this.$parent.next()
     }
   }
