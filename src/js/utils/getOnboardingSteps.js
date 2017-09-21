@@ -66,7 +66,7 @@ export default (user) => {
   }
 
   // step 5 - Password - All users
-  if (!user.status.password) {
+  if (user.status.password === false) {
     steps.push({
       name: 'set-password',
       value: user.status.active

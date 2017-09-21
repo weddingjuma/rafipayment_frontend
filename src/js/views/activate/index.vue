@@ -1,5 +1,5 @@
 <template>
-  <div class="activation">
+  <div class="activation" v-if="current_step">
     <transition name="fade">
       <component :is="current_step.name" :step="current_step">
         <header>
@@ -47,8 +47,7 @@ export default {
   },
   data() {
     return {
-      current_step: '',
-      primary_funding_source: null
+      current_step: null
     }
   },
   computed: {
@@ -70,6 +69,7 @@ export default {
       }
 
       const token = _.get(this.$route.query, 'token')
+
       session.loadActivation(token)
         .then((response) => {
           this.current_step = this.getCurrentStep()
@@ -93,7 +93,9 @@ export default {
           )
         })
     } else {
-      this.$user = session.$user.toJSON()
+      if (!this.steps.length) {
+        this.complete()
+      }
       this.current_step = this.getCurrentStep()
     }
   },
@@ -104,30 +106,31 @@ export default {
     toggleStatusBar(true)
   },
   methods: {
-    getCurrentStep() {
-      const current_step = this.steps.find((step) => {
-        return step.value === false || step.value === undefined
-      })
-      // console.log(this.steps);
-      return current_step
-    },
     next() {
+      this.current_step.value = true
       const next_index = this.current_step.index + 1
       if (next_index === this.steps.length) {
         this.complete()
       } else {
         this.current_step = this.steps[next_index]
       }
-      // console.log('next');
     },
     back() {
       const prev_index = this.current_step.index - 1
       this.current_step = this.steps[prev_index]
     },
+    getCurrentStep() {
+      const current_step = this.steps.find((step, index) => {
+        return step.value === false || step.value === undefined
+      })
+      return current_step
+    },
     complete() {
+      localStorage.removeItem('activation_token')
       // if the user is already logged in, just remove actions
       if (session.logged_in) {
-        return session.$store.dispatch('set_actions_required', [])
+        session.$store.dispatch('set_actions_required', [])
+        return this.$router.push('/')
       }
 
       // otherwise refresh session using new tokens
@@ -135,18 +138,17 @@ export default {
       localStorage.setItem('refresh_token', refresh)
 
       // remove activation token because were done with it
-      localStorage.removeItem('activation_token')
-
       session.loadSession()
-      .then(() => {
-        // remove query string from url
-        this.$router.replace({ query: {} })
-        app.alert(
-          'You\'re all set, thanks for activating your account!',
-          null,
-          'Account Activated'
-        )
-      })
+        .then(() => {
+          // remove query string from url
+          this.$router.replace({ query: {} })
+          this.$router.push('/')
+          app.alert(
+            'You\'re all set, thanks for activating your account!',
+            null,
+            'Account Activated'
+          )
+        })
     }
   },
   components: {
