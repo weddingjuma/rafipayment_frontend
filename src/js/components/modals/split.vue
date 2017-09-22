@@ -44,10 +44,12 @@ export default {
       const validation = this.model.validateSplit(this.split_amount)
       this.split_amount = validation.amount
 
+      console.log({validation})
+
       if (!validation.validated) {
         this.validated = false
         await sleep(90)
-        this.$validator.errorBag.add(
+        this.$validator.errors.add(
           'amount',
           'Total rent split cannot exceed total rent due',
           'required'

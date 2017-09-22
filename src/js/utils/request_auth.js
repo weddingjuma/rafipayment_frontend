@@ -2,9 +2,9 @@
 
 import _ from 'lodash'
 import store from '@/store'
-import { Request, Deferred } from '@/utils'
+import { Request, imports } from '@/utils'
 
-export default function request (url = '', options = {}) {
+export default async function RequestAuth (url = '', _options = {}) {
   const Authorization = store.getters['session:auth_token']
   const Refresh = localStorage.getItem('refresh_token')
   const Activation = localStorage.getItem('activation_token')
@@ -18,28 +18,30 @@ export default function request (url = '', options = {}) {
     method: 'GET',
     headers
   }
-  options = _.merge({}, defaults, options)
+  const options = _.merge({}, defaults, _options)
+  let output
 
-  const req = new Request(url, options)
-  const deferred = new Deferred()
+  try {
+    const response = await new Request(url, options)
+    const error = _.get(response, 'error')
 
-  req.then((response) => {
-    if (_.get(response, 'error') === 'token_expired') {
-      const session = require('@/session').default
-      // console.log({session});
-      session.loadSession()
-      .then(() => {
-        request(url, options)
-        .then((response) => {
-          deferred.resolve(response)
-        })
-      })
+    if (error === 'token_expired') {
+      const [session] = await imports(
+        import('@/session')
+      )
+      await session.loadSession()
+      const response = await RequestAuth(url, _options)
+      output = response
+    } else if (error === 'token_deauthorized') {
+      const app = await imports(
+        import('@/app')
+      )
+      app.$router.push('/')
     } else {
-      deferred.resolve(response)
+      output = response
     }
-  })
-  .catch((error) => {
-    deferred.reject(error)
-  })
-  return deferred.promise
+  } catch (error) {
+    throw error
+  }
+  return output
 }

@@ -59,7 +59,7 @@
           </div>
         </div>
 
-        <div class="table" v-for="tenant in $lease.tenants_sorted">
+        <div class="table" v-for="(tenant, index) in $lease.tenants_sorted" :key="index">
           <user-dl :user="tenant" class="user">
             {{ prettySplit($lease.splits[tenant._id]) }}
           </user-dl>
@@ -191,7 +191,7 @@ export default {
       if (!validation.validated) {
         this.validated = false
         await sleep(90)
-        this.$validator.errorBag.add(
+        this.$validator.errors.add(
           'amount',
           'Total rent split cannot exceed total rent due',
           'required'

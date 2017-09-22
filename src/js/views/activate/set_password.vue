@@ -70,14 +70,11 @@ export default {
     }
   },
   methods: {
-    validate() {
-      this.$validator.validateAll()
-      .then((passed) => {
-        if (passed) {
-          this.savePassword()
-        }
-      })
-      .catch(() => {})
+    async validate() {
+      const passed = await this.$validator.validateAll()
+      if (passed) {
+        this.savePassword()
+      }
     },
     savePassword() {
       this.loading = true
@@ -88,14 +85,14 @@ export default {
         method: 'POST',
         body
       })
-      .then((response) => {
-        this.$parent.$user = response
-        this.$parent.next()
-        // save previous login, maybe password here
-      })
-      .catch((error) => {
-        console.warn(error);
-      })
+        .then((response) => {
+          this.$parent.$user = response
+          this.$parent.next()
+          // save previous login, maybe password here
+        })
+        .catch((error) => {
+          console.warn(error);
+        })
     }
   }
 }

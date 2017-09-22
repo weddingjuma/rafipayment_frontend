@@ -63,7 +63,8 @@ export default {
   watch: {
     logged_in(val) {
       let path = val ? this.getRedirect() : '/'
-      return this.$router.push(path)
+      console.log('redirecting via login', path)
+      return this.$router.replace(path)
     }
   },
   methods: {
@@ -81,6 +82,8 @@ export default {
       }
     },
     getRedirect() {
+      console.log(this.$route)
+      console.log(_.get(this.$route, 'query.redirect'))
       return _.get(this.$route, 'query.redirect') || '/dashboard'
     }
   },

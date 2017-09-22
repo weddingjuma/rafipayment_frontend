@@ -85,7 +85,7 @@ export default {
     },
     checkPasswords() {
       if (this.password !== this.password_confirm) {
-        this.$validator.errorBag.add(
+        this.$validator.errors.add(
           'password_confirm',
           'Passwords must match',
           'required'
@@ -122,7 +122,7 @@ export default {
       })
     },
     handleError() {
-      this.$validator.errorBag.add(
+      this.$validator.errors.add(
         'code',
         'Invalid code or email',
         'required'

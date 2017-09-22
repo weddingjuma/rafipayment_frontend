@@ -17,7 +17,7 @@ module.exports = {
     'html'
   ],
   // add your custom rules here
-  'rules': {
+  rules: {
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await
@@ -28,6 +28,8 @@ module.exports = {
     'space-before-function-paren': 0,
     'semi': 0,
     'no-unused-vars': 1,
-    'keyword-spacing': 0
+    'keyword-spacing': 0,
+    'prefer-promise-reject-errors': 0,
+    indent: 0
   }
 }

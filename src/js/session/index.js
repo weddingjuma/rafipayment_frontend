@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
+// import { Deferred, Request, sleep } from '@/utils'
 import store from '@/store'
 import Request from '@/utils/request_auth'
 import UserModel from '@/models/user'
@@ -36,8 +37,17 @@ const session = new Vue({
     checkAuth() {
       return this.logged_in
     },
-    request(url = '', options = {}) {
+    async request(url = '', options = {}) {
       return new Request(url, options)
+    },
+    async getRefreshToken() {
+      const refresh_token = localStorage.getItem('refresh_token')
+      let output = refresh_token
+      if (!refresh_token || refresh_token === 'undefined') {
+        localStorage.removeItem('refresh_token')
+        throw new Error('no valid refresh token')
+      }
+      return output
     },
     loadActivation(token) {
       const body = { token }
@@ -57,25 +67,21 @@ const session = new Vue({
       })
       return request
     },
-    loadSession() {
-      const token = localStorage.getItem('refresh_token')
-      if (token === 'undefined') {
-        return localStorage.removeItem('refresh_token')
+    async loadSession() {
+      const Refresh = await this.getRefreshToken()
+      try {
+        const options = {
+          headers: {
+            Refresh
+          }
+        }
+        const response = await Request('users/tokens', options)
+        this.dispatchLogin(response)
+      } catch (error) {
+        console.warn(error)
+      } finally {
+        this.$store.dispatch('loading_end')
       }
-      const promise = !token
-        ? Promise.reject('No token')
-        : this.request('users/tokens')
-          .then(response => {
-            this.dispatchLogin(response)
-          })
-          .catch((error) => {
-            console.warn(error)
-          })
-          .then(() => {
-            this.$store.dispatch('loading_end')
-          })
-
-      return promise
     },
     login(credentials) {
       let body = {

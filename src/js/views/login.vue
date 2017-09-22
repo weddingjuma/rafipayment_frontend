@@ -102,7 +102,7 @@ export default {
       }
     },
     handleError() {
-      this.$validator.errorBag.add(
+      this.$validator.errors.add(
         'password',
         'Invalid username or password',
         'required'

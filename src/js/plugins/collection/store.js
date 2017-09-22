@@ -3,9 +3,9 @@ import Vuex from 'vuex'
 import { Model } from '@/plugins/model'
 import { ISODate } from '@/modules/types'
 
-// import app from '@/app'
 import store from '@/store'
-import { request } from '@/session'
+// import { request } from '@/session'
+import Request from '@/utils/request_auth'
 import { sort, sortByDate } from './utils'
 
 export default (
@@ -75,39 +75,33 @@ export default (
         commit('RESET')
       },
       fetch({ commit }) {
-        // app.$store.dispatch('loading_begin')
         store.dispatch('loading_begin')
-        const req = request(`${_basePath()}`)
+        const req = new Request(`${_basePath()}`)
         req.then(response => {
           commit('FETCH', response)
-          // app.$store.dispatch('loading_end')
           store.dispatch('loading_end')
         })
         return req
       },
       add({ commit }, model) {
-        // app.$store.dispatch('loading_begin')
         store.dispatch('loading_begin')
-        const req = request(`${_basePath()}/${createPath}`, {
+        const req = new Request(`${_basePath()}/${createPath}`, {
           method: 'POST',
           body: model
         })
         req.then(response => {
           commit('ADD', response)
-          // app.$store.dispatch('loading_end')
           store.dispatch('loading_end')
         })
         return req
       },
       delete({ commit }, id) {
-        // app.$store.dispatch('loading_begin')
         store.dispatch('loading_begin')
-        const req = request(`${_basePath()}/${id}`, {
+        const req = new Request(`${_basePath()}/${id}`, {
           method: 'DELETE'
         })
         req.then(response => {
           commit('DELETE', id)
-          // app.$store.dispatch('loading_end')
           store.dispatch('loading_end')
         })
         return req

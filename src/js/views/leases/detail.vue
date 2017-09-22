@@ -13,8 +13,9 @@
 
       <dl
         class="pad flex"
-        v-for="charge in $lease.charges.recurring"
-        v-if="charge.type !== 'rent'">
+        v-for="(charge, index) in recurring_charges"
+        v-if="charge.type !== 'rent'"
+        :key="index">
         <dt>
           <div>{{ charge.type | replace('_') | capitalize }}</div>
           <div class="description">{{ charge.description }}</div>
@@ -47,7 +48,7 @@
 
       <div class="pad flex">RENT SPLIT</div>
 
-      <div v-for="tenant in tenants_with_split_and_autopay">
+      <div v-for="(tenant, index) in tenants_with_split_and_autopay" :key="index">
         <user-dl :user="tenant">
           <div v-if="tenant.split !== undefined">
             {{ tenant.split | currency }}
@@ -148,6 +149,9 @@ export default {
       }
       output.loading = this.autopay_loading
       return output
+    },
+    recurring_charges() {
+      return _.get(this.$lease, 'charges.recurring')
     }
   },
   methods: {
@@ -166,7 +170,7 @@ export default {
     async toggleAutopay() {
       if (!this.autopay_needs_confirmation) {
         this.autopay_needs_confirmation = true
-        return
+        return false
       } else {
         this.autopay_loading = true
         await this.setAutopay(!this.my_autopay)
@@ -201,9 +205,9 @@ export default {
     //     }
     //   })
     // },
-    cancel() {
-      return
-    },
+    // cancel() {
+    //   return false
+    // },
     confirmSplitChange(response) {
       this.$lease.split = response.split
     }

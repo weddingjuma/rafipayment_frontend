@@ -2,7 +2,7 @@ export const config = {
   all: {
     statusbar: true,
     options(to) {
-      return
+      return {}
     }
   },
   public: {

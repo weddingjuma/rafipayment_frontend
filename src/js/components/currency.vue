@@ -25,6 +25,7 @@
       :placeholder="placeholder"
       autocomplete="off"
       autocapitalize="off">
+      {{ input_value }}
   </div>
 </template>
 
@@ -82,8 +83,15 @@ export default {
       this.is_focused = false
       const args = this.is_mobile
         ? [ this.input_value, String ]
-        : [ this.input_value, false ]
-      this.input_value = utils.parseCurrency(...args)
+        : [ this.input_value || '', false ]
+      // console.log({args})
+      const value = utils.parseCurrency(...args)
+      if (isNaN(value)) {
+        this.input_value = ''
+      } else {
+        this.input_value = value
+      }
+      // console.log(this.input_value)
       this.$emit('blur')
     },
     field_changed(e) {
@@ -93,7 +101,9 @@ export default {
       this.is_focused = true
       if (!this.is_mobile) {
         await utils.sleep(1)
+        // console.log(e.target.value)
         this.input_value = utils.parseCurrency(e.target.value)
+        console.log(this.input_value)
       }
     }
   }

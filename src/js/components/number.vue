@@ -111,9 +111,9 @@ export default {
       this.input_value = parseInt(this.input_value)
       this.$emit('blur')
     },
-    field_changed(e) {
-      if (!e) return
-    },
+    // field_changed(e) {
+    //   if (!e) return false
+    // },
     async field_focused(e) {
       await utils.sleep(90)
       e.target.value = e.target.value

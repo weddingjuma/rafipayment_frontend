@@ -42,6 +42,11 @@ export const load = (url) => {
   })
 }
 
+export const imports = (...modules) => Promise.all(
+  modules.concat.apply([], modules)
+    .map(async m => (await m).default)
+)
+
 // check if is touch device
 
 export const isTouchDevice = () => {

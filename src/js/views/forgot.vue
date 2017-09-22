@@ -70,7 +70,7 @@ export default {
       })
     },
     handleError(error) {
-      this.$validator.errorBag.add(
+      this.$validator.errors.add(
         'email',
         error.message,
         'required'

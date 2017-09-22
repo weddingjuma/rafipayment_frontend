@@ -63,6 +63,7 @@ export default {
       state.user = user
     },
     LOGIN(state, user) {
+      console.log('dipatching login', user.session.authorization_token)
       state.user = user
       state.logged_in = true
     },
@@ -88,7 +89,7 @@ export default {
       commit('ACTIVATE', user)
       localStorage.setItem('activation_token', _.get(user, 'session.activation_token'))
     },
-    login({ commit }, user) {
+    async login({ commit }, user) {
       commit('LOGIN', user)
       localStorage.setItem('refresh_token', _.get(user, 'session.refresh_token'))
     },
