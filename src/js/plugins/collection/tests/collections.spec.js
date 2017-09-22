@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import * as VueCollection from '@/plugins/collection'
-const { Collection } = VueCollection
 import model from '@/models/bill'
+
+const { Collection } = VueCollection
 
 jest.mock('@/app', function() {
   return {
