@@ -33,6 +33,7 @@
 
 <script>
 import app from '@/app'
+import { Deferred } from '@/utils'
 
 export default {
   name: 'modal-password',
@@ -66,8 +67,15 @@ export default {
       this.$emit('close')
     },
     async validate() {
-      await this.$validator.validateAll()
-      await this.confirmChange()
+      const deferred = new Deferred()
+      const passed = await this.$validator.validateAll()
+      if (passed) {
+        await this.confirmChange()
+        deferred.resolve()
+      } else {
+        deferred.reject()
+      }
+      return deferred.promise
     },
     async confirmChange() {
       this.loading = true

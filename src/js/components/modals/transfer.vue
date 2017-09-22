@@ -22,10 +22,11 @@
 
 <script>
 import _ from 'lodash'
+import { mapGetters } from 'vuex'
+
 import app from '@/app'
 import session from '@/session'
-
-import { mapGetters } from 'vuex'
+import { Deferred } from '@/utils'
 
 export default {
   store: app.$store,
@@ -66,8 +67,15 @@ export default {
       : this.model.better_display_balance
     },
     async validate() {
-      await this.$validator.validateAll()
-      await this.confirmPayment()
+      const deferred = new Deferred()
+      const passed = await this.$validator.validateAll()
+      if (passed) {
+        await this.confirmPayment()
+        deferred.resolve()
+      } else {
+        deferred.reject()
+      }
+      return deferred.promise
     },
     async confirmPayment() {
       const amount = this.transfer_amount

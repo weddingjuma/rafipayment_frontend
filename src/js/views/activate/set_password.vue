@@ -45,6 +45,7 @@
 
 <script>
 import session from '@/session'
+import { Deferred } from '@/utils'
 
 export default {
   name: 'set-password',
@@ -71,10 +72,15 @@ export default {
   },
   methods: {
     async validate() {
+      const deferred = new Deferred()
       const passed = await this.$validator.validateAll()
       if (passed) {
-        this.savePassword()
+        await this.savePassword()
+        deferred.resolve()
+      } else {
+        deferred.reject()
       }
+      return deferred.promise
     },
     savePassword() {
       this.loading = true

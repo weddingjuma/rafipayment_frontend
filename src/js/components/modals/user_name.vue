@@ -33,6 +33,7 @@
 
 <script>
 import session from '@/session'
+import { Deferred } from '@/utils'
 
 export default {
   name: 'modal-name',
@@ -53,19 +54,24 @@ export default {
       this.$emit('close')
     },
     async validate() {
-      await this.$validator.validateAll()
-      await this.confirmChange()
+      const deferred = new Deferred()
+      const passed = await this.$validator.validateAll()
+      if (passed) {
+        await this.confirmChange()
+        deferred.resolve()
+      } else {
+        deferred.reject()
+      }
+      return deferred.promise
     },
     async confirmChange() {
       const user = {
         first_name: this.first_name,
         last_name: this.last_name
       }
-      return this.model.save(user)
-      .then((response) => {
-        session.$user = response
-        this.confirm()
-      })
+      const response = await this.model.save(user)
+      session.$user = response
+      this.confirm()
     }
   }
 }
