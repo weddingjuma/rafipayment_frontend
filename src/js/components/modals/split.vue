@@ -1,5 +1,5 @@
 <template>
-  <modal @close="close" :confirm="save">
+  <modal @close="close" :confirm="validate">
     <h1 slot="header">Edit Split / Autopay</h1>
     <div slot="body" class="text-left">
       <loading v-if="loading"></loading>
@@ -10,7 +10,7 @@
           ref="default"
           name="amount"
           v-validate="'required'"
-          @change="validate">
+          @change="validateInput">
         </currency>
         <validation name="amount" :errors="errors"></validation>
       </div>
@@ -47,9 +47,12 @@ export default {
       if (!validation.validated) {
         this.validated = false
         await sleep(90)
+        const msg = validation.amount
+          ? 'Total rent split cannot exceed total rent due'
+          : 'The amount field is required'
         this.$validator.errors.add(
           'amount',
-          'Total rent split cannot exceed total rent due',
+          msg,
           'required'
         )
         await sleep(300)
@@ -62,15 +65,20 @@ export default {
       return deferred.promise
     },
     async validate() {
+      const deferred = new Deferred()
       if (this.validated === false) {
-        throw new Error()
+        deferred.reject()
       } else if (this.validated === undefined) {
         await this.validateInput()
-        this.save()
+        await this.save()
+        deferred.resolve()
+      } else {
+        await this.save()
+        deferred.resolve()
       }
+      return deferred.promise
     },
-    async save() {
-      await this.validate()
+    save() {
       this.loading = true
       const split = parseCurrency(this.split_amount, Number)
       return this.model.save({
