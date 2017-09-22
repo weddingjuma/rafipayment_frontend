@@ -1,12 +1,12 @@
 import _ from 'lodash'
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
-// import { Deferred, Request, sleep } from '@/utils'
+import events from 'pubsub-js'
+
 import store from '@/store'
 import Request from '@/utils/request_auth'
 import UserModel from '@/models/user'
 import VueModel from '@/plugins/model'
-import events from 'pubsub-js'
 
 Vue.use(VueModel)
 
@@ -49,23 +49,20 @@ const session = new Vue({
       }
       return output
     },
-    loadActivation(token) {
+    async loadActivation(token) {
       const body = { token }
       this.$store.dispatch('loading_begin')
-      const request = this.request('users/activate/contact', {
-        method: 'PUT',
-        body
-      })
-      request.then((response) => {
+      try {
+        const response = await this.request('users/activate/contact', {
+          method: 'PUT',
+          body
+        })
         this.dispatchActivate(response)
-      })
-      .catch((error) => {
-        console.warn(error)
-      })
-      .then(() => {
+      } catch (error) {
+        throw error
+      } finally {
         this.$store.dispatch('loading_end')
-      })
-      return request
+      }
     },
     async loadSession() {
       const Refresh = await this.getRefreshToken()
@@ -75,10 +72,11 @@ const session = new Vue({
             Refresh
           }
         }
-        const response = await Request('users/tokens', options)
+        const response = await this.request('users/tokens', options)
         this.dispatchLogin(response)
       } catch (error) {
-        console.warn(error)
+        throw error
+        // console.warn(error)
       } finally {
         this.$store.dispatch('loading_end')
       }

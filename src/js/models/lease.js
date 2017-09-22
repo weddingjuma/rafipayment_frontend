@@ -13,22 +13,18 @@ const defaults = {
   computed: {
     address() {
       const property = this.property
-      // if (!this.start_date) return
       const unit = this.unit
       return `${property.address} ${unitsHelper(unit.number)}`
     },
     full_address() {
       const property = this.property
-      // if (!this.start_date) return
       return `${this.address}, ${property.city} ${statesHelper(property.state)}`
     },
     term() {
-      // if (!this.start_date) return
       const { start, end } = this.getTerm('l')
       return `${start} – ${end || 'N/A'}`
     },
     length() {
-      // if (!this.start_date) return
       const { start, end } = this.getTerm(false)
       if (!end) return 'N/A'
       const duration = moment.duration(end.diff(start))
@@ -97,7 +93,6 @@ const defaults = {
   },
   methods: {
     getTerm(format = 'MM/DD/YYYY') {
-      // if (!this.start_date) return
       const utc = moment.utc
       const start = format
         ? utc(this.start_date).format(format)
@@ -121,6 +116,11 @@ const defaults = {
         output = {
           validated: false,
           amount: this.rent_remaining
+        }
+      } else if (isNaN(this.split_amount)) {
+        output = {
+          validated: false,
+          amount: ''
         }
       } else {
         output = {

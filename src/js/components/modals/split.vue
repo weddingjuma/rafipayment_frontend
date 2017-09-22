@@ -44,8 +44,6 @@ export default {
       const validation = this.model.validateSplit(this.split_amount)
       this.split_amount = validation.amount
 
-      console.log({validation})
-
       if (!validation.validated) {
         this.validated = false
         await sleep(90)
@@ -63,20 +61,13 @@ export default {
       }
       return deferred.promise
     },
-    validate() {
-      let promise
+    async validate() {
       if (this.validated === false) {
-        promise = Promise.reject()
+        throw new Error()
       } else if (this.validated === undefined) {
-        promise = this.validateInput()
-        // promise.then(() => {
-        //   this.save()
-        // })
-        // .catch(() => {})
-      } else {
-        promise = Promise.resolve()
+        await this.validateInput()
+        this.save()
       }
-      return promise
     },
     async save() {
       await this.validate()

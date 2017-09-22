@@ -63,7 +63,6 @@ export default {
       state.user = user
     },
     LOGIN(state, user) {
-      console.log('dipatching login', user.session.authorization_token)
       state.user = user
       state.logged_in = true
     },

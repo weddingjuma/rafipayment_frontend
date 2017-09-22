@@ -111,8 +111,8 @@
 
 <script>
 import session from '@/session'
-import { parseCurrency, prettyCurrency, Deferred, sleep } from '@/utils'
 import { mapGetters } from 'vuex'
+import { parseCurrency, prettyCurrency, sleep } from '@/utils'
 import userDl from '@/components/cards/user_dl'
 import LeaseModel from '@/models/lease'
 
@@ -123,7 +123,6 @@ export default {
   },
   data() {
     return {
-      // split_amount: 0,
       split_input: 0,
       total: 1000,
       autopay: true,
@@ -168,70 +167,67 @@ export default {
     },
 
     async checkIfValidated() {
-      let promise
       if (this.validated === false) {
-        promise = Promise.reject()
+        return false
       } else if (this.validated === undefined) {
-        promise = this.validate()
-        promise.then(() => {
-          this.modalOpen()
-        })
-        .catch(() => {})
+        const validated = await this.validate()
+        return validated
       } else {
-        promise = Promise.resolve()
+        return true
       }
-      return promise
     },
 
     async validate() {
-      const deferred = new Deferred()
       const validation = this.$lease.validateSplit(this.split_input)
       this.$lease.split_amount = this.split_input = validation.amount
+
+      let output = true
 
       if (!validation.validated) {
         this.validated = false
         await sleep(90)
+        const msg = validation.amount
+          ? 'Total rent split cannot exceed total rent due'
+          : 'The amount field is required'
         this.$validator.errors.add(
           'amount',
-          'Total rent split cannot exceed total rent due',
+          msg,
           'required'
         )
         await sleep(300)
         this.validated = undefined
-        deferred.reject()
+        output = false
       } else {
         this.validated = true
-        deferred.resolve()
       }
-      return deferred.promise
+      return output
     },
 
     async modalOpen() {
-      await this.checkIfValidated()
-      this.loading = true
-      const promise = this.primary_funding_source
-        ? Promise.resolve(true)
-        : this.$become('primary_funding_source')
-      promise.then((value) => {
+      const passed = await this.checkIfValidated()
+      if (passed) {
+        this.loading = true
+        const promise = this.primary_funding_source
+          ? Promise.resolve(true)
+          : this.$become('primary_funding_source')
+        const value = await promise
         if (value) {
           this.loading = false
           this.modal_visible = true
         }
-      })
+      }
     },
 
     modalClose() {
       this.modal_visible = false
     },
 
-    modalConfirm() {
-      return this.$lease.save({
+    async modalConfirm() {
+      await this.$lease.save({
         split: this.$lease.split_amount,
         autopay: this.autopay
       })
-      .then(() => {
-        this.$parent.next()
-      })
+      this.$parent.next()
     }
   },
   components: {
@@ -260,8 +256,6 @@ export default {
 
 <style scoped lang="scss">
 .step {
-  // background: rgb(0, 169, 157);
-
   .currency-container {
     width: 100%
   }
@@ -282,12 +276,10 @@ export default {
   }
   .action {
     width: 100%;
-    // display: inline-block;
     margin: 0;
 
     button {
       width: 100%;
-      // padding: 0.8em 4em;
     }
   }
 }

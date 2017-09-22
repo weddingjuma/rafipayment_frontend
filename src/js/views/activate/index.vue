@@ -1,18 +1,20 @@
 <template>
-  <div class="activation" v-if="current_step">
-    <transition name="fade">
-      <component :is="current_step.name" :step="current_step">
-        <header>
-          <dwolla-logo v-if="current_step.name === 'dwolla-bank'"></dwolla-logo>
-          <logo v-else></logo>
-          <div class="back-container" v-if="current_step.index">
-            <button class="back" @click="back">
-              <svg viewBox="-140 146 30 40"><polyline points="-116.6,185.6 -136.2,166 -116.6,146.4 "></polyline></svg>
-            </button>
-          </div>
-        </header>
-      </component>
-    </transition>
+  <div>
+    <div class="activation" v-if="current_step">
+      <transition name="fade">
+        <component :is="current_step.name" :step="current_step">
+          <header>
+            <dwolla-logo v-if="current_step.name === 'dwolla-bank'"></dwolla-logo>
+            <logo v-else></logo>
+            <div class="back-container" v-if="current_step.index">
+              <button class="back" @click="back">
+                <svg viewBox="-140 146 30 40"><polyline points="-116.6,185.6 -136.2,166 -116.6,146.4 "></polyline></svg>
+              </button>
+            </div>
+          </header>
+        </component>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -52,51 +54,46 @@ export default {
   },
   computed: {
     steps() {
-      return this.actions || this.$user.onboarding_steps
+      return this.actions || session.$user.onboarding_steps
     }
   },
-  created() {
-    if (!session.logged_in) {
-      const query = this.$route.query
-
-      // legacy app route support
-      if (!('token' in query)) {
-        this.$router.replace({
-          query: {
-            token: Object.keys(query)[0]
-          }
-        })
-      }
-
-      const token = _.get(this.$route.query, 'token')
-
-      session.loadActivation(token)
-        .then((response) => {
-          this.current_step = this.getCurrentStep()
-          if (!this.steps.length) {
-            this.$router.replace('/')
-            app.alert(
-              `You have already activated your account. Please log in.`,
-              null,
-              'Already Activated'
-            )
-          }
-        })
-        .catch(() => {
-          this.$router.replace('/')
+  watch: {
+    steps(steps) {
+      if (!steps.length) {
+        if (session.logged_in) {
+          this.complete()
+        } else {
           app.alert(
-            `That activation token has expired. If you already activated your
-            account, please log in. Otherwise, ask your property manager to
-            reinvite you.`,
+            `You have already activated your account. Please log in.`,
             null,
-            'Token Expired'
+            'Already Activated'
           )
-        })
-    } else {
-      if (!this.steps.length) {
-        this.complete()
+          this.$router.push('/')
+        }
       }
-      this.current_step = this.getCurrentStep()
+    }
+  },
+  async created() {
+    if (!session.logged_in) {
+      this.checkForLegacyToken()
+
+      try {
+        const token = _.get(this.$route.query, 'token')
+        await session.loadActivation(token)
+        this.updateCurrentStep()
+      } catch (error) {
+        console.warn(error)
+        this.$router.replace('/')
+        app.alert(
+          `That activation token has expired or is invalid. If you already 
+          activated your account, please log in. Otherwise, ask your property 
+          manager to reinvite you.`,
+          null,
+          'Token Expired'
+        )
+      }
+    } else {
+      this.updateCurrentStep()
     }
   },
   mounted() {
@@ -119,11 +116,10 @@ export default {
       const prev_index = this.current_step.index - 1
       this.current_step = this.steps[prev_index]
     },
-    getCurrentStep() {
-      const current_step = this.steps.find((step, index) => {
+    updateCurrentStep() {
+      this.current_step = this.steps.find((step, index) => {
         return step.value === false || step.value === undefined
       })
-      return current_step
     },
     complete() {
       localStorage.removeItem('activation_token')
@@ -149,6 +145,16 @@ export default {
             'Account Activated'
           )
         })
+    },
+    checkForLegacyToken() {
+      const query = this.$route.query
+      if (!('token' in query)) {
+        this.$router.replace({
+          query: {
+            token: Object.keys(query)[0]
+          }
+        })
+      }
     }
   },
   components: {

@@ -4,7 +4,6 @@ import { Model } from '@/plugins/model'
 import { ISODate } from '@/modules/types'
 
 import store from '@/store'
-// import { request } from '@/session'
 import Request from '@/utils/request_auth'
 import { sort, sortByDate } from './utils'
 
