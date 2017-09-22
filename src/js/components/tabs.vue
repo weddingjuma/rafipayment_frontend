@@ -53,6 +53,7 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style lang="scss">
+/*
 @import '~%/colors';
 
 .tabs {
@@ -95,4 +96,5 @@ export default {
     }
   }
 }
+*/
 </style>
