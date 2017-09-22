@@ -32,9 +32,8 @@ export default {
       }]
     }
   },
-  mounted() {
-    this.$validator.validateAll()
-    .catch(() => {})
+  async mounted() {
+    await this.$validator.validateAll()
   },
   methods: {
     pushOption() {

@@ -74,13 +74,14 @@ export default {
     }
   },
   methods: {
-    submit() {
-      if (this.loading) return
-      this.$validator.validateAll()
-        .then(() => {
-          this.login()
-        })
-        .catch(() => {})
+    async submit() {
+      if (this.loading) {
+        return false
+      }
+      const passed = await this.$validator.validateAll()
+      if (passed) {
+        this.login()
+      }
     },
     login() {
       this.updateCredentials()

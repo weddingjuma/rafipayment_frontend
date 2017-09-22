@@ -21,8 +21,6 @@
 
 <script>
 import session from '@/session'
-// import { Request } from '../utils'
-// import app from '../app'
 
 export default {
   name: 'forgot',
@@ -43,16 +41,14 @@ export default {
     }
   },
   methods: {
-    submit() {
-      this.$validator.validateAll()
-        .then(() => {
-          this.request()
-        })
-        .catch(() => {})
+    async submit() {
+      const passed = await this.$validator.validateAll()
+      if (passed) {
+        this.request()
+      }
     },
     request() {
       this.loading = true
-      // this.$store.dispatch('loading_begin')
       return session.request('users/password', {
         method: 'POST',
         body: {
@@ -66,7 +62,6 @@ export default {
       .catch(err => this.handleError(err))
       .then(() => {
         this.loading = false
-        // this.$store.dispatch('loading_end')
       })
     },
     handleError(error) {

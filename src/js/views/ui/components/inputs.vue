@@ -235,10 +235,11 @@ export default {
         label: `Test ${next}`
       })
     },
-    validate() {
-      this.$validator.validateAll()
-      .then(alert('validated!'))
-      .catch(() => {})
+    async validate() {
+      const passed = this.$validator.validateAll()
+      if (passed) {
+        alert('validated!')
+      }
     },
     async next(e, component) {
       const name = component.$el.querySelector('input').getAttribute('name')

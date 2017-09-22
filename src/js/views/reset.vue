@@ -69,19 +69,17 @@ export default {
     })
   },
   methods: {
-    validateCode() {
-      return this.$validator.validateAll()
-        .then(() => {
-          this.submitCode()
-        })
-        .catch(() => {})
+    async validateCode() {
+      const passed = await this.$validator.validateAll()
+      if (passed) {
+        this.submitCode()
+      }
     },
-    validatePasswords() {
-      return this.$validator.validateAll()
-        .then(() => {
-          this.checkPasswords()
-        })
-        .catch(() => {})
+    async validatePasswords() {
+      const passed = await this.$validator.validateAll()
+      if (passed) {
+        this.checkPasswords()
+      }
     },
     checkPasswords() {
       if (this.password !== this.password_confirm) {

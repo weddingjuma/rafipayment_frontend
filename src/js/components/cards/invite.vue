@@ -55,12 +55,11 @@ export default {
     close() {
       this.$emit('close')
     },
-    validate() {
-      this.$validator.validateAll()
-        .then(() => {
-          this.createModel()
-        })
-        .catch(() => {})
+    async validate() {
+      const passed = await this.$validator.validateAll()
+      if (passed) {
+        this.createModel()
+      }
     },
     createModel() {
       this.$store.dispatch('add', {
