@@ -3,6 +3,7 @@ import './lib'
 
 // main Vue plugins
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 import VeeValidate from 'vee-validate'
 import VueTouch from 'vue-touch'
 import VueMask from 'v-mask'
@@ -118,13 +119,27 @@ const app = new Vue({
   analytics,
   template: '<App/>',
   components: { App },
+  data() {
+    return {
+      online: navigator.onLine
+    }
+  },
   computed: {
     is_cordova() {
       return env === 'cordova'
-    }
+    },
+    ...mapGetters({
+      offline: 'app:offline'
+    })
   },
   async beforeMount() {
     await this.checkBrowserSupport()
+    window.addEventListener('online', () => {
+      this.$store.dispatch('set_offline', false)
+    })
+    window.addEventListener('offline', () => {
+      this.$store.dispatch('set_offline', true)
+    })
   },
   methods: {
     afterLeave(el) {
@@ -189,6 +204,17 @@ const app = new Vue({
         },
         button_labels: button_labels
       })
+    }
+  },
+  watch: {
+    offline(val) {
+      if (val) {
+        this.alert(
+          'You are offline. Please reconnect to the internet to use Rafi Payment.',
+          null,
+          'Offline'
+        )
+      }
     }
   }
 })

@@ -1,7 +1,5 @@
 
-- make sure .includes polyfill and release version are working!!!
-
-- fallback for private browsing mode
+- fallback for private browsing mode - use vuex store
 
 DOCKER
 
@@ -46,27 +44,6 @@ Android deep linking notes
   adb shell am start -a android.intent.action.VIEW -d "https://app.payment.rafiproperties.com/dashboard" com.rafi.payment
 
 
-  - test push notifs in prod
-    - test on ed's phone
-    - make anytime bill
-    - make $1 payment
-
-- form novalidate currency -> stop using number input probably
-
-
-- marketing site seo
-- handle models notfound
-
-
-
-NOTIF DESIGNER IDEAS
-
-- switch back end to node, mainly for single install convenience
-- convert to jinja2 templates?
-- sick editor to allow for CRUD in browser or not
-- release to npm and profit
-
-
 Things to document
 
 BE
@@ -92,22 +69,14 @@ X- write additional tests
 - collection is still using _id
 
 
-
-
-WHAT IS LEFT TO DO
-
-/account is exposing password, auth data
-
-
 rafiproperties@gmail.com
 burritos4dogzRawesome
 
 X- update public site
   X- add buttons for App Store, Google Play
-  - write some copy about the native app
-  - add images/video
-
-
+  X- write some copy about the native app
+  X- add images
+  - add video
 
 - use service workers to check for offline mode
 
@@ -123,7 +92,6 @@ Come up with a design challenge
 UX designers should ask a lot of questions
 
 
-
 - semi-independently think about ux and ui
 - someone who can help improve and refine the product
 - someone who can write copy talking about what the product is
@@ -131,8 +99,8 @@ UX designers should ask a lot of questions
 - someone who can help to inform user experience
 - someone who can work with us as a peer
 - someone who is excited about the product and working with our team
-
 - our process gets slowed down because we dont have enough help planning ux and designing stuff, not because we dont have enough coders
+
 
 - sentry blacklist
 - robomongo
@@ -146,10 +114,7 @@ UX designers should ask a lot of questions
 BACK END
 
 - Commercial leasing seems to have different needs from residential
-
-
-- inviting a removed user is really weird, it kind of just unremoves them
-- back end make IAV tokens endpoints consistent
+- how to handle reinviting removed users
 
 - person pays, roommate doesn't, overdue bill email should be "not fully paid"
 - dwolla logo during bank activation step?
@@ -181,7 +146,7 @@ BIG CHANGES IF LEASING
 
 
 - filtering should work more like excel, just remove useless filters from lists
-- update invite email
+X- update invite email
 - build debug API swapper
 - make bank account cards nicer
 - use password strength on validate?

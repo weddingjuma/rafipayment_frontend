@@ -84,14 +84,14 @@ export default {
         password: this.password
       }
       return this.model.save(data, { path: '/password' })
-      .then((response) => {
-        this.loading = true
-        app.alert(
-          'Please check the new email address for a verification link',
-          this.confirm,
-          'Verify Email'
-        )
-      })
+        .then((response) => {
+          this.loading = true
+          app.alert(
+            'Please check the new email address for a verification link',
+            this.confirm,
+            'Verify Email'
+          )
+        })
     }
   }
 }

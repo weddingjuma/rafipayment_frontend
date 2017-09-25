@@ -2,6 +2,16 @@
   <div>
     <div class="grid">
       <div class="grid__col grid__col--1-of-2">
+        <div class="box online" v-if="online" style="background: green">
+          You are currently online.
+        </div>
+        <div class="box online" v-else style="background: red">
+          You are offline.
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="grid__col grid__col--1-of-2">
         <div class="box">
           <Child @vue-event="vueEvent" />
         </div>
@@ -24,6 +34,18 @@ import session from '@/session'
 export default {
   created() {
     events.subscribe('pubsub-event', this.pubsubEvent)
+    window.addEventListener('online', () => {
+      this.online = true
+    })
+
+    window.addEventListener('offline', () => {
+      this.online = false
+    })
+  },
+  data() {
+    return {
+      online: navigator.onLine
+    }
   },
   computed: {
     $user() {

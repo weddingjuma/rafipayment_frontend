@@ -1,35 +1,39 @@
 <template>
   <div class="app">
-    <div v-if="actions_required.length">
-      <activate :actions="actions_required"></activate>
-    </div>
+    <div>
+      <div v-if="actions_required.length">
+        <activate :actions="actions_required"></activate>
+      </div>
 
-    <div v-else>
-      <header v-if="logged_in">
-        <div class="logo-container">
-          <transition name="fade">
-            <button v-if="backRoute" @click="$router.goBack" class="back-button">
-              <icon-arrow-left />
-            </button>
-            <logo v-else></logo>
+      <div v-else>
+        <header v-if="logged_in">
+          <div class="logo-container">
+            <transition name="fade">
+              <button v-if="backRoute" @click="$router.goBack" class="back-button">
+                <icon-arrow-left />
+              </button>
+              <logo v-else></logo>
+            </transition>
+          </div>
+          <div class="page-title">{{ title }}</div>
+          <navigation></navigation>
+        </header>
+        <v-touch
+        tag="main"
+        :options="{ touchAction: 'auto' }"
+        @panright="onSwipeRight"
+        @panleft="onSwipeLeft">
+          <transition name="route-fade" mode="out-in">
+            <router-view></router-view>
           </transition>
+        </v-touch>
+        <loading v-if="loading" />
+        <alert v-if="alert_visible" />
+        <div v-if="offline" class="offline">
+          <div class="message">You are offline.</div>
         </div>
-        <div class="page-title">{{ title }}</div>
-        <navigation></navigation>
-      </header>
-      <v-touch
-      tag="main"
-      :options="{ touchAction: 'auto' }"
-      @panright="onSwipeRight"
-      @panleft="onSwipeLeft">
-        <transition name="route-fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
-      </v-touch>
-      <loading v-if="loading" />
-      <alert v-if="alert_visible" />
+      </div>
     </div>
-
   </div>
 </template>
 
@@ -55,6 +59,7 @@ export default {
     },
     ...mapGetters({
       loading: 'app:loading',
+      offline: 'app:offline',
       alert_visible: 'app:alert_visible',
       actions_required: 'session:actions_required',
       logged_in: 'session:logged_in'
@@ -103,6 +108,7 @@ main {
 
 <style scoped lang="scss">
 @import '~%/colors';
+@import '~%/mixins';
 
 header {
   position: fixed;
@@ -163,5 +169,16 @@ header {
   height: 20px;
   z-index: 100;
   background: red;
+}
+
+.offline {
+  @include fixed_fill;
+  z-index: 9997;
+  background-color: rgba(0,0,0, 0.6);
+
+  .message {
+    display: inline-block;
+    @include fixed_center;
+  }
 }
 </style>

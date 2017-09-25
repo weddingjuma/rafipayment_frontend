@@ -3,13 +3,13 @@ import _ from 'lodash'
 
 const defaults = () => ({
   loading: false,
+  offline: null,
   nav_visible: false,
   alert_visible: false,
   forgot_email: '',
   alert: {
     header: '',
     message: '',
-    // template: null,
     actions: {},
     button_labels: []
   }
@@ -21,6 +21,9 @@ export default {
   getters: {
     'app:loading': state => {
       return state.loading
+    },
+    'app:offline': state => {
+      return state.offline
     },
     'app:nav_visible': state => {
       return state.nav_visible
@@ -64,6 +67,9 @@ export default {
     },
     SET_FORGOT_EMAIL(state, email) {
       state.forgot_email = email
+    },
+    SET_OFFLINE(state, value) {
+      state.offline = value
     }
   },
   actions: {
@@ -93,6 +99,9 @@ export default {
     },
     set_forgot_email({ commit }, email) {
       commit('SET_FORGOT_EMAIL', email)
+    },
+    set_offline({ commit }, value) {
+      commit('SET_OFFLINE', value)
     }
   }
 }
