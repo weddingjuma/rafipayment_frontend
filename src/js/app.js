@@ -132,8 +132,7 @@ const app = new Vue({
       offline: 'app:offline'
     })
   },
-  async beforeMount() {
-    await this.checkBrowserSupport()
+  beforeMount() {
     window.addEventListener('online', () => {
       this.$store.dispatch('set_offline', false)
     })
@@ -145,17 +144,6 @@ const app = new Vue({
     afterLeave(el) {
       window.scroll(0, 0)
     },
-    checkBrowserSupport() {
-      try {
-        localStorage.setItem('_test', '123')
-        localStorage.removeItem('_test')
-      } catch(error) {
-        this.alert(
-          `Your browser does not support local storage. If you
-          are in private browsing mode, please disable it.`
-        )
-      }
-    },
     alert(
       message = '',
       callback = () => {},
@@ -164,7 +152,7 @@ const app = new Vue({
     ) {
       const createAlert = this.is_cordova
         ? navigator.notification.alert
-        : this._modalAlert
+        : modalAlert.bind(this)
       return createAlert(message, callback, title, button_label)
     },
     confirm(
@@ -175,7 +163,7 @@ const app = new Vue({
     ) {
       const createAlert = this.is_cordova
         ? navigator.notification.confirm
-        : this._modalConfirm
+        : modalConfirm.bind(this)
 
       const callback = !this.is_cordova
         ? _callback
@@ -183,27 +171,6 @@ const app = new Vue({
           if (index === 1) _callback()
         }
       return createAlert(message, callback, title, button_labels)
-    },
-    _modalAlert(message, callback, title, button_label) {
-      return this.$store.dispatch('alert_show', {
-        header: title,
-        message: message,
-        actions: {
-          confirm: callback
-        },
-        button_labels: [ button_label ]
-      })
-    },
-    _modalConfirm(message, callback, title, button_labels) {
-      return this.$store.dispatch('alert_show', {
-        header: title,
-        message: message,
-        actions: {
-          confirm: callback,
-          cancel: true
-        },
-        button_labels: button_labels
-      })
     }
   },
   watch: {
@@ -219,5 +186,29 @@ const app = new Vue({
   }
 })
 
+function modalAlert(message, callback, title, button_label) {
+  return this.$store.dispatch('alert_show', {
+    header: title,
+    message: message,
+    actions: {
+      confirm: callback
+    },
+    button_labels: [ button_label ]
+  })
+}
+
+function modalConfirm(message, callback, title, button_labels) {
+  return this.$store.dispatch('alert_show', {
+    header: title,
+    message: message,
+    actions: {
+      confirm: callback,
+      cancel: true
+    },
+    button_labels: button_labels
+  })
+}
+
 export default app
 module.exports = app
+// using both commonjs and es modules for tests

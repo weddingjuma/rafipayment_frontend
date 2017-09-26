@@ -35,9 +35,7 @@ button, .button {
 
   &:focus {
     outline: none;
-    // border: 1px solid #5d5f5f;
     box-shadow: 0 0 5px 2px #7584b9;
-    // box-shadow: 0 0 5px 2px #5897fb;
   }
 
   &:disabled, .disabled {
@@ -242,18 +240,13 @@ button, .button {
 .button-full {
   display: block;
   padding: 20px;
-  // color: $color-highlight;
   color: $color-text-default;
   background: $color-highlight;
-  // color: #fff;
-  // background-color: $color-button-primary-background;
   font-size: 1.1em;
   font-weight: bold;
   text-transform: uppercase;
   text-align: center;
   border-top: 1px solid hsla(0,0%,100%,.3);
-  // border-top-left-radius: 0;
-  // border-top-right-radius: 0;
   border-radius: 0;
 
   &:hover {
@@ -261,7 +254,6 @@ button, .button {
   }
 
   &.disabled {
-    // cursor: not-allowed;
     pointer-events: none;
   }
 }

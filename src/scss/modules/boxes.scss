@@ -4,8 +4,6 @@
   position: relative;
   padding: 1.25rem;
   margin-bottom: 6px;
-  // margin-bottom: 20px;
-  // border-radius: 5px;
   border-radius: 0;
   background-color: $color-box-background;
   color: $color-box-text;
@@ -14,14 +12,9 @@
 
   header {
     padding: 12px 14px;
-    // color: #99a0b1;
     font-size: 0.9em;
     font-weight: 500;
     margin-top: 10px;
-    // font-size: 0.85em;
-    // background-color: lighten($color-background-default, 10%);
-    // border-bottom: 1px solid $color-grey-80;
-    // border-bottom: 1px solid #24282f;
   }
 
   h2 {

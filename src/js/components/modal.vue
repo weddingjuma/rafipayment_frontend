@@ -90,27 +90,19 @@ export default {
 
 <style lang="scss">
 @import '~%/colors';
+@import '~%/mixins';
 
 .modal-container {
-  position: fixed;
+  @include fixed_fill;
   z-index: 9998;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   background: rgba(0,0,0, 0.6);
 
   .modal {
-    background: #efefef;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    max-height: 100%;
+    @include fixed_fill;
+    // width: 100%;
+    // max-width: 100%;
+    // height: 100%;
+    // max-height: 100%;
     background: $color-modal-background;
     box-shadow: 0 1px 4px rgba(0,0,0, 0.3);
     z-index: 2;

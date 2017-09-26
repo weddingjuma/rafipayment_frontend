@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <div>
+    <div v-if="compatible">
       <div v-if="actions_required.length">
         <activate :actions="actions_required"></activate>
       </div>
@@ -28,11 +28,14 @@
           </transition>
         </v-touch>
         <loading v-if="loading" />
-        <alert v-if="alert_visible" />
-        <div v-if="offline" class="offline">
-          <div class="message">You are offline.</div>
-        </div>
       </div>
+    </div>
+    <div v-else>
+      <bug />
+    </div>
+    <alert v-if="alert_visible" />
+    <div v-if="offline" class="offline">
+      <div class="message">You are offline.</div>
     </div>
   </div>
 </template>
@@ -46,7 +49,8 @@ import { mapGetters } from 'vuex'
 import { getPanStartPosition } from '@/utils'
 
 import activate from '@/views/activate'
-import navigation from './nav'
+import navigation from '@/components/nav'
+import bug from '@/components/bug'
 
 export default {
   name: 'app',
@@ -65,6 +69,14 @@ export default {
       logged_in: 'session:logged_in'
     })
   },
+  mounted() {
+    this.checkBrowserSupport()
+  },
+  data() {
+    return {
+      compatible: true
+    }
+  },
   watch: {
     logged_in(val) {
       let path = val ? this.getRedirect() : '/'
@@ -72,6 +84,9 @@ export default {
     }
   },
   methods: {
+    getRedirect() {
+      return _.get(this.$route, 'query.redirect') || '/dashboard'
+    },
     onSwipeRight(e) {
       const start = getPanStartPosition(e);
       if (start.x < 50) {
@@ -79,19 +94,30 @@ export default {
       }
     },
     onSwipeLeft(e) {
-      if (!config.debug) return
-      const start = getPanStartPosition(e);
-      if ((window.innerWidth - start.x) < 50) {
-        window.debug.toggle()
+      if (config.debug) {
+        const start = getPanStartPosition(e);
+        if ((window.innerWidth - start.x) < 50) {
+          window.debug.toggle()
+        }
       }
     },
-    getRedirect() {
-      return _.get(this.$route, 'query.redirect') || '/dashboard'
+    checkBrowserSupport() {
+      try {
+        localStorage.setItem('_', '_')
+        localStorage.removeItem('_')
+      } catch(error) {
+        this.compatible = false
+        this.$parent.alert(
+          `It looks like you are in private browsing mode, which is not 
+          supported by Rafi Payment. Please disable it to continue.`
+        )
+      }
     }
   },
   components: {
     navigation,
-    activate
+    activate,
+    bug
   }
 }
 </script>
@@ -159,16 +185,6 @@ header {
 }
 .loader-container {
   position: fixed;
-}
-
-.fixed_header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 20px;
-  z-index: 100;
-  background: red;
 }
 
 .offline {

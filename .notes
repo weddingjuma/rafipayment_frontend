@@ -78,7 +78,7 @@ X- update public site
   X- add images
   - add video
 
-- use service workers to check for offline mode
+X- use service workers to check for offline mode
 
 
 UI/UX designer

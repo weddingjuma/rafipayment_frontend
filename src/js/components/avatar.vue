@@ -46,7 +46,6 @@ export default {
     background-blend-mode: overlay;
 
     text {
-      // fill: $color-text-light;
       fill: currentColor;
       font-family: 'Roboto', sans-serif;
       font-weight: 200;

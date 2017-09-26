@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import app from '@/app'
+// import app from '@/app'
 export default {
   name: 'alert',
   props: {
@@ -75,13 +75,13 @@ export default {
       return this.alert.button_labels[1] || 'Cancel'
     },
     alert() {
-      return app.$store.getters['app:alert']
+      return this.$store.getters['app:alert']
     }
   },
   methods: {
     closeAlert() {
       if (this.close) this.close()
-      app.$store.dispatch('alert_hide')
+      this.$store.dispatch('alert_hide')
     },
     async validate(e) {
       this.alert_loading = true
@@ -110,21 +110,16 @@ export default {
 
 <style lang="scss">
 @import '~%/colors';
+@import '~%/mixins';
 
 .alert-container {
-  position: fixed;
+  @include fixed_fill;
   z-index: 9998;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   background: rgba(0,0,0, 0.6);
 
   .alert {
+    @include fixed_center;
     background: #efefef;
-    position: fixed;
-    top: 50%;
-    left: 50%;
     width: 600px;
     max-width: 90%;
     max-height: 80%;
@@ -133,7 +128,6 @@ export default {
     box-shadow: 0 1px 4px rgba(0,0,0, 0.3);
     z-index: 2;
     overflow: hidden;
-    transform: translateX(-50%) translateY(-50%);
 
     .alert-header {
       padding: 0 15px;
