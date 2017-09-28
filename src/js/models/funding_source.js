@@ -2,6 +2,7 @@ import _ from 'lodash'
 import app from '@/app'
 import session from '@/session'
 import { Model } from '@/plugins/model'
+import { ObjectId, ISODate } from '@/modules/types'
 
 const defaults = {
   name: 'funding_source',
@@ -9,7 +10,7 @@ const defaults = {
   computed: {
     is_primary() {
       const primary_id = _.get(session.$user, 'dwolla.primary_funding_source')
-      return this.id === primary_id
+      return this.id && this.id === primary_id
     },
     microdeposits() {
       const status = _.get(session.$user.dwolla_account.funding_sources, this.id)
@@ -42,17 +43,39 @@ const defaults = {
 export default class FundingSource extends Model {
   static schema() {
     return {
-      id: String,
-      links: Array,
-      name: String,
-      type: String,
-      status: String,
-      bankName: String,
-      channels: Array,
-      created: String,
-      removed: Boolean,
-      amount1: Object,
-      amount2: Object
+      id: {
+        type: ObjectId
+      },
+      links: {
+        type: Array
+      },
+      name: {
+        type: String
+      },
+      type: {
+        type: String
+      },
+      status: {
+        type: String
+      },
+      bankName: {
+        type: String
+      },
+      channels: {
+        type: Array
+      },
+      created: {
+        type: ISODate
+      },
+      removed: {
+        type: Boolean
+      },
+      amount1: {
+        type: Object
+      },
+      amount2: {
+        type: Object
+      }
     }
   }
   constructor(attributes, options) {

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import moment from 'moment'
 import session from '@/session';
 import { Model } from '@/plugins/model'
-import { ISODate, Currency } from '@/modules/types'
+import { ObjectId, ISODate, Currency } from '@/modules/types'
 import { parseCurrency, statesHelper, unitsHelper } from '@/utils'
 
 const defaults = {
@@ -137,17 +137,39 @@ const defaults = {
 export default class Lease extends Model {
   static schema() {
     return {
-      id: String,
-      company: String,
-      updated: ISODate,
-      created: ISODate,
-      autopay: Object,
-      bill_due_day: Number,
-      bill_generation_day: Number,
-      bill_overdue_day: Number,
-      start_date: ISODate,
-      end_date: ISODate,
-      rent: Currency,
+      id: {
+        type: ObjectId
+      },
+      company: {
+        type: String
+      },
+      updated: {
+        type: ISODate
+      },
+      created: {
+        type: ISODate
+      },
+      autopay: {
+        type: Object
+      },
+      bill_due_day: {
+        type: Number
+      },
+      bill_generation_day: {
+        type: Number
+      },
+      bill_overdue_day: {
+        type: Number
+      },
+      start_date: {
+        type: ISODate
+      },
+      end_date: {
+        type: ISODate
+      },
+      rent: {
+        type: Currency
+      },
       charges: {
         type: Object,
         scheduled: {
@@ -160,14 +182,30 @@ export default class Lease extends Model {
           amount: Currency
         }
       },
-      split: Object,
-      first_bill_generation_date: ISODate,
-      last_bill_generation_date: ISODate,
-      property: Object,
-      status: Object,
-      tenants: Array,
-      type: String,
-      unit: Object,
+      split: {
+        type: Object
+      },
+      first_bill_generation_date: {
+        type: ISODate
+      },
+      last_bill_generation_date: {
+        type: ISODate
+      },
+      property: {
+        type: Object
+      },
+      status: {
+        type: Object
+      },
+      tenants: {
+        type: Array
+      },
+      type: {
+        type: String
+      },
+      unit: {
+        type: Object
+      },
       split_amount: {
         type: Boolean,
         default: false

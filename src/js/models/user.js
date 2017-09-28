@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { Model } from '@/plugins/model'
+import { ObjectId, ISODate } from '@/modules/types'
 
 import getOnboardingSteps from '@/utils/getOnboardingSteps'
 import getSecondarySteps from '@/utils/getSecondarySteps'
@@ -40,20 +41,51 @@ const defaults = {
 export default class User extends Model {
   static schema() {
     return {
-      id: String,
-      company: String,
-      first_name: String,
-      last_name: String,
-      email: String,
-      role: String,
-      avatar_color: String,
-      dwolla: Object,
-      notifications: Object,
-      status: Object,
-      updated: String,
-      created: String,
-      leases: Array,
-      terms_accepted: Object
+      id: {
+        type: ObjectId
+      },
+      updated: {
+        type: ISODate
+      },
+      created: {
+        type: ISODate
+      },
+      company: {
+        type: String
+      },
+      first_name: {
+        type: String
+      },
+      last_name: {
+        type: String
+      },
+      email: {
+        type: String
+      },
+      role: {
+        type: String
+      },
+      password: {
+        type: String
+      },
+      avatar_color: {
+        type: String
+      },
+      dwolla: {
+        type: Object
+      },
+      notifications: {
+        type: Object
+      },
+      status: {
+        type: Object
+      },
+      leases: {
+        type: Array
+      },
+      terms_accepted: {
+        type: Object
+      }
     }
   }
   constructor(attributes, options) {

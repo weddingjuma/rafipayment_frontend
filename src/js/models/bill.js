@@ -3,7 +3,7 @@ import moment from 'moment'
 import { Model } from '@/plugins/model'
 import session from '@/session'
 
-import { ISODate, Currency } from '@/modules/types'
+import { ObjectId, ISODate, Currency } from '@/modules/types'
 
 const defaults = {
   name: 'bill',
@@ -150,24 +150,57 @@ const defaults = {
 export default class Bill extends Model {
   static schema() {
     return {
-      id: String,
-      company: String,
-      due_date: ISODate,
-      type: String,
-      amount: Currency,
-      total: Currency,
-      balance: Currency,
-      // display_balance: Currency,
-      charges: Object,
-      identifier: String,
-      lease: Object,
-      property: Object,
-      unit: Object,
-      status: Object,
-      tenants: Array,
-      transfers: Array,
-      created: ISODate,
-      updated: ISODate
+      id: {
+        type: ObjectId
+      },
+      company: {
+        type: String
+      },
+      due_date: {
+        type: ISODate
+      },
+      type: {
+        type: String
+      },
+      total: {
+        type: Currency
+      },
+      balance: {
+        type: Currency
+      },
+      charges: {
+        type: Object
+      },
+      identifier: {
+        type: String
+      },
+      lease: {
+        type: Object
+      },
+      property: {
+        type: Object
+      },
+      unit: {
+        type: Object
+      },
+      status: {
+        type: Object
+      },
+      tenants: {
+        type: Array
+      },
+      transfers: {
+        type: Array,
+        items: {
+          amount: Currency
+        }
+      },
+      created: {
+        type: ISODate
+      },
+      updated: {
+        type: ISODate
+      }
     }
   }
   constructor(attributes, options) {
