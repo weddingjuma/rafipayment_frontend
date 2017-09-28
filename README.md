@@ -93,7 +93,7 @@ There are 2 aliases available as a shortcut to the js and scss modules.
 import App from '@/components'
 ```
 
-~%: /src/scss
+~%: /src/scss/modules
 
 ```scss
 @import '~%/colors';

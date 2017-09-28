@@ -5,24 +5,6 @@ import * as utils from './utils'
 
 const { Request } = utils
 
-const getDiff = (oldData, newData) => {
-  const keys = getChangedKeys(oldData, newData)
-  let output = {}
-  for (let index in keys) {
-    const key = keys[index]
-    output[key] = newData[key]
-  }
-  return output
-}
-
-const getChangedKeys = (oldData, newData) => {
-  const updated = _.merge({}, oldData, newData)
-  const output = _.reduce(oldData, function(result, value, key) {
-    return _.isEqual(value, updated[key]) ? result : result.concat(key);
-  }, []);
-  return output
-}
-
 export default class Model {
   static schema() {
     return {
@@ -72,9 +54,13 @@ export default class Model {
       methods: {
         fetch() {
           const req = new Request(this.urlRoot)
-          req.then((response) => {
+          req
+          .then((response) => {
             this.set(response)
           })
+          // .catch((err) => {
+          //   console.warn(err)
+          // })
           return req
         },
         destroy() {
@@ -87,9 +73,11 @@ export default class Model {
             path: ''
           }
           _.merge(_options, options)
-          const changed = getDiff(this.$data, _body)
-          if (_.isEmpty(changed)) return Promise.resolve() // maybe return changed: false
-          const body = utils.decodeWithSchema(changed, schema)
+          const changed = utils.getDiff(this.$data, _body)
+          if (_.isEmpty(changed)) {
+            return Promise.resolve()
+          }
+          const body = this.encode(changed)
           const method = this.isNew ? 'POST' : 'PUT'
           const path = _options.path ? '/' + _options.path : ''
           const req = new Request(this.url + path, {
@@ -102,17 +90,8 @@ export default class Model {
           return req
         },
         set(data) {
-          // NOTE: Vue reserves properties that begin with an underscore
-          // so it is necessary to remove the underscore before setting
-          for (let _key in data) {
-            const key = _key.charAt(0) === '_'
-              ? _key.substr(1)
-              : _key
-            this[key] = data[_key]
-            // console.log({key});
-            // console.log('value', data[_key]);
-            // this[key] = utils.encodeWithSchema(data[_key], schema[_key])
-          }
+          const data_decoded = this.decode(data)
+          _.merge(this, data_decoded)
           return this
         },
         reset(defaults) {
@@ -121,8 +100,11 @@ export default class Model {
         toJSON() {
           return utils.modelToJSON(this)
         },
-        decode() {
-          return utils.decodeWithSchema(this.$data, schema)
+        decode(data = this.$data) {
+          return utils.decodeData(utils.removeUnderscores(data), schema)
+        },
+        encode(data = this.$data) {
+          return utils.addUnderscores(utils.encodeData(data, schema))
         },
         schema() {
           return schema
