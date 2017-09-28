@@ -36,7 +36,6 @@
 </template>
 
 <script>
-// import app from '@/app'
 export default {
   name: 'alert',
   props: {

@@ -172,17 +172,6 @@ const app = new Vue({
         }
       return createAlert(message, callback, title, button_labels)
     }
-  },
-  watch: {
-    offline(val) {
-      if (val) {
-        this.alert(
-          'You are offline. Please reconnect to the internet to use Rafi Payment.',
-          null,
-          'Offline'
-        )
-      }
-    }
   }
 })
 
