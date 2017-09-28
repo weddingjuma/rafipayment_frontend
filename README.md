@@ -114,7 +114,7 @@ Passing options to the Request instance to modify the request:
 
 ```js
 new Request('users/managers', {
-  mode: 'POST',
+  method: 'POST',
   body: {
     name: 'test',
     email: 'test@gmail.com'
@@ -127,23 +127,23 @@ Adding custom Headers:
 let headers = new Headers()
 if (authToken) headers.append('Authorization', authToken)
 new Request('users/managers', {
-  mode: 'GET',
+  method: 'GET',
   headers
 })
 ```
-Request always returns a promise:
+Request returns a promise:
 
 ```js
 new Request('users/login')
-.then((response) => {
-  this.$store.dispatch('login', response)
-})
-.catch((err) => {
-  this.$store.dispatch('error', err)
-})
-.then(() => {
-  console.log('This always fires')
-})
+  .then((response) => {
+    console.log(reponse)
+  })
+  .catch((error) => {
+    console.warn(error)
+  })
+  .then(() => {
+    console.log('This always fires')
+  })
 ```
 
 ## Store
@@ -151,7 +151,7 @@ The primary data store is located in app.$store, which will be automatically res
 
 ## Models
 
-The Model class is an extendable wrapper that returns a Vue instance, which makes it easy to create reusable models with default attributes, shared methods, and methods that use default or dynamic values.
+The Model class returns a Vue instance with some default helper methods and computed properties. The following is an example of extending the Model class:
 
 ```js
 import Model from '@/modules/model'
@@ -183,11 +183,11 @@ export default class User extends Model {
 ```js
 import UserModel from '@/models/user'
 const user = new UserModel({
-  first_name: 'Jane',
-  last_name: 'Goodall'
+  first_name: 'Hidetoshi',
+  last_name: 'Hasagawa'
 })
 
-console.log(user.full_name) // returns 'Jane Goodall'
+console.log(user.full_name) // returns 'Hidetoshi Hasagawa'
 
 ```
 
