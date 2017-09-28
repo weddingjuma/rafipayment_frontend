@@ -28,7 +28,7 @@ const defaults = {
       let label
       switch (this.type) {
         case 'monthly':
-          label = `rent - ${moment(this.due_date).format('MMMM')}`
+          label = `rent - ${moment.utc(this.due_date).format('MMMM')}`
           break
         case 'anytime':
           label = 'one-time bill'
@@ -99,7 +99,8 @@ const defaults = {
     },
     better_display_balance() {
       const valid_transfers = this.transfers.filter((transfer) => {
-        return !['error', 'cancelled', 'failed'].includes(transfer.status.state)
+        const state = _.get(transfer, 'status.state')
+        return !['error', 'cancelled', 'failed'].includes(state)
       })
       const amount_paid = valid_transfers.reduce((a, b) => {
         return a + b.amount
@@ -113,7 +114,8 @@ const defaults = {
         let transfers = [];
         if (this.transfers) {
           this.transfers.map((transfer) => {
-            if (transfer.source === id && !['failed', 'error', 'cancelled'].includes(transfer.status.state)) {
+            const state = _.get(transfer, 'status.state')
+            if (transfer.source === id && !['failed', 'error', 'cancelled'].includes(state)) {
               transfers.push(transfer)
             }
           })

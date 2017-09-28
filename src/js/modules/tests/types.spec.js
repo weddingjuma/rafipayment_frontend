@@ -58,17 +58,17 @@ describe('ObjectId', () => {
   })
 
   const id = new ObjectId({
-    $id: '8f9347uej83r98r3wj9j'
+    $oid: '8f9347uej83r98r3wj9j'
   })
-  it('should correctly parse extended json', () => {
+  it('should return id string from .valueOf()', () => {
     expect(id.valueOf())
       .toBe('8f9347uej83r98r3wj9j')
   })
 
-  it('should create a new ObjectId instance', () => {
+  it('should reencode the id for mongo', () => {
     expect(id.encode())
       .toEqual({
-        $id: '8f9347uej83r98r3wj9j'
+        $oid: '8f9347uej83r98r3wj9j'
       })
   })
 })
