@@ -202,6 +202,9 @@ export default class Bill extends Model {
       },
       updated: {
         type: ISODate
+      },
+      amount: {
+        type: Currency
       }
     }
   }
