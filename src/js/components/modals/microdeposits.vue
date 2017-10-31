@@ -114,8 +114,7 @@ export default {
         inputs.forEach((input, index) => {
           this.validateInput(input, index)
         })
-        // console.log(this.errors);
-        if (this.errors.errors.length) {
+        if (this.errors.any()) {
           reject()
         } else {
           resolve()
